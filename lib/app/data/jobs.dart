@@ -1,0 +1,102 @@
+List<Map<dynamic, dynamic>> jobs = [
+  {
+    "id": 4,
+    "createTime": "2023-03-27 10:44:27",
+    "updateTime": "2023-03-27 10:44:50",
+    "orderID": 7,
+    "driverID": 41,
+    "yardID": null,
+    "status": 1,
+    "schedulerStart": "1679884571880",
+    "schedulerEnd": "1679888040000",
+    "start": null,
+    "end": null,
+    "isAccept": 0,
+    "note": null,
+    "color": "#3b5bc2",
+    "departmentId": "14",
+    "expectedDate": "1680192000000",
+    "pickupAddress": "SSS Auto Parts 421 Victoria Street Brunswick VIC 3056",
+    "pickupAddressState": "VIC",
+    "name": "FORD Fiesta 5D Hatchback LX",
+    "model": "Fiesta 5D Hatchback",
+    "year": 2007,
+    "brand": "FORD",
+    "colour": "",
+    "vinNumber": "FORFIELXWQ16FHS2007A",
+    "series": "WQ",
+    "engine": "1.6 litre, 4 cyl, WQ",
+    "image":
+        "http://www.carregistrationapi.com/image.aspx/@Rk9SRCBGaWVzdGEgNUQgSGF0Y2hiYWNr",
+    "phoneNumber": "02222233339"
+  },
+  {
+    "id": 3,
+    "createTime": "2023-03-27 10:31:20",
+    "updateTime": "2023-03-27 10:36:19",
+    "orderID": 3,
+    "driverID": 41,
+    "yardID": null,
+    "status": 1,
+    "schedulerStart": "1679884571880",
+    "schedulerEnd": "1679888160000",
+    "start": null,
+    "end": null,
+    "isAccept": 0,
+    "note": null,
+    "color": "#3b5bc2",
+    "departmentId": "14",
+    "expectedDate": "1680192000000",
+    "pickupAddress": "ASF Audits 108 King William Street Adelaide SA 5000",
+    "pickupAddressState": "SA",
+    "name": "FORD Fiesta 5D Hatchback LX",
+    "model": "Fiesta 5D Hatchback",
+    "year": 2007,
+    "brand": "FORD",
+    "colour": "",
+    "vinNumber": "FORFIELXWQ16FHS2007A",
+    "series": "WQ",
+    "engine": "1.6 litre, 4 cyl, WQ",
+    "image":
+        "http://www.carregistrationapi.com/image.aspx/@Rk9SRCBGaWVzdGEgNUQgSGF0Y2hiYWNr",
+    "phoneNumber": "02222233339"
+  },
+  {
+    "id": 1,
+    "createTime": "2023-03-27 10:22:54",
+    "updateTime": "2023-03-27 10:44:47",
+    "orderID": 1,
+    "driverID": 41,
+    "yardID": null,
+    "status": 1,
+    "schedulerStart": "1679883658213",
+    "schedulerEnd": "1679887140000",
+    "start": null,
+    "end": null,
+    "isAccept": 0,
+    "note": null,
+    "color": "#3b5bc2",
+    "departmentId": "14",
+    "expectedDate": "1679970000000",
+    "pickupAddress": "ASD Family Legal 2 Innovation Parkway Birtinya QLD 4575",
+    "pickupAddressState": "QLD",
+    "name": "FORD Fiesta 5D Hatchback LX",
+    "model": "Fiesta 5D Hatchback",
+    "year": 2007,
+    "brand": "FORD",
+    "colour": "",
+    "vinNumber": "FORFIELXWQ16FHS2007A",
+    "series": "WQ",
+    "engine": "1.6 litre, 4 cyl, WQ",
+    "image":
+        "http://www.carregistrationapi.com/image.aspx/@Rk9SRCBGaWVzdGEgNUQgSGF0Y2hiYWNr",
+    "phoneNumber": "02222233339"
+  }
+];
+
+// final newJobsList = <dynamic>[];
+// for(final item in jobs) {
+//   // 迭代jobs中的每个元素，可以在这里对item进行操作
+//   newJobsList.add(item);
+// }
+
