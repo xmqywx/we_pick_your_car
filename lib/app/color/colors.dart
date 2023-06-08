@@ -39,6 +39,8 @@ class AppColors {
   static const Color white = Color(0xffffffff);
   static const Color outSideText = Color(0xffC2C9DD);
   static const Color verDrvider = Color(0xffF2F2F2);
+  static const Color logob = Color(0xfffbe39f);
+
   static const MaterialColor primarySwatch = MaterialColor(
     0xfffdc22e,
     <int, Color>{

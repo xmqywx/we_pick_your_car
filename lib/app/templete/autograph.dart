@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -121,6 +120,53 @@ class _HandwrittenSignatureWidgetState
 
   /// 生成Padding为20的 只包含绘制区域的图片
   /// import 'dart:ui' as ui;
+  // Future<Uint8List?> _generateImage() async {
+  //   var paint = Paint()
+  //     ..color = Colors.black
+  //     ..style = PaintingStyle.stroke
+  //     ..strokeCap = StrokeCap.round
+  //     ..strokeJoin = StrokeJoin.round
+  //     ..strokeWidth = 2
+  //     ..isAntiAlias = true;
+
+  //   // 计算所有笔画 涉及的最大区域
+  //   Rect? bound;
+  //   for (Path? path in _pathList) {
+  //     if (path != null) {
+  //       var rect = path.getBounds();
+  //       if (bound == null) {
+  //         bound = rect;
+  //       } else {
+  //         bound = bound.expandToInclude(rect);
+  //       }
+  //     }
+  //   }
+  //   if (bound == null) {
+  //     return null;
+  //   }
+
+  //   final size = bound.size;
+  //   // PictureRecorder 记录画布上产生的行为
+  //   final recorder = ui.PictureRecorder();
+  //   final canvas = Canvas(recorder, bound);
+
+  //   for (Path? path in _pathList) {
+  //     if (path != null) {
+  //       // padding 是20 ，然后将路径偏移至左上角（20，20）
+  //       var offsetPath = path.shift(Offset(20 - bound.left, 20 - bound.top));
+  //       canvas.drawPath(offsetPath, paint);
+  //     }
+  //   }
+
+  //   // 结束记录
+  //   final picture = recorder.endRecording();
+  //   // 因为padding为20，所以整体宽高要+40
+  //   ui.Image img = await picture.toImage(
+  //       size.width.toInt() + 40, size.height.toInt() + 40);
+  //   // 转换为png格式的图片数据
+  //   var bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+  //   return bytes?.buffer.asUint8List();
+  // }
   Future<Uint8List?> _generateImage() async {
     var paint = Paint()
       ..color = Colors.black
@@ -142,8 +188,20 @@ class _HandwrittenSignatureWidgetState
         }
       }
     }
+
+    // 如果签名区域太小，则使用一个默认的最小尺寸
+    const double minSignatureSize = 50.0;
     if (bound == null) {
-      return null;
+      bound = Rect.fromLTWH(0, 0, minSignatureSize, minSignatureSize);
+    } else {
+      if (bound.width < minSignatureSize) {
+        bound = Rect.fromLTWH(
+            bound.left, bound.top, minSignatureSize, bound.height);
+      }
+      if (bound.height < minSignatureSize) {
+        bound =
+            Rect.fromLTWH(bound.left, bound.top, bound.width, minSignatureSize);
+      }
     }
 
     final size = bound.size;
@@ -263,4 +321,3 @@ class SignaturePainter extends CustomPainter {
     return true;
   }
 }
-

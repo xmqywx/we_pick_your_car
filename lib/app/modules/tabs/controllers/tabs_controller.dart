@@ -190,7 +190,7 @@ class TabsController extends GetxController {
       for (var item in handleJobsList)
         if (item['schedulerStart'] != null)
           DateTime.fromMillisecondsSinceEpoch(int.parse(item['schedulerStart']))
-              .subtract(const Duration(hours: -8)): item['event']
+              .subtract(const Duration(hours: 0)): item['event']
     };
     kEvents.value = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,

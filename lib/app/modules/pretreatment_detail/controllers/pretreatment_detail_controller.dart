@@ -26,7 +26,7 @@ class PretreatmentDetailController extends GetxController {
   RxMap arguments = {}.obs;
   RxString currentStatus = "".obs;
   RxBool toFinishTask = false.obs;
-
+  RxBool hasError = false.obs;
   // ---------------表单
   // RxString modelNumber = "".obs;
   // modelNumberChange(value) {

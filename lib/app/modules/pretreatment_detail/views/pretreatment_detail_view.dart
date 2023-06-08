@@ -23,7 +23,7 @@ import '../../../widget/card_container.dart';
 import '../../../widget/image_preview_screen.dart' as ImagePreviewScreenWidget;
 
 class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
-  const PretreatmentDetailView({Key? key}) : super(key: key);
+  PretreatmentDetailView({Key? key}) : super(key: key);
   @override
   Widget _buildViewSignature() {
     return Column(
@@ -167,484 +167,533 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
     return Container();
   }
 
+  bool hasError = false;
   Widget _buildBody() {
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(ScreenAdapter.width(32),
-            ScreenAdapter.height(0), ScreenAdapter.width(32), 0),
         child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: ScreenAdapter.height(30)),
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: Text(
-                  "${handleFormatDateEEEEMMMMdyat(controller.arguments['schedulerStart'])}${handleFormathmma(controller.arguments['schedulerStart'])}-${handleFormathmma(controller.arguments['schedulerEnd'])}"),
-            ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            Obx(() => CardContainer(children: [
-                      // Container(
-                      //   height: ScreenAdapter.height(25.92),
-                      //   color: handleStatusColor(
-                      //       handleStatus(controller.arguments['status'])),
-                      // ),
-                      // Container(
-                      //   padding: EdgeInsets.fromLTRB(
-                      //       ScreenAdapter.width(34.56),
-                      //       ScreenAdapter.height(23.04),
-                      //       ScreenAdapter.width(34.56),
-                      //       ScreenAdapter.height(23.04)),
-                      //   decoration: const BoxDecoration(
-                      //       border: Border(
-                      //           bottom: BorderSide(
-                      //               color: AppColors.themeBorderColor1,
-                      //               width: 1))),
-                      // ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(
-                            ScreenAdapter.width(34.56),
-                            ScreenAdapter.height(23.04),
-                            ScreenAdapter.width(34.56),
-                            ScreenAdapter.height(23.04)),
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: AppColors.themeBorderColor1,
-                                    width: 1))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                // padding: EdgeInsets.all(20),
-                                child: Image.asset(
-                              "assets/images/icon_location.png",
-                              width: ScreenAdapter.width(48.96),
-                            )),
-                            SizedBox(
-                              width: ScreenAdapter.width(15),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: controller.arguments['pickupAddress'] != ""
-                                  ? InkWell(
-                                      child: Text(
-                                        controller.arguments['pickupAddress'],
-                                        // overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 10,
-                                        style: TextStyle(
-                                            fontSize:
-                                                ScreenAdapter.fontSize(50),
-                                            fontFamily: "Roboto-Medium",
-                                            color: AppColors.themeTextColor1),
-                                      ),
-                                      onTap: () async {
-                                        final Uri url = Uri.parse(
-                                            // 'https://maps.google.com/maps/search/?api=1&query=${controller.arguments['pickupAddress']}'
-                                            'https://www.google.com/maps/dir/?api=1&destination=${controller.arguments['pickupAddress']}');
-                                        // if (await canLaunchUrl(url)) {
-                                        //   print(123123);
-                                        //   await launchUrl(url);
-                                        // } else {
-                                        //   print(456456);
-                                        //   throw 'Could not launch $url';
-                                        // }
-                                        if (!await launchUrl(
-                                          url,
-                                          mode: LaunchMode.externalApplication,
-                                        )) {
-                                          throw Exception(
-                                              'Could not launch $url');
-                                        }
-                                      },
-                                    )
-                                  : Text("--"),
-                            ),
-                          ],
+      children: [
+        // Obx(() => AppBar(
+        //       centerTitle: true,
+        //       title: const Text("Job details"),
+        //       elevation: 0,
+        //       actions: <Widget>[
+        //         if (controller.isLoadingController.isLoading.value)
+        //           Padding(
+        //             padding: const EdgeInsets.all(8.0),
+        //             child: CircularProgressIndicator(
+        //               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        //             ),
+        //           ),
+        //       ],
+        //     )),
+        Padding(
+          padding: EdgeInsets.fromLTRB(ScreenAdapter.width(32),
+              ScreenAdapter.height(0), ScreenAdapter.width(32), 0),
+          child: Column(
+            children: [
+              Container(
+                margin:
+                    EdgeInsets.symmetric(vertical: ScreenAdapter.height(30)),
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Text(
+                    "${handleFormatDateEEEEMMMMdyat(controller.arguments['schedulerStart'])}${handleFormathmma(controller.arguments['schedulerStart'])}-${handleFormathmma(controller.arguments['schedulerEnd'])}"),
+              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              Obx(() => CardContainer(children: [
+                        // Container(
+                        //   height: ScreenAdapter.height(25.92),
+                        //   color: handleStatusColor(
+                        //       handleStatus(controller.arguments['status'])),
+                        // ),
+                        // Container(
+                        //   padding: EdgeInsets.fromLTRB(
+                        //       ScreenAdapter.width(34.56),
+                        //       ScreenAdapter.height(23.04),
+                        //       ScreenAdapter.width(34.56),
+                        //       ScreenAdapter.height(23.04)),
+                        //   decoration: const BoxDecoration(
+                        //       border: Border(
+                        //           bottom: BorderSide(
+                        //               color: AppColors.themeBorderColor1,
+                        //               width: 1))),
+                        // ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              ScreenAdapter.width(34.56),
+                              ScreenAdapter.height(23.04),
+                              ScreenAdapter.width(34.56),
+                              ScreenAdapter.height(23.04)),
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: AppColors.themeBorderColor1,
+                                      width: 1))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  // padding: EdgeInsets.all(20),
+                                  child: Image.asset(
+                                "assets/images/icon_location.png",
+                                width: ScreenAdapter.width(48.96),
+                              )),
+                              SizedBox(
+                                width: ScreenAdapter.width(15),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: controller.arguments['pickupAddress'] !=
+                                        ""
+                                    ? InkWell(
+                                        child: Text(
+                                          controller.arguments['pickupAddress'],
+                                          // overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 10,
+                                          style: TextStyle(
+                                              fontSize:
+                                                  ScreenAdapter.fontSize(50),
+                                              fontFamily: "Roboto-Medium",
+                                              color: AppColors.themeTextColor1),
+                                        ),
+                                        onTap: () async {
+                                          final Uri url = Uri.parse(
+                                              // 'https://maps.google.com/maps/search/?api=1&query=${controller.arguments['pickupAddress']}'
+                                              'https://www.google.com/maps/dir/?api=1&destination=${controller.arguments['pickupAddress']}');
+                                          // final url = Uri.parse(
+                                          //     'https://www.google.com/maps/dir/?api=1&center=${controller.orderDetail['pickupAddressLat']},${controller.orderDetail['pickupAddressLng']}');
+                                          // if (await canLaunchUrl(url)) {
+                                          //   print(123123);
+                                          //   await launchUrl(url);
+                                          // } else {
+                                          //   print(456456);
+                                          //   throw 'Could not launch $url';
+                                          // }
+
+                                          if (!await launchUrl(
+                                            url,
+                                            mode:
+                                                LaunchMode.externalApplication,
+                                          )) {
+                                            throw Exception(
+                                                'Could not launch $url');
+                                          }
+                                        },
+                                      )
+                                    : Text("--"),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
+                        Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(
+                                ScreenAdapter.width(34.56),
+                                ScreenAdapter.height(23.04),
+                                ScreenAdapter.width(34.56),
+                                ScreenAdapter.height(23.04)),
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: AppColors.themeBorderColor1,
+                                        width: 1))),
+                            child: Column(
+                              children: [
+                                FilesMap(
+                                  attribute: '',
+                                  value: '',
+                                  valueWidget: Container(
+                                    // height: ScreenAdapter.height(47),
+                                    padding:
+                                        EdgeInsets.all(ScreenAdapter.width(10)),
+                                    // margin: EdgeInsets.only(
+                                    //     bottom: ScreenAdapter.height(19)),
+                                    decoration: BoxDecoration(
+                                        color: handleStatusColor(handleStatus(
+                                            controller.arguments['status'])),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(
+                                                ScreenAdapter.height(12)))),
+                                    child: Text(
+                                      handleStatus(
+                                          controller.arguments['status']),
+                                      style: TextStyle(
+                                          color: AppColors.themeTextColor1,
+                                          fontSize:
+                                              ScreenAdapter.fontSize(40.8),
+                                          fontFamily: "Roboto-Medium",
+                                          height: 1.3),
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Container(
+                                    width: ScreenAdapter.width(500),
+                                    child: InkWell(
+                                      child: Container(
+                                          // width: ScreenAdapter.width(585),
+                                          // height: ScreenAdapter.height(600),
+                                          child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4.0)),
+                                          // border: Border.all(
+                                          //     color: Colors.grey,
+                                          //     width: 2,
+                                          //     style: BorderStyle.solid)
+                                        ),
+                                        child: controller
+                                                    .orderDetail['image'] !=
+                                                null
+                                            ? Image.network(
+                                                controller.orderDetail['image'],
+                                                // fit: BoxFit.fitWidth,
+                                                width: ScreenAdapter.width(585),
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  controller.hasError.value =
+                                                      true;
+                                                  return ImgErrorBuild();
+                                                },
+                                              )
+                                            : Text(""),
+                                      )),
+                                      onTap: controller.orderDetail['image'] !=
+                                              null
+                                          ? () {
+                                              if (!controller.hasError.value) {
+                                                Get.to(ImagePreviewScreen(
+                                                  images: [
+                                                    controller.orderDetail[
+                                                            'image'] ??
+                                                        ""
+                                                  ],
+                                                  index: 0,
+                                                ));
+                                              }
+                                            }
+                                          : null,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                        Container(
+                            padding: EdgeInsets.fromLTRB(
+                                ScreenAdapter.width(34.56),
+                                ScreenAdapter.height(23.04),
+                                ScreenAdapter.width(34.56),
+                                ScreenAdapter.height(23.04)),
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: AppColors.themeBorderColor1,
+                                        width: 1))),
+                            child: Column(
+                              children: [
+                                // FilesMap(
+                                //   attribute: '',
+                                //   value:
+                                //       "${controller.orderDetail['name'] ?? '--'}",
+                                // ),
+                                Text(
+                                  "${controller.orderDetail['name'] ?? '--'}",
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    fontFamily: "Roboto-Medium",
+                                    color: AppColors.themeTextColor1,
+                                    fontSize: ScreenAdapter.fontSize(50),
+                                    height: ScreenAdapter.height(80) /
+                                        ScreenAdapter.fontSize(50),
+                                  ),
+                                ),
+                                FilesMap(
+                                    attribute: 'Reg. No.',
+                                    value:
+                                        "${controller.orderDetail['registrationNumber']}",
+                                    valueWidget: LicensePlate(
+                                      widget: Text(
+                                          "${controller.orderDetail['registrationNumber']}"),
+                                    )),
+                                FilesMap(
+                                  attribute: 'BODY',
+                                  value: controller.orderDetail['bodyStyle'],
+                                ),
+                                FilesMap(
+                                    attribute: 'VIN',
+                                    value: controller.orderDetail['vinNumber']),
+                                // FilesMap(
+                                //   attribute: 'Engine',
+                                //   value: controller.orderDetail['engine'],
+                                //   flag: false,
+                                // ),
+                              ],
+                            )),
+                        Container(
+                            padding: EdgeInsets.fromLTRB(
+                                ScreenAdapter.width(34.56),
+                                ScreenAdapter.height(23.04),
+                                ScreenAdapter.width(34.56),
+                                ScreenAdapter.height(23.04)),
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: AppColors.themeBorderColor1,
+                                        width: 1))),
+                            child: Column(
+                              children: [
+                                FilesMap(
+                                  attribute: 'Customer',
+                                  value: controller.orderDetail['firstName'],
+                                ),
+                                FilesMap(
+                                  attribute: 'Email',
+                                  value: controller.orderDetail['emailAddress'],
+                                ),
+                                Container(
+                                    constraints: const BoxConstraints(
+                                      minHeight: 25,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        FilesMap(
+                                          attribute: 'Phone',
+                                          value:
+                                              "${controller.orderDetail['registrationNumber']}",
+                                          valueWidget: InkWell(
+                                            onTap: () async {
+                                              await FlutterPhoneDirectCaller
+                                                  .callNumber(
+                                                      controller.orderDetail[
+                                                          'phoneNumber']);
+                                            },
+                                            child: Text(
+                                              controller.orderDetail[
+                                                      'phoneNumber'] ??
+                                                  "----",
+                                              textAlign: TextAlign.right,
+                                              style: const TextStyle(
+                                                  fontFamily: "Roboto-Medium",
+                                                  color:
+                                                      AppColors.themeTextColor1,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor:
+                                                      AppColors.darkBlueColor),
+                                            ),
+                                          ),
+                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     const Flexible(
+                                        //       child: Text(
+                                        //         'Phone',
+                                        //         textAlign: TextAlign.left,
+                                        //         style: TextStyle(
+                                        //             fontFamily: "Roboto-Medium",
+                                        //             color: AppColors
+                                        //                 .themeTextColor3),
+                                        //       ),
+                                        //     ),
+                                        //     InkWell(
+                                        //       onTap: () async {
+                                        //         await FlutterPhoneDirectCaller
+                                        //             .callNumber(
+                                        //                 controller.orderDetail[
+                                        //                     'phoneNumber']);
+                                        //       },
+                                        //       child: Text(
+                                        //         controller.orderDetail[
+                                        //                 'phoneNumber'] ??
+                                        //             "----",
+                                        //         textAlign: TextAlign.right,
+                                        //         style: const TextStyle(
+                                        //             fontFamily: "Roboto-Medium",
+                                        //             color:
+                                        //                 AppColors.themeTextColor1,
+                                        //             decoration:
+                                        //                 TextDecoration.underline,
+                                        //             decorationColor:
+                                        //                 AppColors.darkBlueColor),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // Divider(
+                                        //     color: AppColors.black,
+                                        //     height: ScreenAdapter.height(35),
+                                        //     thickness: ScreenAdapter.height(3)),
+                                      ],
+                                    ))
+                              ],
+                            )),
+                        Container(
+                          margin: EdgeInsets.all(0),
+                          padding: EdgeInsets.fromLTRB(
+                              ScreenAdapter.width(34.56),
+                              ScreenAdapter.height(23.04),
+                              ScreenAdapter.width(34.56),
+                              ScreenAdapter.height(23.04)),
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: AppColors.themeBorderColor1,
+                                      width: 1))),
+                          child: Column(
+                            children: [
+                              // FilesMap(
+                              //   attribute: 'Start time',
+                              //   value: controller.arguments['schedulerStart'] !=
+                              //           null
+                              //       ? handleFormatDateDDMMYYYY(
+                              //           controller.arguments['schedulerStart'])
+                              //       : '--',
+                              // ),
+                              // FilesMap(
+                              //   attribute: 'End time',
+                              //   value:
+                              //       controller.arguments['schedulerEnd'] != null
+                              //           ? handleFormatDateDDMMYYYY(
+                              //               controller.arguments['schedulerEnd'])
+                              //           : '--',
+                              //   // isUpdate: true,
+                              // ),
+                              // FilesMap(
+                              //   attribute: 'Estimated price',
+                              //   value: controller.orderDetail['recommendedPrice'],
+                              //   prefix: '\$',
+                              // ),
+                              FilesMap(
+                                attribute: 'Price',
+                                value: controller.actualPayPrice.value,
+                                flag: false,
+                                isUpdate: controller.isEdit.value,
+                                onChanged: controller.actualPayPriceChange,
+                                prefix: '\$',
+                              ),
+                              FilesMap(
+                                attribute: 'Model number',
+                                value: controller.modelNumber.value,
+                                flag: false,
+                                isUpdate: controller.isEdit.value,
+                                onChanged: controller.modelNumberChange,
+                                // prefix: '\$',
+                              ),
+                              FilesMap(
+                                attribute: 'Color',
+                                value: controller.carColor.value,
+                                flag: false,
+                                isUpdate: controller.isEdit.value,
+                                onChanged: controller.carColorChange,
+                                // prefix: '\$',
+                              ),
+                              FilesMap(
+                                  attribute: 'Payment method',
+                                  value: controller.paymentMethod.value,
+                                  flag: false,
+                                  isUpdate: controller.isEdit.value,
+                                  onSelectChanged:
+                                      controller.paymentMethodChange,
+                                  inputType: 'select',
+                                  selectItems: [
+                                    'Cheque',
+                                    'Cash',
+                                    'Direct Credit'
+                                  ]
+                                  // prefix: '\$',
+                                  ),
+                              // FilesMap(
+                              //   attribute: 'Model number',
+                              //   value: controller
+                              //       .orderDetail['modelNumber'],
+                              //   flag: false,
+                              //   isUpdate: controller.isEdit.value,
+                              //   // prefix: '\$',
+                              // ),
+
+                              FilesMap(
+                                attribute: 'Site photos',
+                                hasValue: false,
+                              ),
+
+                              ImagePickerWidget(
+                                onImagesChanged: controller.changeImageFileDir,
+                                images: controller.imageFileDir.value,
+                                isEditable: controller.isEdit.value,
+                              ),
+                              // Text(controller.signature.value),
+                              FilesMap(
+                                attribute: 'Customer signature',
+                                hasValue: false,
+                              ),
+                              _buildViewSignature(),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(0),
                           width: double.infinity,
                           padding: EdgeInsets.fromLTRB(
                               ScreenAdapter.width(34.56),
-                              ScreenAdapter.height(23.04),
+                              ScreenAdapter.height(15),
                               ScreenAdapter.width(34.56),
-                              ScreenAdapter.height(23.04)),
-                          decoration: const BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: AppColors.themeBorderColor1,
-                                      width: 1))),
-                          child: Column(
-                            children: [
-                              FilesMap(
-                                attribute: '',
-                                value: '',
-                                valueWidget: Container(
-                                  // height: ScreenAdapter.height(47),
-                                  padding:
-                                      EdgeInsets.all(ScreenAdapter.width(10)),
-                                  // margin: EdgeInsets.only(
-                                  //     bottom: ScreenAdapter.height(19)),
-                                  decoration: BoxDecoration(
-                                      color: handleStatusColor(handleStatus(
-                                          controller.arguments['status'])),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(
-                                              ScreenAdapter.height(12)))),
-                                  child: Text(
-                                    handleStatus(
-                                        controller.arguments['status']),
-                                    style: TextStyle(
-                                        color: AppColors.themeTextColor1,
-                                        fontSize: ScreenAdapter.fontSize(40.8),
-                                        fontFamily: "Roboto-Medium",
-                                        height: 1.3),
-                                  ),
-                                ),
-                              ),
-                              Center(
-                                child: Container(
-                                  width: ScreenAdapter.width(500),
-                                  child: InkWell(
-                                    child: Container(
-                                        // width: ScreenAdapter.width(585),
-                                        // height: ScreenAdapter.height(600),
-                                        child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4.0)),
-                                        // border: Border.all(
-                                        //     color: Colors.grey,
-                                        //     width: 2,
-                                        //     style: BorderStyle.solid)
-                                      ),
-                                      child: controller.orderDetail['image'] !=
-                                              null
-                                          ? Image.network(
-                                              controller.orderDetail['image'],
-                                              // fit: BoxFit.fitWidth,
-                                              width: ScreenAdapter.width(585),
-                                              errorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return ImgErrorBuild();
-                                              },
-                                            )
-                                          : Text(""),
-                                    )),
-                                    onTap: () {
-                                      Get.to(ImagePreviewScreen(
-                                        images: [
-                                          controller.orderDetail['image'] ?? ""
-                                        ],
-                                        index: 0,
-                                      ));
-                                    },
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
-                      Container(
-                          padding: EdgeInsets.fromLTRB(
-                              ScreenAdapter.width(34.56),
-                              ScreenAdapter.height(23.04),
-                              ScreenAdapter.width(34.56),
-                              ScreenAdapter.height(23.04)),
-                          decoration: const BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: AppColors.themeBorderColor1,
-                                      width: 1))),
-                          child: Column(
-                            children: [
-                              // FilesMap(
-                              //   attribute: '',
-                              //   value:
-                              //       "${controller.orderDetail['name'] ?? '--'}",
-                              // ),
-                              Text(
-                                "${controller.orderDetail['name'] ?? '--'}",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontFamily: "Roboto-Medium",
-                                  color: AppColors.themeTextColor1,
-                                  fontSize: ScreenAdapter.fontSize(50),
-                                  height: ScreenAdapter.height(80) /
-                                      ScreenAdapter.fontSize(50),
-                                ),
-                              ),
-                              FilesMap(
-                                  attribute: 'Reg. No.',
-                                  value:
-                                      "${controller.orderDetail['registrationNumber']}",
-                                  valueWidget: LicensePlate(
-                                    widget: Text(
-                                        "${controller.orderDetail['registrationNumber']}"),
-                                  )),
-                              FilesMap(
-                                attribute: 'BODY',
-                                value: controller.orderDetail['bodyStyle'],
-                              ),
-                              FilesMap(
-                                  attribute: 'VIN',
-                                  value: controller.orderDetail['vinNumber']),
-                              // FilesMap(
-                              //   attribute: 'Engine',
-                              //   value: controller.orderDetail['engine'],
-                              //   flag: false,
-                              // ),
-                            ],
-                          )),
-                      Container(
-                          padding: EdgeInsets.fromLTRB(
-                              ScreenAdapter.width(34.56),
-                              ScreenAdapter.height(23.04),
-                              ScreenAdapter.width(34.56),
-                              ScreenAdapter.height(23.04)),
-                          decoration: const BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: AppColors.themeBorderColor1,
-                                      width: 1))),
-                          child: Column(
-                            children: [
-                              FilesMap(
-                                attribute: 'Customer',
-                                value: controller.orderDetail['firstName'],
-                              ),
-                              FilesMap(
-                                attribute: 'Email',
-                                value: controller.orderDetail['emailAddress'],
-                              ),
-                              Container(
-                                  constraints: const BoxConstraints(
-                                    minHeight: 25,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      FilesMap(
-                                        attribute: 'Phone',
-                                        value:
-                                            "${controller.orderDetail['registrationNumber']}",
-                                        valueWidget: InkWell(
-                                          onTap: () async {
-                                            await FlutterPhoneDirectCaller
-                                                .callNumber(
-                                                    controller.orderDetail[
-                                                        'phoneNumber']);
-                                          },
-                                          child: Text(
-                                            controller.orderDetail[
-                                                    'phoneNumber'] ??
-                                                "----",
-                                            textAlign: TextAlign.right,
-                                            style: const TextStyle(
-                                                fontFamily: "Roboto-Medium",
-                                                color:
-                                                    AppColors.themeTextColor1,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationColor:
-                                                    AppColors.darkBlueColor),
-                                          ),
-                                        ),
-                                      ),
-                                      // Row(
-                                      //   mainAxisAlignment:
-                                      //       MainAxisAlignment.spaceBetween,
-                                      //   children: [
-                                      //     const Flexible(
-                                      //       child: Text(
-                                      //         'Phone',
-                                      //         textAlign: TextAlign.left,
-                                      //         style: TextStyle(
-                                      //             fontFamily: "Roboto-Medium",
-                                      //             color: AppColors
-                                      //                 .themeTextColor3),
-                                      //       ),
-                                      //     ),
-                                      //     InkWell(
-                                      //       onTap: () async {
-                                      //         await FlutterPhoneDirectCaller
-                                      //             .callNumber(
-                                      //                 controller.orderDetail[
-                                      //                     'phoneNumber']);
-                                      //       },
-                                      //       child: Text(
-                                      //         controller.orderDetail[
-                                      //                 'phoneNumber'] ??
-                                      //             "----",
-                                      //         textAlign: TextAlign.right,
-                                      //         style: const TextStyle(
-                                      //             fontFamily: "Roboto-Medium",
-                                      //             color:
-                                      //                 AppColors.themeTextColor1,
-                                      //             decoration:
-                                      //                 TextDecoration.underline,
-                                      //             decorationColor:
-                                      //                 AppColors.darkBlueColor),
-                                      //       ),
-                                      //     ),
-                                      //   ],
-                                      // ),
-                                      // Divider(
-                                      //     color: AppColors.black,
-                                      //     height: ScreenAdapter.height(35),
-                                      //     thickness: ScreenAdapter.height(3)),
-                                    ],
-                                  ))
-                            ],
-                          )),
-                      Container(
-                        margin: EdgeInsets.all(0),
-                        padding: EdgeInsets.fromLTRB(
-                            ScreenAdapter.width(34.56),
-                            ScreenAdapter.height(23.04),
-                            ScreenAdapter.width(34.56),
-                            ScreenAdapter.height(23.04)),
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: AppColors.themeBorderColor1,
-                                    width: 1))),
-                        child: Column(
-                          children: [
-                            // FilesMap(
-                            //   attribute: 'Start time',
-                            //   value: controller.arguments['schedulerStart'] !=
-                            //           null
-                            //       ? handleFormatDateDDMMYYYY(
-                            //           controller.arguments['schedulerStart'])
-                            //       : '--',
-                            // ),
-                            // FilesMap(
-                            //   attribute: 'End time',
-                            //   value:
-                            //       controller.arguments['schedulerEnd'] != null
-                            //           ? handleFormatDateDDMMYYYY(
-                            //               controller.arguments['schedulerEnd'])
-                            //           : '--',
-                            //   // isUpdate: true,
-                            // ),
-                            // FilesMap(
-                            //   attribute: 'Estimated price',
-                            //   value: controller.orderDetail['recommendedPrice'],
-                            //   prefix: '\$',
-                            // ),
-                            FilesMap(
-                              attribute: 'Price',
-                              value: controller.actualPayPrice.value,
-                              flag: false,
-                              isUpdate: controller.isEdit.value,
-                              onChanged: controller.actualPayPriceChange,
-                              prefix: '\$',
-                            ),
-                            FilesMap(
-                              attribute: 'Model number',
-                              value: controller.modelNumber.value,
-                              flag: false,
-                              isUpdate: controller.isEdit.value,
-                              onChanged: controller.modelNumberChange,
-                              // prefix: '\$',
-                            ),
-                            FilesMap(
-                              attribute: 'Color',
-                              value: controller.carColor.value,
-                              flag: false,
-                              isUpdate: controller.isEdit.value,
-                              onChanged: controller.carColorChange,
-                              // prefix: '\$',
-                            ),
-                            FilesMap(
-                                attribute: 'Payment method',
-                                value: controller.paymentMethod.value,
-                                flag: false,
-                                isUpdate: controller.isEdit.value,
-                                onSelectChanged: controller.paymentMethodChange,
-                                inputType: 'select',
-                                selectItems: ['Cheque', 'Cash', 'Direct Credit']
-                                // prefix: '\$',
-                                ),
-                            // FilesMap(
-                            //   attribute: 'Model number',
-                            //   value: controller
-                            //       .orderDetail['modelNumber'],
-                            //   flag: false,
-                            //   isUpdate: controller.isEdit.value,
-                            //   // prefix: '\$',
-                            // ),
-
-                            FilesMap(
-                              attribute: 'Site photos',
-                              hasValue: false,
-                            ),
-
-                            ImagePickerWidget(
-                              onImagesChanged: controller.changeImageFileDir,
-                              images: controller.imageFileDir.value,
-                              isEditable: controller.isEdit.value,
-                            ),
-                            // Text(controller.signature.value),
-                            FilesMap(
-                              attribute: 'Customer signature',
-                              hasValue: false,
-                            ),
-                            _buildViewSignature(),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(0),
-                        width: double.infinity,
-                        padding: EdgeInsets.fromLTRB(
-                            ScreenAdapter.width(34.56),
-                            ScreenAdapter.height(15),
-                            ScreenAdapter.width(34.56),
-                            ScreenAdapter.height(51.84)),
-                        decoration: const BoxDecoration(),
-                        child: Obx(() => _StatusHandler()),
-                      )
-                    ])
-                // DetailTemplete(
-                //   customer_name: "${controller.orderDetail['firstName']}",
-                //   customer_phone_number:
-                //       "${controller.orderDetail['phoneNumber']}",
-                //   time_of_appointment:
-                //       "${controller.arguments['expectedDate']}",
-                //   start_postion:
-                //       "${controller.arguments['pickupAddress']}",
-                //   end_position: "${controller.arguments['end_position']}",
-                //   cost: "${controller.orderDetail['recommendedPrice']}",
-                //   status: "${controller.arguments['status']}",
-                //   whether_to_pay:
-                //       "${controller.arguments['whether_to_pay']}",
-                //   job_detail: controller.arguments,
-                //   arguments: controller.orderDetail,
-                // ),
-                ),
-            const SizedBox(
-              height: 10,
-            ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-          ],
+                              ScreenAdapter.height(51.84)),
+                          decoration: const BoxDecoration(),
+                          child: Obx(() => _StatusHandler()),
+                        )
+                      ])
+                  // DetailTemplete(
+                  //   customer_name: "${controller.orderDetail['firstName']}",
+                  //   customer_phone_number:
+                  //       "${controller.orderDetail['phoneNumber']}",
+                  //   time_of_appointment:
+                  //       "${controller.arguments['expectedDate']}",
+                  //   start_postion:
+                  //       "${controller.arguments['pickupAddress']}",
+                  //   end_position: "${controller.arguments['end_position']}",
+                  //   cost: "${controller.orderDetail['recommendedPrice']}",
+                  //   status: "${controller.arguments['status']}",
+                  //   whether_to_pay:
+                  //       "${controller.arguments['whether_to_pay']}",
+                  //   job_detail: controller.arguments,
+                  //   arguments: controller.orderDetail,
+                  // ),
+                  ),
+              const SizedBox(
+                height: 10,
+              ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+            ],
+          ),
         ),
-      ),
-    );
+      ],
+    ));
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBar(
+        appBar: (AppBar(
           centerTitle: true,
           title: const Text("Job details"),
           elevation: 0,
-        ),
+          actions: <Widget>[
+            if (controller.isLoadingController.isLoading.value)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
+          ],
+        )),
         // body: Obx(() => !controller.isLoadingController.isLoading.value
         //     ? ()
         //     : Loading()));

@@ -33,7 +33,6 @@ class UserController extends GetxController {
     var tempLoginState = await UserServices.getUserLoginState();
     isLogin.value = tempLoginState;
     Map<String, dynamic> info = await UserServices.getUserInfo();
-    print(info);
     if (info.isNotEmpty) {
       userInfo.value = UserModel.fromJson(info);
     }

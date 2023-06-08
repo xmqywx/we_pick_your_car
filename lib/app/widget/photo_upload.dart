@@ -8,7 +8,7 @@ import './image_preview_screen.dart';
 import '../widget/toast.dart';
 import '../modules/pretreatment_detail/controllers/pretreatment_detail_controller.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 // class ImagePickerWidget extends StatefulWidget {
 //   final Function(List<String>) onImagesChanged;
 //   const ImagePickerWidget({Key? key, required this.onImagesChanged})
@@ -307,15 +307,37 @@ class ImagePickerWidget extends StatelessWidget {
                   leading: Icon(Icons.photo_camera),
                   title: Text('Take a photo'),
                   onTap: () async {
+                    Navigator.pop(context);
                     final pickedFile =
                         await picker.pickImage(source: ImageSource.camera);
                     if (pickedFile != null) {
                       // var response = await httpsClient.uploadFile(
                       //     "/admin/base/comm/upload",
                       //     file: pickedFiles);
-                      var response = await httpsClient.uploadFile(
+                      int fileSize = await pickedFile.length();
+                      var response;
+                      // 如果大于800K,进行压缩
+                      if (fileSize > 800 * 1024) {
+// 压缩文件
+                        File? compressedFile =
+                            await compressFile(File(pickedFile.path));
+// 上传压缩后的文件
+                        if (compressedFile != null) {
+                          response = await httpsClient.uploadFile(
+                            "/admin/base/comm/upload",
+                            file: compressedFile,
+                          );
+                        }
+                      } else {
+// 文件本身小于800K,直接上传
+                        response = await httpsClient.uploadFile(
                           "/admin/base/comm/upload",
-                          file: File(pickedFile.path));
+                          file: File(pickedFile.path),
+                        );
+                      }
+                      // response = await httpsClient.uploadFile(
+                      //     "/admin/base/comm/upload",
+                      //     file: File(pickedFile.path));
                       if (response != null) {
                         if (response.data["message"] == "success") {
                           //保存
@@ -331,7 +353,6 @@ class ImagePickerWidget extends StatelessWidget {
                             message: 'Upload failed', status: '3');
                       }
                       onImagesChanged(images);
-                      Navigator.pop(context);
                     }
                   },
                 ),
@@ -346,9 +367,29 @@ class ImagePickerWidget extends StatelessWidget {
                       //     "/admin/base/comm/upload",
                       //     file: pickedFiles);
                       pickedFiles.forEach((file) async {
-                        var response = await httpsClient.uploadFile(
+                        int fileSize = await file.length();
+                        var response;
+                        if (fileSize > 800 * 1024) {
+// 压缩文件
+                          File? compressedFile =
+                              await compressFile(File(file.path));
+// 上传压缩后的文件
+                          if (compressedFile != null) {
+                            response = await httpsClient.uploadFile(
+                              "/admin/base/comm/upload",
+                              file: compressedFile,
+                            );
+                          }
+                        } else {
+// 文件本身小于800K,直接上传
+                          response = await httpsClient.uploadFile(
                             "/admin/base/comm/upload",
-                            file: File(file.path));
+                            file: File(file.path),
+                          );
+                        }
+                        // response = await httpsClient.uploadFile(
+                        //     "/admin/base/comm/upload",
+                        //     file: File(file.path));
                         if (response != null) {
                           if (response.data["message"] == "success") {
                             //保存
@@ -534,8 +575,8 @@ class ImagePickerWidget extends StatelessWidget {
                                     right: 0,
                                     child: IconButton(
                                       icon: Icon(
-                                        Icons.clear,
-                                        color: AppColors.redColor,
+                                        Icons.delete,
+                                        color: AppColors.white,
                                       ),
                                       onPressed: () {
                                         images.removeAt(index);
@@ -558,3 +599,19 @@ class ImagePickerWidget extends StatelessWidget {
 }
 
 HttpsClient httpsClient = HttpsClient();
+Future<File?> compressFile(File file) async {
+  final filePath = file.absolute.path;
+// Create output file path
+  final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+  final splitted = filePath.substring(0, (lastIndex));
+  final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+
+// Compress file
+  final out = await FlutterImageCompress.compressAndGetFile(
+    file.absolute.path,
+    outPath,
+    quality: 70,
+  );
+
+  return out;
+}
