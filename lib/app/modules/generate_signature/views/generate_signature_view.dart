@@ -326,7 +326,7 @@ Future<File?> saveImageToFile(Uint8List? imageBytes) async {
     return null;
   }
   final directory = await getApplicationDocumentsDirectory();
-  final imagePath = '${directory.path}signature.jpg';
+  final imagePath = '${directory.path}/signature.jpg';
   final imageFile = File(imagePath);
   await imageFile.writeAsBytes(imageBytes);
   return imageFile;

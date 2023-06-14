@@ -103,6 +103,7 @@ class HttpsClient {
       var response = await dio.post(apiUrl, data: data);
       return response;
     } catch (e) {
+      print(e);
       return null;
     }
   }

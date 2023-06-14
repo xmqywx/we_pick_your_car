@@ -43,7 +43,7 @@ class PassTextFiled extends StatelessWidget {
             style: TextStyle(
                 fontSize: ScreenAdapter.fontSize(48),
                 fontFamily: "Roboto-Medium"),
-            keyboardType: keyboardType, //默认弹出数字键盘
+            // keyboardType: keyboardType, //默认弹出数字键盘
             decoration: InputDecoration(
                 hintText: hintText, border: InputBorder.none //去掉下划线
                 ),
