@@ -32,7 +32,7 @@ class UserView extends GetView<UserController> {
                           left: ScreenAdapter.width(40),
                           right: ScreenAdapter.width(40)),
                       child: Logo(
-                        logoWidth: 550,
+                        logoWidth: ScreenAdapter.width(1000),
                       )),
                   Expanded(
                       flex: 1,

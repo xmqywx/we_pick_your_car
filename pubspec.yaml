@@ -27,6 +27,7 @@ dependencies:
   flutter: 
     sdk: flutter
   flutter_signature_pad: ^3.0.1
+  simple_barcode_scanner: ^0.0.8
 dev_dependencies: 
   flutter_lints: ^2.0.0
   flutter_test: 

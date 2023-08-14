@@ -19,7 +19,7 @@ class Logo extends StatelessWidget {
         child: SizedBox(
           width: ScreenAdapter.width(logoWidth),
           child:
-              Image.asset("assets/images/pickYourCar.png", fit: BoxFit.cover),
+              Image.asset("assets/images/pickYourCar.png", fit: BoxFit.contain),
         ),
       )),
     );

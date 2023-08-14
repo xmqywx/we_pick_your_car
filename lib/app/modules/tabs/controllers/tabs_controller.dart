@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../home/views/home_view.dart';
 import '../../task_list/views/task_list_view.dart';
 import '../../user/views/user_view.dart';
+import '../../Wrecking/views/wrecking_view.dart';
 import '../../../services/https_client.dart';
 import '../../../services/storage.dart';
 import '../../../services/keep_alive_wrapper.dart';
@@ -10,6 +12,7 @@ import 'dart:collection';
 import 'package:table_calendar/table_calendar.dart';
 import '../../user/controllers/user_controller.dart';
 import '../../../templete/event.dart';
+import '../../NoRole/views/no_role_view.dart';
 
 class TabsController extends GetxController {
   RxInt currentIndex = 0.obs; //可改变，需要给obs
@@ -23,7 +26,23 @@ class TabsController extends GetxController {
   UserController userController = Get.find();
 
   final count = 0.obs;
-  final List<Widget> pages = [HomeView(), TaskListView(), UserView()];
+  RxList<Widget> pages = [
+    // HomeView(),
+    // TaskListView(),
+    // WreckingView(),
+    NoRoleView(),
+    UserView(),
+  ].obs;
+  RxList<BottomNavigationBarItem> bottomNavigationBarItems = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
+  ].obs;
+  // RxList<BottomNavigationBarItem> bottomNavigationBarItems =
+  //     <BottomNavigationBarItem>[].obs;
+// bottomNavigationBarItems.addAll([
+//   BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+//   BottomNavigationBarItem(icon: Icon(Icons.task), label: "Job"),
+// ]);
   //不可改变，final，不需要obs
 
   RxMap<DateTime, List<Event>> kEvents = RxMap<DateTime, List<Event>>({});
@@ -71,17 +90,14 @@ class TabsController extends GetxController {
     } else {
       searchData.addAll(filterDataCopy.value);
     }
-    if (true) {
-      // userinfo['id']
-      var response =
-          await httpsClient.post('/admin/job/info/list', data: searchData);
-      if (response != null && response.data['message'] == 'success') {
-        jobListPageData.value = response.data['data'];
-        // initializeEvents();
-        // print("jobsList finish");
-      } else {
-        print('Token expired or network error');
-      }
+    print(searchData);
+    var response =
+        await httpsClient.post('/admin/job/info/list', data: searchData);
+    if (response != null && response.data['message'] == 'success') {
+      jobListPageData.value = response.data['data'];
+      print('OK');
+    } else {
+      print(response.data['message']);
     }
   }
 
@@ -113,8 +129,48 @@ class TabsController extends GetxController {
     await getJobListPageData(filterData: filterData);
   }
 
+  initTabs() async {
+    final userinfo = await Storage.getData('userinfo');
+    if (userinfo['roleName'] != null &&
+        containsRoles(userinfo['roleName'], ['Driver', 'Wrecker'])) {
+      bottomNavigationBarItems.value = [
+        const BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
+      ];
+      List<Widget> pagesCopy = [];
+      if (userinfo['roleName'].contains('Wrecker')) {
+        List<StatelessWidget> pagesToAdd = const [WreckingView()];
+        pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
+
+        bottomNavigationBarItems.value = [
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.qr_code_scanner_rounded), label: "Scan"),
+          ...bottomNavigationBarItems
+        ];
+        pages.refresh();
+      }
+      if (userinfo['roleName'].contains('Driver')) {
+        List<StatelessWidget> pagesToAdd = const [HomeView(), TaskListView()];
+        pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
+        // List<BottomNavigationBarItem> items = [
+        //   BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        //   BottomNavigationBarItem(icon: Icon(Icons.task), label: "Job"),
+        // ];
+        bottomNavigationBarItems.value = [
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          const BottomNavigationBarItem(icon: Icon(Icons.task), label: "Job"),
+          ...bottomNavigationBarItems
+        ];
+        pages.refresh();
+      }
+
+      pages.value = [...pagesCopy, UserView()].cast<StatelessWidget>();
+      print(pages);
+    } else {}
+  }
+
   @override
   void onInit() async {
+    await initTabs();
     super.onInit();
     if (Get.arguments != null) {
       currentIndex.value = Get.arguments["initialPage"];
@@ -206,4 +262,8 @@ class TabsController extends GetxController {
   void setCurrentIndex(index) {
     currentIndex.value = index;
   }
+}
+
+bool containsRoles(String str, List<String> role) {
+  return role.any((substring) => str.contains(substring));
 }

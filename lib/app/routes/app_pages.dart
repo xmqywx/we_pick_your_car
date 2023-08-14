@@ -1,5 +1,10 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+
+import '../modules/NoRole/bindings/no_role_binding.dart';
+import '../modules/NoRole/views/no_role_view.dart';
+import '../modules/Wrecking/views/wrecking_view.dart';
 import '../modules/completed/bindings/completed_binding.dart';
 import '../modules/completed/views/completed_view.dart';
 import '../modules/generate_signature/bindings/generate_signature_binding.dart';
@@ -28,8 +33,8 @@ import '../modules/trailer_info/bindings/trailer_info_binding.dart';
 import '../modules/trailer_info/views/trailer_info_view.dart';
 import '../modules/unaccomplished/bindings/unaccomplished_binding.dart';
 import '../modules/unaccomplished/views/unaccomplished_view.dart';
-import '../modules/user/views/user_view.dart';
 import '../modules/user/controllers/user_controller.dart';
+import '../modules/user/views/user_view.dart';
 
 part 'app_routes.dart';
 
@@ -106,6 +111,11 @@ class AppPages {
         page: () => const TaskInfoFinishView(),
         binding: TaskInfoFinishBinding(),
         middlewares: middlewares),
+    GetPage(
+      name: _Paths.NO_ROLE,
+      page: () => const NoRoleView(),
+      binding: NoRoleBinding(),
+    ),
   ];
 }
 

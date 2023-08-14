@@ -18,15 +18,16 @@ class TabsView extends GetView<TabsController> {
         // ),
         backgroundColor: AppColors.background,
         bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: AppColors.primary,
+            unselectedItemColor: Colors.grey,
+            unselectedLabelStyle: TextStyle(color: Colors.grey),
+            selectedIconTheme: IconThemeData(color: AppColors.primary),
+            unselectedIconTheme: IconThemeData(color: Colors.grey),
             currentIndex: controller.currentIndex.value,
             onTap: (index) {
               controller.setCurrentIndex(index);
             },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-              BottomNavigationBarItem(icon: Icon(Icons.task), label: "Job"),
-              BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
-            ]),
+            items: controller.bottomNavigationBarItems.value),
         body: controller.pages[controller.currentIndex.value]));
   }
 }

@@ -6,6 +6,8 @@ import '../../task_list/controllers/task_list_controller.dart';
 import '../../user/controllers/user_controller.dart';
 import '../../scheduling/controllers/scheduling_controller.dart';
 import '../../pretreatment/controllers/pretreatment_controller.dart';
+import '../../NoRole/controllers/no_role_controller.dart';
+import '../../Wrecking/controllers/wrecking_controller.dart';
 
 //配置binding 懒加载控制器
 class TabsBinding extends Bindings {
@@ -27,5 +29,6 @@ class TabsBinding extends Bindings {
       () => SchedulingController(),
     );
     Get.lazyPut<PretreatmentController>(() => PretreatmentController());
+    Get.lazyPut<WreckingController>(() => WreckingController());
   }
 }

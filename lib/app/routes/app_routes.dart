@@ -16,6 +16,8 @@ abstract class Routes {
   static const PERSONAL_CENTER = _Paths.PERSONAL_CENTER;
   static const SUBMIT_TASKINFO = _Paths.SUBMIT_TASKINFO;
   static const TASK_INFO_FINISH = _Paths.TASK_INFO_FINISH;
+  static const WRECKING = _Paths.WRECKING;
+  static const NO_ROLE = _Paths.NO_ROLE;
 }
 
 abstract class _Paths {
@@ -33,4 +35,6 @@ abstract class _Paths {
   static const PERSONAL_CENTER = '/personal-center';
   static const SUBMIT_TASKINFO = '/submit-taskinfo';
   static const TASK_INFO_FINISH = '/task-info-finish';
+  static const WRECKING = '/wrecking';
+  static const NO_ROLE = '/no-role';
 }

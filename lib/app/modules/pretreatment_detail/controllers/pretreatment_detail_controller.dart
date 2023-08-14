@@ -110,7 +110,7 @@ class PretreatmentDetailController extends GetxController {
       await getCustomerInfo();
       var sendRes = await apiSendInvoice(
           name: orderDetail['firstName'],
-          id: arguments['id'],
+          id: arguments['orderID'],
           price: orderDetail['actualPaymentPrice'],
           email: orderDetail['emailAddress']);
       if (sendRes == null) {

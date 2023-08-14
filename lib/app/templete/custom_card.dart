@@ -102,9 +102,9 @@ class _CustomCardState extends State<CustomCard> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      height: ScreenAdapter.height(47),
+                                      // height: ScreenAdapter.height(47),
                                       padding: EdgeInsets.all(
-                                          ScreenAdapter.width(5)),
+                                          ScreenAdapter.width(10)),
                                       // margin: EdgeInsets.only(
                                       //     bottom: ScreenAdapter.height(19)),
                                       decoration: BoxDecoration(
@@ -119,7 +119,7 @@ class _CustomCardState extends State<CustomCard> {
                                             fontSize:
                                                 ScreenAdapter.fontSize(28.8),
                                             fontFamily: "Roboto-Medium",
-                                            height: 1.3),
+                                            height: 1),
                                       ),
                                     ),
                                     Row(
