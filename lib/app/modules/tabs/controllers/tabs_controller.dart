@@ -131,23 +131,32 @@ class TabsController extends GetxController {
 
   initTabs() async {
     final userinfo = await Storage.getData('userinfo');
+    print('---------------------------');
+    print(userinfo);
+    print('---------------------------');
+    if (userinfo == null) {
+      userController.loginOut();
+      return;
+    }
     if (userinfo['roleName'] != null &&
-        containsRoles(userinfo['roleName'], ['Driver', 'Wrecker'])) {
+        containsRoles(userinfo['roleName'], ['Driver'])) {
+      // 如果添加Wrecker角色的话需要添加Wrecker
       bottomNavigationBarItems.value = [
         const BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
       ];
       List<Widget> pagesCopy = [];
-      if (userinfo['roleName'].contains('Wrecker')) {
-        List<StatelessWidget> pagesToAdd = const [WreckingView()];
-        pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
+      // 如果添加Wrecker角色的话
+      // if (userinfo['roleName'].contains('Wrecker')) {
+      //   List<StatelessWidget> pagesToAdd = const [WreckingView()];
+      //   pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
 
-        bottomNavigationBarItems.value = [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code_scanner_rounded), label: "Scan"),
-          ...bottomNavigationBarItems
-        ];
-        pages.refresh();
-      }
+      //   bottomNavigationBarItems.value = [
+      //     const BottomNavigationBarItem(
+      //         icon: Icon(Icons.qr_code_scanner_rounded), label: "Scan"),
+      //     ...bottomNavigationBarItems
+      //   ];
+      //   pages.refresh();
+      // }
       if (userinfo['roleName'].contains('Driver')) {
         List<StatelessWidget> pagesToAdd = const [HomeView(), TaskListView()];
         pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());

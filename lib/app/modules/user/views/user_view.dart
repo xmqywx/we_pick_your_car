@@ -101,7 +101,7 @@ class UserView extends GetView<UserController> {
           padding: EdgeInsets.only(left: ScreenAdapter.width(40)),
           height: ScreenAdapter.height(400),
           decoration: const BoxDecoration(
-            color: AppColors.darkBlueColor,
+            color: AppColors.logoBgc,
           ),
           child: Row(
             // crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +124,7 @@ class UserView extends GetView<UserController> {
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white, // 将按钮背景色改为白色
                             onPrimary: AppColors
-                                .darkBlueColor, // 将文字颜色改为Color.fromRGBO(240, 115, 49, 1)
+                                .logoBgc, // 将文字颜色改为Color.fromRGBO(240, 115, 49, 1)
                             elevation: 0, // 将阴影去掉
                           ),
                           child: Text("Click to login"),
@@ -141,10 +141,10 @@ class UserView extends GetView<UserController> {
         SizedBox(
           height: ScreenAdapter.height(20),
         ),
-        const ListTile(
-          title: Text("System settings"),
-          leading: CircleAvatar(child: Icon(Icons.settings)),
-        )
+        // const ListTile(
+        //   title: Text("System settings"),
+        //   leading: CircleAvatar(child: Icon(Icons.settings)),
+        // )
       ],
     );
   }
