@@ -8,6 +8,7 @@ import '../../../color/colors.dart';
 import '../../../widget/photo_upload.dart';
 import '../../../widget/card_container.dart';
 import '../../../templete/no_data_templete.dart';
+import '../../../text/paragraph.dart';
 
 class WreckingView extends GetView<WreckingController> {
   const WreckingView({Key? key}) : super(key: key);
@@ -16,7 +17,10 @@ class WreckingView extends GetView<WreckingController> {
     final FocusNode _focusNode = FocusNode();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Scan'),
+          title: MyParagraph(
+            text: 'Component',
+            fontSize: 65,
+          ),
           centerTitle: true,
           actions: [
             IconButton(
@@ -71,35 +75,35 @@ class WreckingView extends GetView<WreckingController> {
                               ),
                             ),
                           ),
-                          IconButton(
-                            onPressed: () async {
-                              await controller.onSearch();
-                              _focusNode.unfocus();
-                            },
-                            icon: Icon(
-                              Icons.search,
-                              color: AppColors.darkBlueColor,
-                            ),
-                          ),
+                          // IconButton(
+                          //   onPressed: () async {
+                          //     await controller.onSearch();
+                          //     _focusNode.unfocus();
+                          //   },
+                          //   icon: Icon(
+                          //     Icons.search,
+                          //     color: AppColors.darkBlueColor,
+                          //   ),
+                          // ),
                         ],
                       ),
                       controller.wreckedData.value['disassemblyNumber'] != null
                           ? Column(
                               children: [
                                 FilesMap(
-                                  attribute: 'Disassembly number',
+                                  attribute: 'Number',
                                   value: controller
                                           .wreckedData['disassemblyNumber'] ??
                                       '----',
                                 ),
                                 FilesMap(
-                                  attribute: 'Disassembly category',
+                                  attribute: 'Category',
                                   value: controller
                                           .wreckedData['disassemblyCategory'] ??
                                       '----',
                                 ),
                                 FilesMap(
-                                  attribute: 'Disassembling information',
+                                  attribute: 'Info',
                                   value:
                                       "${controller.wreckedData['disassmblingInformation'] ?? '----'}",
                                   hasValue: controller
@@ -116,7 +120,7 @@ class WreckingView extends GetView<WreckingController> {
                                       )
                                     : SizedBox(),
                                 FilesMap(
-                                  attribute: 'Disassembly description',
+                                  attribute: 'Description',
                                   value: controller.wreckedData[
                                           'disassemblyDescription'] ??
                                       '----',
@@ -126,7 +130,7 @@ class WreckingView extends GetView<WreckingController> {
                                 //   value: controller.wreckedData['disassemblyImages'] ?? '----',
                                 // ),
                                 FilesMap(
-                                  attribute: 'Disassembly images',
+                                  attribute: 'Images',
                                   hasValue: false,
                                 ),
 

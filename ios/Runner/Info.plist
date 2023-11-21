@@ -42,7 +42,15 @@
 	<string>Example usage description</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Example usage description</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
 	<key>UISupportedInterfaceOrientations</key>
+
+	<key>NSCameraUsageDescription</key>
+	<string>Your Description</string>
+
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
 
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -62,5 +70,6 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
 </dict>
 </plist>

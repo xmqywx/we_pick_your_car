@@ -15,7 +15,7 @@ final IsLoadingController isLoadingController =
 
 class HttpsClient {
   static String domain = "http://13.54.137.62/api/";
-  // static String domain = "http://192.168.0.102:9000/dev/";
+  // static String domain = "http://192.168.101.21:9000/dev/";
 
   static Dio dio = Dio();
   static int _loadingCount = 0; // 记录当前显示的加载动画数量

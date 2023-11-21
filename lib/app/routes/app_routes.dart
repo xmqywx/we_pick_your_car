@@ -18,6 +18,11 @@ abstract class Routes {
   static const TASK_INFO_FINISH = _Paths.TASK_INFO_FINISH;
   static const WRECKING = _Paths.WRECKING;
   static const NO_ROLE = _Paths.NO_ROLE;
+  static const CONTAINER = _Paths.CONTAINER;
+  static const CONTAINER_DETAIL = _Paths.CONTAINER_DETAIL;
+  static const COMPONENTS = _Paths.COMPONENTS;
+  static const COMPONENT_DETAIL = _Paths.COMPONENT_DETAIL;
+  static const SCAN = _Paths.SCAN;
 }
 
 abstract class _Paths {
@@ -37,4 +42,9 @@ abstract class _Paths {
   static const TASK_INFO_FINISH = '/task-info-finish';
   static const WRECKING = '/wrecking';
   static const NO_ROLE = '/no-role';
+  static const CONTAINER = '/container';
+  static const CONTAINER_DETAIL = '/container-detail';
+  static const COMPONENTS = '/components';
+  static const COMPONENT_DETAIL = '/component-detail';
+  static const SCAN = '/scan';
 }

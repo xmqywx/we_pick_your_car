@@ -39,3 +39,19 @@ String handleFormathmma(dynamic date) {
     return '--';
   }
 }
+
+DateTime handleParse({String? date, String format = 'dd-MM-yyyy'}) {
+  if (date == null) return DateTime.now();
+  return DateFormat(format).parse(date);
+}
+
+String handleFormat({DateTime? date, String format = 'dd-MM-yyyy'}) {
+  if (date == null) return '----';
+  return DateFormat(format).format(date);
+}
+
+String getCurrentDate() {
+  DateTime now = DateTime.now();
+  String formattedDate = DateFormat('dd-MM-yyyy').format(now);
+  return formattedDate;
+}

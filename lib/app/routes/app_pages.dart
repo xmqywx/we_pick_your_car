@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../modules/ComponentDetail/bindings/component_detail_binding.dart';
+import '../modules/ComponentDetail/views/component_detail_view.dart';
+import '../modules/Components/bindings/components_binding.dart';
+import '../modules/Components/views/components_view.dart';
+import '../modules/Container/views/container_view.dart';
 import '../modules/NoRole/bindings/no_role_binding.dart';
 import '../modules/NoRole/views/no_role_view.dart';
 import '../modules/Wrecking/views/wrecking_view.dart';
 import '../modules/completed/bindings/completed_binding.dart';
 import '../modules/completed/views/completed_view.dart';
+import '../modules/containerDetail/bindings/container_detail_binding.dart';
+import '../modules/containerDetail/views/container_detail_view.dart';
 import '../modules/generate_signature/bindings/generate_signature_binding.dart';
 import '../modules/generate_signature/views/generate_signature_view.dart';
 import '../modules/have_in_hand/bindings/have_in_hand_binding.dart';
@@ -115,6 +122,21 @@ class AppPages {
       name: _Paths.NO_ROLE,
       page: () => const NoRoleView(),
       binding: NoRoleBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTAINER_DETAIL,
+      page: () => const ContainerDetailView(),
+      binding: ContainerDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.COMPONENTS,
+      page: () => const ComponentsView(),
+      binding: ComponentsBinding(),
+    ),
+    GetPage(
+      name: _Paths.COMPONENT_DETAIL,
+      page: () => const ComponentDetailView(),
+      binding: ComponentDetailBinding(),
     ),
   ];
 }

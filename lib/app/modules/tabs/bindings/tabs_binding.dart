@@ -8,6 +8,7 @@ import '../../scheduling/controllers/scheduling_controller.dart';
 import '../../pretreatment/controllers/pretreatment_controller.dart';
 import '../../NoRole/controllers/no_role_controller.dart';
 import '../../Wrecking/controllers/wrecking_controller.dart';
+import '../../Container/controllers/container_controller.dart';
 
 //配置binding 懒加载控制器
 class TabsBinding extends Bindings {
@@ -30,5 +31,6 @@ class TabsBinding extends Bindings {
     );
     Get.lazyPut<PretreatmentController>(() => PretreatmentController());
     Get.lazyPut<WreckingController>(() => WreckingController());
+    Get.lazyPut<ContainerController>(() => ContainerController());
   }
 }

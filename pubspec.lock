@@ -182,6 +182,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.3.0"
+  flutter_image:
+    dependency: "direct main"
+    description:
+      name: flutter_image
+      sha256: e3662dc99ee90a8d17eb178bfbcaabaa96c11504d6e2bab53b9158ed0439910a
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.1.9"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -528,6 +536,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.27.7"
+  scan:
+    dependency: "direct main"
+    description:
+      name: scan
+      sha256: b343ec36f863a88d41eb4c174b810c055c6bd1f1822b2188ab31aab684fb7cdb
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.6.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -887,4 +903,4 @@ packages:
     version: "1.0.0"
 sdks:
   dart: ">=2.19.0 <4.0.0"
-  flutter: ">=3.3.0"
+  flutter: ">=3.7.0"

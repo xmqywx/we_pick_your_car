@@ -1,10 +1,12 @@
+import 'package:car_wrecker/app/modules/Wrecking/views/wrecking_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../home/views/home_view.dart';
 import '../../task_list/views/task_list_view.dart';
 import '../../user/views/user_view.dart';
-import '../../Wrecking/views/wrecking_view.dart';
+// import '../../Wrecking/views/wrecking_view.dart';
+import '../../Container/views/container_view.dart';
 import '../../../services/https_client.dart';
 import '../../../services/storage.dart';
 import '../../../services/keep_alive_wrapper.dart';
@@ -139,24 +141,24 @@ class TabsController extends GetxController {
       return;
     }
     if (userinfo['roleName'] != null &&
-        containsRoles(userinfo['roleName'], ['Driver'])) {
+        containsRoles(userinfo['roleName'], ['Driver', 'Container'])) {
       // 如果添加Wrecker角色的话需要添加Wrecker
       bottomNavigationBarItems.value = [
         const BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
       ];
       List<Widget> pagesCopy = [];
       // 如果添加Wrecker角色的话
-      // if (userinfo['roleName'].contains('Wrecker')) {
-      //   List<StatelessWidget> pagesToAdd = const [WreckingView()];
-      //   pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
+      if (userinfo['roleName'].contains('Container')) {
+        List<StatelessWidget> pagesToAdd = const [ContainerView()];
+        pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
 
-      //   bottomNavigationBarItems.value = [
-      //     const BottomNavigationBarItem(
-      //         icon: Icon(Icons.qr_code_scanner_rounded), label: "Scan"),
-      //     ...bottomNavigationBarItems
-      //   ];
-      //   pages.refresh();
-      // }
+        bottomNavigationBarItems.value = [
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.hotel_class_sharp), label: "Container"),
+          ...bottomNavigationBarItems
+        ];
+        pages.refresh();
+      }
       if (userinfo['roleName'].contains('Driver')) {
         List<StatelessWidget> pagesToAdd = const [HomeView(), TaskListView()];
         pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
