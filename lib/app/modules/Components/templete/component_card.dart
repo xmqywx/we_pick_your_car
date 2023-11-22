@@ -24,12 +24,18 @@ class ComponentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> imagesFile = <String>[];
+    print('category == Catalytic Converter');
+    print(category == 'Catalytic Converter');
     if (category == 'Catalytic Converter') {
       List cloneData = [];
-      cloneData = json
-          .decode(disassmblingInformation)
-          .map((e) => e.toString())
-          .toList();
+      try {
+        cloneData = json
+            .decode(disassmblingInformation)
+            .map((e) => e.toString())
+            .toList();
+      } catch (e) {
+        cloneData = [];
+      }
       imagesFile = cloneData.cast<String>().toList();
     }
     return Container(

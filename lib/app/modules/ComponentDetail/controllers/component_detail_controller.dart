@@ -18,7 +18,7 @@ class ComponentDetailController extends GetxController {
   RxBool canAddToContainer = false.obs;
   int containerStatus = -1.obs;
   RxString argContainerNumber = ''.obs;
-
+  final formKey = GlobalKey<FormState>();
   RxBool fieldsDisabled = false.obs;
   setFormList() {
     formList.value = [
@@ -184,7 +184,11 @@ class ComponentDetailController extends GetxController {
   }
 
   formSubmit() async {
-    updatePart(data: wreckedDataForm.value);
+    if (formKey.currentState!.validate()) {
+      // 表单验证通过，执行提交逻辑
+      // onSubmit(formValues);
+      updatePart(data: wreckedDataForm.value);
+    }
   }
 
   handleToAddContainer() async {

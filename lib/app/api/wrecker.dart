@@ -45,3 +45,9 @@ Future apiDeleteComponentFromThisContainer(data) async {
   return await httpsClient.post("/admin/car/carWrecked/moveOutFromContainer",
       data: data);
 }
+
+Future checkIsUniqueContainerNumber(data) async {
+  //  {containerNumber: "asdf"}
+  return await httpsClient
+      .post("/admin/container/base/checkIsUniqueContainerNumber", data: data);
+}

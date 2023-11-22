@@ -36,6 +36,7 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                         padding: EdgeInsets.all(ScreenAdapter.width(15)),
                         children: [
                           DynamicForm(
+                            formKey: controller.formKey,
                             formFields: controller.formList.value,
                             formData: controller.wreckedDataForm.value,
                             formDataChange: controller.formDataChange,

@@ -9,11 +9,13 @@ class DynamicForm extends StatelessWidget {
   final List<Map<String, dynamic>> formFields;
   final Map<String, dynamic> formData;
   final void Function(String key, dynamic value) formDataChange;
+  final GlobalKey<FormState> formKey;
   // final void Function(Map<String, dynamic> values) onSubmit;
 
   DynamicForm(
       {required this.formFields,
       // required this.onSubmit,
+      required this.formKey,
       required this.formData,
       required this.formDataChange});
 
@@ -22,6 +24,7 @@ class DynamicForm extends StatelessWidget {
     final formValues = _getInitialFormValues();
 
     return Form(
+      key: formKey,
       child: Column(
         children: [
           ...formFields.map((field) {
@@ -32,6 +35,19 @@ class DynamicForm extends StatelessWidget {
             bool disabled = field['disabled'] ?? false;
             bool hidden = field['hidden'] ?? false;
             String prop = field['prop'] ?? label;
+
+            Future myValidator(value, validatorMsg, validator) async {
+              field['validatorMsg'] = null;
+
+              // 进行异步验证
+              bool isValid = await validator(value);
+
+              if (!isValid) {
+                field['validatorMsg'] = validatorMsg;
+                formKey.currentState!.validate();
+              }
+            }
+
             Function triggeredOnChange = field['triggeredOnChange'] ??
                 (value) {
                   print(value);
@@ -52,7 +68,34 @@ class DynamicForm extends StatelessWidget {
                 ),
                 style: TextStyle(fontFamily: 'Roboto-Medium'),
                 validator: (value) {
-                  // Validation logic
+                  if (field['validatorMsg'] != null) {
+                    String msg = field['validatorMsg'];
+                    field['validatorMsg'] = null;
+                    return msg;
+                  }
+                  // 遍历rules进行校验
+                  for (var rule in rules) {
+                    if (rule.containsKey('require') &&
+                        rule['require'] == true) {
+                      if (formData[prop] == null) {
+                        return rule['message'];
+                      }
+                    }
+                    if (rule.containsKey('min') && rule.containsKey('max')) {
+                      int min = rule['min'];
+                      int max = rule['max'];
+                      if (formData[prop] != null &&
+                          (formData[prop].toString().length < min ||
+                              formData[prop].toString().length > max)) {
+                        return rule['message'];
+                      }
+                    }
+                    if (rule.containsKey('validator')) {
+                      Function validator = rule['validator'];
+                      myValidator(formData[prop], rule['message'], validator);
+                    }
+                  }
+                  return null;
                 },
                 onChanged: (value) {
                   formValues[prop] = value;
@@ -86,7 +129,7 @@ class DynamicForm extends StatelessWidget {
                 ),
               );
             } else if (component['type'] == 'datepicker') {
-              formField = InkWell(
+              Widget datePickerField = InkWell(
                 onTap: () async {
                   DateTime? selectedDate = await showDatePicker(
                     context: context,
@@ -111,6 +154,52 @@ class DynamicForm extends StatelessWidget {
                   ),
                   child: MyParagraph(text: formData[prop] ?? ''),
                 ),
+              );
+
+              formField = FormField<DateTime?>(
+                builder: (FormFieldState<DateTime?> state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      datePickerField,
+                      if (state.errorText != null)
+                        Text(
+                          state.errorText!,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                    ],
+                  );
+                },
+                validator: (value) {
+                  if (field['validatorMsg'] != null) {
+                    String msg = field['validatorMsg'];
+                    field['validatorMsg'] = null;
+                    return msg;
+                  }
+                  // 遍历rules进行校验
+                  for (var rule in rules) {
+                    if (rule.containsKey('require') &&
+                        rule['require'] == true) {
+                      if (formData[prop] == null) {
+                        return rule['message'];
+                      }
+                    }
+                    if (rule.containsKey('min') && rule.containsKey('max')) {
+                      int min = rule['min'];
+                      int max = rule['max'];
+                      if (formData[prop] != null &&
+                          (formData[prop].toString().length < min ||
+                              formData[prop].toString().length > max)) {
+                        return rule['message'];
+                      }
+                    }
+                    if (rule.containsKey('validator')) {
+                      Function validator = rule['validator'];
+                      myValidator(formData[prop], rule['message'], validator);
+                    }
+                  }
+                  return null;
+                },
               );
             } else if (component['type'] == 'checkbox') {
               formField = Row(

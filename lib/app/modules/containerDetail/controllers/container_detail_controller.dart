@@ -14,6 +14,7 @@ class ContainerDetailController extends GetxController {
   RxList<Map<String, dynamic>> formList = RxList<Map<String, dynamic>>([]);
   ScrollController listScrollController = ScrollController();
   RxMap<String, dynamic> containerInfoForm = RxMap<String, dynamic>({});
+  final formKey = GlobalKey<FormState>();
   formDataChange(key, value) {
     containerInfoForm.value[key] = value;
     containerInfoForm.refresh();
@@ -27,6 +28,15 @@ class ContainerDetailController extends GetxController {
       return response.data['data'];
     } else {
       return {};
+    }
+  }
+
+  Future handleApi(data) async {
+    var response = await data['api'](data['payload']);
+    if (response != null && response.data['message'] == 'success') {
+      return response.data['data'];
+    } else {
+      return null;
     }
   }
 
@@ -56,9 +66,29 @@ class ContainerDetailController extends GetxController {
         },
         "rules": [
           {
-            "pattern": r'^[a-zA-Z]+$',
-            "errorMessage": "Name should contain only alphabets",
+            "require": true,
+            "message": "Container number cannot be empty.",
           },
+          if (!isEdit.value)
+            {
+              "validator": (containerNumber) async {
+                var res = await handleApi({
+                  "api": checkIsUniqueContainerNumber,
+                  "payload": {"containerNumber": containerNumber}
+                });
+                print(1111111);
+                if (res != null) {
+                  if (res['isUnique']) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                } else {
+                  return false;
+                }
+              },
+              "message": "The container number has already been used.",
+            },
         ],
       },
       {
@@ -71,8 +101,8 @@ class ContainerDetailController extends GetxController {
         },
         "rules": [
           {
-            "pattern": r'^[a-zA-Z]+$',
-            "errorMessage": "Name should contain only alphabets",
+            "require": true,
+            "message": "Commence date cannot be empty.",
           },
         ],
       },
@@ -106,8 +136,8 @@ class ContainerDetailController extends GetxController {
         },
         "rules": [
           {
-            "pattern": r'^[a-zA-Z]+$',
-            "errorMessage": "Name should contain only alphabets",
+            "require": true,
+            "message": "Seal number cannot be empty.",
           },
         ],
       }
@@ -118,10 +148,12 @@ class ContainerDetailController extends GetxController {
   Future<void> handleRefresh() async {}
 
   formSubmit() async {
-    if (isEdit.value) {
-      updateContainer();
-    } else {
-      addNewContainer();
+    if (formKey.currentState != null && formKey.currentState!.validate()) {
+      if (isEdit.value) {
+        updateContainer();
+      } else {
+        addNewContainer();
+      }
     }
   }
 

@@ -41,6 +41,7 @@ class ContainerDetailView extends GetView<ContainerDetailController> {
                         padding: EdgeInsets.all(ScreenAdapter.width(15)),
                         children: [
                           DynamicForm(
+                            formKey: controller.formKey,
                             formFields: controller.formList.value,
                             formData: controller.containerInfoForm.value,
                             formDataChange: controller.formDataChange,
