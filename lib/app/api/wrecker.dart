@@ -51,3 +51,15 @@ Future checkIsUniqueContainerNumber(data) async {
   return await httpsClient
       .post("/admin/container/base/checkIsUniqueContainerNumber", data: data);
 }
+
+Future checkIsUniqueSealedNumber(data) async {
+  //  {sealNumber: "asdf"}
+  return await httpsClient
+      .post("/admin/container/base/checkIsUniqueSealedNumber", data: data);
+}
+
+Future apiGetWreckerContainerAndComponents(data) async {
+  //  {sealNumber: "asdf"}
+  return await httpsClient.post("/admin/container/base/get_wrecker_container",
+      data: data);
+}

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../modules/ComponentDetail/bindings/component_detail_binding.dart';
 import '../modules/ComponentDetail/views/component_detail_view.dart';
-import '../modules/Components/bindings/components_binding.dart';
+// import '../modules/Components/bindings/components_binding.dart';
 import '../modules/Components/views/components_view.dart';
 import '../modules/Container/views/container_view.dart';
 import '../modules/NoRole/bindings/no_role_binding.dart';
@@ -19,6 +19,8 @@ import '../modules/generate_signature/views/generate_signature_view.dart';
 import '../modules/have_in_hand/bindings/have_in_hand_binding.dart';
 import '../modules/have_in_hand/views/have_in_hand_view.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/job_details/bindings/job_details_binding.dart';
+import '../modules/job_details/views/job_details_view.dart';
 import '../modules/passLogin/bindings/pass_login_binding.dart';
 import '../modules/passLogin/views/pass_login_view.dart';
 import '../modules/personal_center/bindings/personal_center_binding.dart';
@@ -128,15 +130,20 @@ class AppPages {
       page: () => const ContainerDetailView(),
       binding: ContainerDetailBinding(),
     ),
-    GetPage(
-      name: _Paths.COMPONENTS,
-      page: () => const ComponentsView(),
-      binding: ComponentsBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.COMPONENTS,
+    //   page: () => const ComponentsView(),
+    //   binding: ComponentsBinding(),
+    // ),
     GetPage(
       name: _Paths.COMPONENT_DETAIL,
       page: () => const ComponentDetailView(),
       binding: ComponentDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.JOB_DETAILS,
+      page: () => const JobDetailsView(),
+      binding: JobDetailsBinding(),
     ),
   ];
 }

@@ -4,6 +4,7 @@ import '../../../api/wrecker.dart';
 import '../../../models/container_model.dart';
 import 'package:flutter/material.dart';
 import '../../../services/format_date.dart';
+import '../../../services/storage.dart';
 
 class ContainerDetailController extends GetxController {
   //TODO: Implement ContainerDetailController
@@ -48,6 +49,8 @@ class ContainerDetailController extends GetxController {
       "startDeliverTime": containerInfo.value.startDeliverTime,
       "sealNumber": containerInfo.value.sealNumber,
       "status": containerInfo.value.status,
+      "photo": containerInfo.value.photo,
+      "departmentId": containerInfo.value.departmentId,
     };
 
     containerInfo.refresh();
@@ -76,15 +79,14 @@ class ContainerDetailController extends GetxController {
                   "api": checkIsUniqueContainerNumber,
                   "payload": {"containerNumber": containerNumber}
                 });
-                print(1111111);
                 if (res != null) {
                   if (res['isUnique']) {
-                    return true;
+                    return null;
                   } else {
-                    return false;
+                    return "The container number has already been used.";
                   }
                 } else {
-                  return false;
+                  return "Unable to verify!";
                 }
               },
               "message": "The container number has already been used.",
@@ -105,6 +107,14 @@ class ContainerDetailController extends GetxController {
             "message": "Commence date cannot be empty.",
           },
         ],
+      },
+      {
+        "label": "Container photos",
+        "prop": "photo",
+        "value": containerInfo.value.photo ?? '[]',
+        "component": {
+          "type": "uploadImage",
+        },
       },
       {
         "label": "Seal",
@@ -129,28 +139,80 @@ class ContainerDetailController extends GetxController {
         "label": "Seal number",
         "prop": "sealNumber",
         "value": containerInfo.value.sealNumber ?? '',
-        "hidden": !containerInfoForm.value['isSeal'],
+        // "hidden": !containerInfoForm.value['isSeal'],
         "component": {
           "type": "input",
           "placeholder": "Please input the container number.",
         },
         "rules": [
           {
-            "require": true,
-            "message": "Seal number cannot be empty.",
+            "require": containerInfoForm.value['isSeal'],
+            "message": "Seal number cannot be empty when sealed.",
           },
+          if (!isEdit.value)
+            {
+              "validator": (sealNumber) async {
+                var res = await handleApi({
+                  "api": checkIsUniqueSealedNumber,
+                  "payload": {"sealNumber": sealNumber}
+                });
+                if (res != null) {
+                  if (res['isUnique']) {
+                    return null;
+                  } else {
+                    return "The seal number has already been used.";
+                  }
+                } else {
+                  return "Unable to verify!";
+                }
+              },
+              "message": "The seal number has already been used.",
+            },
         ],
       }
     ];
     formList.refresh();
   }
 
-  Future<void> handleRefresh() async {}
+  Future<void> handleRefresh() async {
+    if (isEdit.value) {
+      await setContainerInfo();
+    }
+    containerInfoForm.value["isSeal"] =
+        (containerInfo.value.status == 2) ?? false;
+  }
 
   formSubmit() async {
     if (formKey.currentState != null && formKey.currentState!.validate()) {
       if (isEdit.value) {
-        updateContainer();
+        if (containerInfoForm.value['isSeal'] == true) {
+          var result = await Get.dialog(
+              AlertDialog(
+                title: const Text("Prompt information!"),
+                content: const Text(
+                    "Are you sure you want to seal this container??"),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text("Cancel"),
+                    onPressed: () {
+                      Get.back(result: 'Cancel');
+                    },
+                  ),
+                  TextButton(
+                    child: const Text("Ok"),
+                    onPressed: () {
+                      Get.back(result: 'Ok');
+                    },
+                  )
+                ],
+              ),
+              barrierDismissible: false);
+          if (result == 'Ok') {
+            updateContainer();
+          } else {}
+        } else {
+          updateContainer();
+        }
       } else {
         addNewContainer();
       }
@@ -203,6 +265,12 @@ class ContainerDetailController extends GetxController {
   addNewContainer() async {
     if (containerInfoForm.value['status'] == null) {
       containerInfoForm.value['status'] = 0;
+    }
+    if (containerInfoForm.value['departmentId'] == null) {
+      final userinfo = await Storage.getData('userinfo');
+
+      containerInfoForm.value['departmentId'] = userinfo['departmentId'];
+      containerInfoForm.value['createBy'] = userinfo['id'];
     }
     var response = await apiAddContainer(containerInfoForm.value);
     if (response != null && response.data['message'] == 'success') {

@@ -140,9 +140,6 @@ class ComponentDetailController extends GetxController {
   setComponentDetail() async {
     if (arguments.value['componentId'] != null) {
       var response = await getComponentDetail(arguments.value['componentId']);
-      print('===========res');
-      print(arguments.value['componentId']);
-      print('===========res');
       wreckedData.value = Component.fromJson(response);
       containerStatus = wreckedData.value.containerStatus ?? -1;
       wreckedDataForm.value = {

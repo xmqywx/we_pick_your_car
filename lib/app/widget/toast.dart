@@ -1,6 +1,8 @@
+import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../color/colors.dart';
+import '../text/paragraph.dart';
 
 const toStatus = {
   '1': AppColors.logoBgc,
@@ -61,13 +63,13 @@ class CustomSnackbar extends StatelessWidget {
                       ),
                     ),
                   if (title != null) SizedBox(height: 8.0),
-                  Text(
-                    message,
-                    style: TextStyle(
-                      fontFamily: "Roboto-Medium",
-                      fontSize: 14.0,
+                  Container(
+                    width: ScreenAdapter.width(800),
+                    child: MyParagraph(
+                      text: message,
+                      fontSize: 55,
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -90,12 +92,33 @@ void showCustomSnackbar({
   Get.snackbar('', '',
       duration: duration,
       // snackPosition: SnackPosition.BOTTOM,
+      dismissDirection: DismissDirection.horizontal,
       backgroundColor: Colors.transparent,
       messageText: CustomSnackbar(
         title: title,
         message: message,
         status: status,
       ),
+      animationDuration: Duration(milliseconds: 200),
+      barBlur: 0);
+}
+
+void showCustomPrompt({
+  required Widget tipWidget,
+  Duration? duration = const Duration(seconds: 2),
+}) {
+  if (Get.isSnackbarOpen) {
+    Get.back();
+    Get.closeAllSnackbars();
+  }
+  // Get.closeAllSnackbars();
+  Get.snackbar('', '',
+      duration: duration,
+      margin: EdgeInsets.only(bottom: ScreenAdapter.width(200)),
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.transparent,
+      messageText: tipWidget,
+      dismissDirection: DismissDirection.horizontal,
       animationDuration: Duration(milliseconds: 200),
       barBlur: 0);
 }

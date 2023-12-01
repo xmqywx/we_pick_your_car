@@ -10,24 +10,36 @@ class PretreatmentController extends GetxController {
   final TabsController myController = Get.find<TabsController>();
 
   final IsLoadingController isLoadingController =
-  Get.find<IsLoadingController>();
+      Get.find<IsLoadingController>();
 
   final count = 0.obs;
   RxList<Widget> initListView() {
     RxList<Widget> list = RxList<Widget>();
     myController.jobListPageData.forEach((value) {
       list.addAll([
-        CustomCard(
-          pickupAddress: value['pickupAddress'] ?? "--",
-          expectedDate: value['expectedDate'] ?? "--",
-          engine: value['engine'] ?? "--",
-          image: value['image'] ?? "--",
-          name: value['name'] ?? "--",
-          model: value['model'] ?? "--",
-          pickupAddressState: value['pickupAddressState'] ?? "--",
-          status: value['status'],
-          arguments: value,
-        ),
+        InkWell(
+          child: CustomCard(
+            pickupAddress: value['pickupAddress'] ?? "--",
+            expectedDate: value['expectedDate'] ?? "--",
+            engine: value['engine'] ?? "--",
+            image: value['image'] ?? "--",
+            name: value['name'] ?? "--",
+            model: value['model'] ?? "--",
+            pickupAddressState: value['pickupAddressState'] ?? "--",
+            status: value['status'],
+            arguments: value,
+          ),
+          onTap: () {
+            print(1111);
+            Get.toNamed(
+              "/job-details",
+              arguments: {
+                ...value,
+                "refresh": handleRefresh,
+              },
+            );
+          },
+        )
       ]);
     });
     return list;

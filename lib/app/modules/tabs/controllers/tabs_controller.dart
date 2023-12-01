@@ -7,6 +7,7 @@ import '../../task_list/views/task_list_view.dart';
 import '../../user/views/user_view.dart';
 // import '../../Wrecking/views/wrecking_view.dart';
 import '../../Container/views/container_view.dart';
+import '../../Components/views/components_view.dart';
 import '../../../services/https_client.dart';
 import '../../../services/storage.dart';
 import '../../../services/keep_alive_wrapper.dart';
@@ -149,7 +150,7 @@ class TabsController extends GetxController {
       List<Widget> pagesCopy = [];
       // 如果添加Wrecker角色的话
       if (userinfo['roleName'].contains('Container')) {
-        List<StatelessWidget> pagesToAdd = const [ContainerView()];
+        List<StatelessWidget> pagesToAdd = const [ComponentsView()];
         pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
 
         bottomNavigationBarItems.value = [

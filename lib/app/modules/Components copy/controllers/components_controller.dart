@@ -6,9 +6,6 @@ import '../templete/component_card.dart';
 import 'package:scan/scan.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:core';
-import '../../../services/storage.dart';
-import '../../../services/screen_adapter.dart';
-import '../../../text/paragraph.dart';
 
 class ComponentsController extends GetxController {
   //TODO: Implement ComponentsController
@@ -16,7 +13,6 @@ class ComponentsController extends GetxController {
   RxInt totalPage = 1.obs;
   RxList componentList = [].obs;
   RxBool canLoadMore = false.obs;
-  RxBool isExist = false.obs;
   RxMap arguments = {}.obs;
   RxString containerNumber = ''.obs;
 
@@ -33,104 +29,18 @@ class ComponentsController extends GetxController {
 
   RxList<Widget> initListView() {
     RxList<Widget> list = RxList<Widget>();
-    List<String> titles = [];
-    List<Map<String, dynamic>> handleData = [];
-    componentList.value.forEach((e) {
-      if(e["disassemblyCategory"] != 'Catalytic Converter') {
-        int existingIndex = handleData.indexWhere((item) =>
-          item['disassmblingInformation'] == e['disassmblingInformation']);
-      if (existingIndex != -1) {
-        handleData[existingIndex]['components'].add({
-          "disassemblyNumber": e["disassemblyNumber"],
-          "disassemblyCategory": e["disassemblyCategory"],
-          "disassemblyDescription":
-              """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                  "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-        });
-      } else {
-        handleData.addAll([
-          {
-            "disassmblingInformation": e["disassmblingInformation"],
-            "disassemblyCategory": e["disassemblyCategory"],
-            "components": [
-              {
-                "disassemblyNumber": e["disassemblyNumber"],
-                "disassemblyCategory": e["disassemblyCategory"],
-                "disassemblyDescription":
-                    """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${(e['catalyticConverterName'] != null && e['catalyticConverterName'] != '') ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                        "${(e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '') ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-              }
-            ]
-          }
-        ]);
-      }
-      } else {
-        int existingIndex = handleData.indexWhere((item) =>
-          item['disassemblyCategory'] == 'Catalytic Converter');
-        if(existingIndex != -1) {
-          handleData[existingIndex]['components'].add({
-          "disassemblyNumber": e["disassemblyNumber"],
-          "disassemblyCategory": e["disassemblyCategory"],
-          "disassemblyDescription":
-              """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                  "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-        });
-        } else {
-          handleData.addAll([
-          {
-            "disassmblingInformation": e["disassmblingInformation"],
-            "disassemblyCategory": e["disassemblyCategory"],
-            "components": [
-              {
-                "disassemblyNumber": e["disassemblyNumber"],
-                "disassemblyCategory": e["disassemblyCategory"],
-                "disassemblyDescription":
-                    """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${(e['catalyticConverterName'] != null && e['catalyticConverterName'] != '') ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                        "${(e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '') ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-              }
-            ]
-          }
-        ]);
-        }
-      }
-    });
-
-    handleData.forEach((value) {
-      List<Widget> components = List<Widget>.from(value['components'].map((c) {
-        return InkWell(
-          child: ComponentCard(
-            disassmblingInformation: c['disassmblingInformation'] ?? '',
-            containerNumber: c['containerNumber'] ?? '',
-            disassemblyNumber: c['disassemblyNumber'] ?? '',
-            disassemblyDescription: c["disassemblyDescription"] ?? '',
-            category: c['disassemblyCategory'],
-          ),
-          onTap: () => Get.toNamed("/component-detail", arguments: {
-            "componentId": c['disassemblyNumber'],
-            "refresh": handleRefresh,
-          }),
-        );
-      }));
+    componentList.forEach((value) {
       list.addAll([
-        Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                  vertical: ScreenAdapter.height(15),
-                  horizontal: ScreenAdapter.width(15)),
-              child: MyParagraph(
-                align: TextAlign.left,
-                text:
-                    "${value['disassemblyCategory'] == 'Catalytic Converter' ? 'Catalytic Converter' : value['disassmblingInformation'] ?? '----'}",
-                fontSize: 55,
-              ),
-            ),
-            Column(
-              children: components,
-            )
-          ],
-        )
+        InkWell(
+            child: ComponentCard(
+                disassmblingInformation: value['disassmblingInformation'] ?? '',
+                containerNumber: value['containerNumber'] ?? '',
+                disassemblyNumber: value['disassemblyNumber'],
+                category: value['disassemblyCategory']),
+            onTap: () => Get.toNamed("/component-detail", arguments: {
+                  "componentId": value['disassemblyNumber'],
+                  "refresh": handleRefresh
+                }))
       ]);
     });
     return list;
@@ -140,34 +50,28 @@ class ComponentsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    handleRefresh();
+    arguments.value = Get.arguments;
+    containerNumber.value =
+        arguments.value['containerValue']['containerNumber'];
+    await toRefresh();
     scrollListener();
   }
 
   Future getContainerInfo() async {
-    final userinfo = await Storage.getData('userinfo');
-
-    var response = await apiGetWreckerContainerAndComponents(
-        {"departmentId": userinfo['departmentId'], "createBy": userinfo['id']});
+    var response =
+        await apiGetContainerInfo(id: arguments.value['containerValue']['id']);
+    print(response);
     if (response != null && response.data['message'] == 'success') {
-      isExist.value = response.data['data']['isExist'];
-      if (isExist.value) {
-        containerNumber.value =
-            response.data['data']['containerDetail']['containerNumber'];
-        return response.data['data']['containerDetail'];
-      } else {
-        containerNumber.value = "Container";
-        return null;
-      }
+      return response.data['data'];
     } else {
-      return null;
+      return arguments.value['containerValue'];
     }
   }
 
   getComponentPageByContainerId() async {
     var response = await apiGetComponentPageByContainerId({
       "page": currentPage.value,
-      "size": 200,
+      "size": 10,
       "containerNumber": containerNumber.value
     });
     if (response != null && response.data['message'] == 'success') {
@@ -186,13 +90,13 @@ class ComponentsController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
-    final res = await getContainerInfo();
-    if (res != null) {
-      arguments.value['containerValue'] = res;
-      currentPage.value = 1;
-      toRefresh();
-      print(arguments.value['containerValue']);
+    if (arguments.value['refresh'] != null) {
+      arguments.value['refresh']();
     }
+    currentPage.value = 1;
+    toRefresh();
+    arguments.value['containerValue'] = await getContainerInfo();
+    print(arguments.value['containerValue']);
   }
 
   Future<void> handleToLoadMore() async {
@@ -220,9 +124,9 @@ class ComponentsController extends GetxController {
     });
     if (response != null && response.data['message'] == 'success') {
       Get.back();
-      // if (arguments.value['refresh'] != null) {
-      //   arguments.value['refresh']();
-      // }
+      if (arguments.value['refresh'] != null) {
+        arguments.value['refresh']();
+      }
       showCustomSnackbar(message: 'Successfully deleted.', status: '1');
     } else {
       showCustomSnackbar(

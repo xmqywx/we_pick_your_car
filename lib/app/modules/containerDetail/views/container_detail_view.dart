@@ -37,15 +37,24 @@ class ContainerDetailView extends GetView<ContainerDetailController> {
                 child: RefreshIndicator(
                     onRefresh: controller.handleRefresh,
                     child: ListView(
-                        controller: controller.listScrollController,
+                        // controller: controller.listScrollController,
                         padding: EdgeInsets.all(ScreenAdapter.width(15)),
                         children: [
-                          DynamicForm(
-                            formKey: controller.formKey,
-                            formFields: controller.formList.value,
-                            formData: controller.containerInfoForm.value,
-                            formDataChange: controller.formDataChange,
-                          ),
+                          CardContainer(
+                              crossAlign: CrossAxisAlignment.start,
+                              padding: EdgeInsets.fromLTRB(
+                                  ScreenAdapter.width(20),
+                                  ScreenAdapter.width(10),
+                                  ScreenAdapter.width(20),
+                                  ScreenAdapter.width(35)),
+                              children: [
+                                DynamicForm(
+                                  formKey: controller.formKey,
+                                  formFields: controller.formList.value,
+                                  formData: controller.containerInfoForm.value,
+                                  formDataChange: controller.formDataChange,
+                                ),
+                              ]),
                           Row(
                             // mainAxisAlignment: MainAxisAlignment.end,
                             children: [

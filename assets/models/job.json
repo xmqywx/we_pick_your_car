@@ -1,0 +1,17 @@
+{
+    "id": 693,
+    "createTime": "2023-11-22 11:45:34",
+    "updateTime": "2023-11-22 11:49:31",
+    "orderID": 687,
+    "driverID": 63,
+    "yardID": null,
+    "status": 1,
+    "schedulerStart": "1700626500000",
+    "schedulerEnd": "1700639100000",
+    "start": null,
+    "end": null,
+    "isAccept": false,
+    "note": null,
+    "color": "#3b5bc2",
+    "departmentId": "39"
+}

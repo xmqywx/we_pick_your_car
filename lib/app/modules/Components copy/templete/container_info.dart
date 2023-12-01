@@ -5,8 +5,6 @@ import '../../../templete/files_map.dart';
 import '../../../const/wrecker.dart';
 import '../../../widget/passButton.dart';
 import '../../../color/colors.dart';
-import '../../../widget/photo_upload.dart';
-import 'dart:convert';
 
 class ContainerInfo extends StatelessWidget {
   final Map<dynamic, dynamic> info;
@@ -22,44 +20,15 @@ class ContainerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map? containerStatusMap =
-        containerStatus[info['status']] ?? {"fields": [], "op": []};
+    Map? containerStatusMap = containerStatus[info['status']];
     List<Widget> _containerFields() {
-      return containerStatusMap?['fields'].map<Widget>((data) {
-        if (data['type'] != null && data['type'] == 'img') {
-          List cloneData = [];
-          List<String> imagesFile = <String>[];
-          try {
-            cloneData = json
-                .decode(info[data['prop']])
-                .map((e) => e.toString())
-                .toList();
-          } catch (e) {
-            cloneData = [];
-          }
-          imagesFile = cloneData.cast<String>().toList();
-          return Column(
-            children: [
-              FilesMap(
+      return containerStatusMap?['fields']
+          .map<Widget>((data) => FilesMap(
                 attribute: data['label'],
                 value: info[data['prop']],
                 key: key,
-                hasValue: false,
-              ),
-              ImagePickerWidget(
-                onImagesChanged: (list) {},
-                images: imagesFile,
-                isEditable: false,
-              )
-            ],
-          );
-        }
-        return FilesMap(
-          attribute: data['label'],
-          value: info[data['prop']],
-          key: key,
-        );
-      }).toList();
+              ))
+          .toList();
     }
 
     return CardContainer(

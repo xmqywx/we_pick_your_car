@@ -35,12 +35,21 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                     child: ListView(
                         padding: EdgeInsets.all(ScreenAdapter.width(15)),
                         children: [
-                          DynamicForm(
-                            formKey: controller.formKey,
-                            formFields: controller.formList.value,
-                            formData: controller.wreckedDataForm.value,
-                            formDataChange: controller.formDataChange,
-                          ),
+                          CardContainer(
+                              crossAlign: CrossAxisAlignment.start,
+                              padding: EdgeInsets.fromLTRB(
+                                  ScreenAdapter.width(20),
+                                  ScreenAdapter.width(10),
+                                  ScreenAdapter.width(20),
+                                  ScreenAdapter.width(35)),
+                              children: [
+                                DynamicForm(
+                                  formKey: controller.formKey,
+                                  formFields: controller.formList.value,
+                                  formData: controller.wreckedDataForm.value,
+                                  formDataChange: controller.formDataChange,
+                                ),
+                              ]),
                           Column(
                             // mainAxisAlignment: MainAxisAlignment.end,
                             children: [

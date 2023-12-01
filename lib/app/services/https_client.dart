@@ -101,9 +101,12 @@ class HttpsClient {
   Future post(String apiUrl, {Map? data}) async {
     try {
       var response = await dio.post(apiUrl, data: data);
+      print(response);
       return response;
     } catch (e) {
+      print("======================= dio");
       print(e);
+      print("======================= dio");
       return null;
     }
   }

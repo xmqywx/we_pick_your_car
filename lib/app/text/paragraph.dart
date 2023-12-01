@@ -11,6 +11,7 @@ class MyParagraph extends StatelessWidget {
   Color color;
   TextAlign align;
   FontWeight fontWeight;
+  TextDecoration textDecoration;
   MyParagraph(
       {super.key,
       required this.text,
@@ -18,18 +19,21 @@ class MyParagraph extends StatelessWidget {
       this.fontSize = 45,
       this.color = AppColors.themeTextColor1,
       this.align = TextAlign.left,
-      this.fontWeight = FontWeight.normal});
+      this.fontWeight = FontWeight.normal,
+      this.textDecoration = TextDecoration.none});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       textAlign: align,
+      softWrap: true,
       style: TextStyle(
           fontFamily: fontFamily,
           fontSize: ScreenAdapter.fontSize(fontSize),
           color: color,
-          fontWeight: fontWeight),
+          fontWeight: fontWeight,
+          decoration: textDecoration),
     );
   }
 }

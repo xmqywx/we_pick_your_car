@@ -34,12 +34,14 @@ class AppColors {
   static const Color themeTextColor1 = Color(0xff000000);
   static const Color themeTextColor2 = Color(0xff9BA4BD);
   static const Color themeTextColor3 = Color(0xff919BB6);
+  static const Color themeTextColor4 = Color(0xff666666);
   static const Color themeBtnColor = Color(0xff242A39);
   static const Color themeBorderColor1 = Color(0xffF1ECEF);
   static const Color white = Color(0xffffffff);
   static const Color outSideText = Color(0xffC2C9DD);
   static const Color verDrvider = Color(0xffF2F2F2);
   static const Color logob = Color(0xfffbe39f);
+  static const Color divider1 = Color(0xff9e9e9e);
 
   static const MaterialColor primarySwatch = MaterialColor(
     0xfffdc22e,

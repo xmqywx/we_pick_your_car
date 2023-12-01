@@ -11,7 +11,6 @@ import 'dart:convert';
 class ComponentCard extends StatelessWidget {
   final String containerNumber;
   final String disassmblingInformation;
-  final String disassemblyDescription;
   final String disassemblyNumber;
   final String category;
   const ComponentCard({
@@ -19,14 +18,14 @@ class ComponentCard extends StatelessWidget {
     required this.containerNumber,
     required this.disassmblingInformation,
     required this.category,
-    required this.disassemblyDescription,
     required this.disassemblyNumber,
   });
 
   @override
   Widget build(BuildContext context) {
     List<String> imagesFile = <String>[];
-
+    print('category == Catalytic Converter');
+    print(category == 'Catalytic Converter');
     if (category == 'Catalytic Converter') {
       List cloneData = [];
       try {
@@ -48,15 +47,12 @@ class ComponentCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: MyParagraph(
-                    text: disassemblyDescription,
-                    fontSize: 55,
-                  ),
+              Container(
+                child: MyParagraph(
+                  text: disassemblyNumber,
+                  fontSize: 55,
                 ),
-              )
+              ),
               // MyParagraph(
               //   text: statusMap?['label'] ?? '-error-',
               //   color: statusMap?['color'] ?? AppColors.redColor,
@@ -79,13 +75,10 @@ class ComponentCard extends StatelessWidget {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        child: MyParagraph(
-                          text: disassemblyNumber,
-                          fontSize: 40,
-                        ),
+                    Container(
+                      child: MyParagraph(
+                        text: disassmblingInformation,
+                        fontSize: 40,
                       ),
                     ),
                     Icon(

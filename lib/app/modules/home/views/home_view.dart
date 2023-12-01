@@ -98,7 +98,7 @@ class HomeView extends GetView<HomeController> {
                 margin: EdgeInsets.only(top: ScreenAdapter.height(185)),
                 height: ScreenAdapter.height(1975),
                 width: ScreenAdapter.width(1080),
-                child: TableComplexExample(),
+                child: TableComplexExample(refresh: controller.handleRefresh),
               ),
               controller.changFlag.value ? Text("") : Text("")
             ],
@@ -240,18 +240,9 @@ class HomeView extends GetView<HomeController> {
             backgroundColor: AppColors.background,
             body: Obx(
               () {
-                print(
-                    "------------>${controller.isLoadingController.isLoading.value}");
                 return Stack(
                   children: [
                     _appBar(),
-
-                    /// 架构感觉有问题，你这个的加载被其他的请求也控制
-                    /// 应该是比如我首页请求应该控制首页的
-                    /// 你这个就相当于全局都影响
-                    /// 理解我的意思吗？
-                    /// 理解的，但是 感觉没啥，是变量引起的？
-                    /// 是的，照理说应该是一对一，网络请求那边也控制再这里，而且请求又快，懵逼，无法下手
                     !controller.isLoadingController.isLoading.value
                         ? (controller.userController.isLogin.value
                             ? _HomeContent()

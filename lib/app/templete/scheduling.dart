@@ -16,7 +16,8 @@ import '../widget/imgErrorBuild.dart';
 
 // TableBasicsExample()
 class TableComplexExample extends StatefulWidget {
-  const TableComplexExample({super.key});
+  final refresh;
+  const TableComplexExample({super.key, required this.refresh});
 
   @override
   TableComplexExampleState createState() => TableComplexExampleState();
@@ -361,8 +362,15 @@ class TableComplexExampleState extends State<TableComplexExample> {
                             ),
                           ),
                           onTap: () {
-                            Get.toNamed("/pretreatment-detail",
-                                arguments: jobDetail);
+                            // Get.toNamed("/pretreatment-detail",
+                            //     arguments: jobDetail);
+                            Get.toNamed(
+                              "/job-details",
+                              arguments: {
+                                ...jobDetail,
+                                "refresh": widget.refresh,
+                              },
+                            );
                           },
                         ));
                   },

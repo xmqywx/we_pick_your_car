@@ -20,9 +20,10 @@ abstract class Routes {
   static const NO_ROLE = _Paths.NO_ROLE;
   static const CONTAINER = _Paths.CONTAINER;
   static const CONTAINER_DETAIL = _Paths.CONTAINER_DETAIL;
-  static const COMPONENTS = _Paths.COMPONENTS;
+  // static const COMPONENTS = _Paths.COMPONENTS;
   static const COMPONENT_DETAIL = _Paths.COMPONENT_DETAIL;
   static const SCAN = _Paths.SCAN;
+  static const JOB_DETAILS = _Paths.JOB_DETAILS;
 }
 
 abstract class _Paths {
@@ -44,7 +45,8 @@ abstract class _Paths {
   static const NO_ROLE = '/no-role';
   static const CONTAINER = '/container';
   static const CONTAINER_DETAIL = '/container-detail';
-  static const COMPONENTS = '/components';
+  // static const COMPONENTS = '/components';
   static const COMPONENT_DETAIL = '/component-detail';
   static const SCAN = '/scan';
+  static const JOB_DETAILS = '/job-details';
 }

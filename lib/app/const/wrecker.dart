@@ -7,6 +7,8 @@ Map<int, Map<String, dynamic>> containerStatus = {
     "fields": [
       {"label": "Container No.", "prop": "containerNumber"},
       {"label": "Commence date", "prop": "startDeliverTime"},
+      {"label": "Seal Number", "prop": "sealNumber"},
+      {"label": "Container photos", "prop": "photo", "type": "img"},
     ],
     "op": ['edit', 'delete', 'add']
   },
@@ -16,6 +18,8 @@ Map<int, Map<String, dynamic>> containerStatus = {
     "fields": [
       {"label": "Container No.", "prop": "containerNumber"},
       {"label": "Commence date", "prop": "startDeliverTime"},
+      {"label": "Seal Number", "prop": "sealNumber"},
+      {"label": "Container photos", "prop": "photo", "type": "img"},
     ],
     "op": ['edit', 'add']
   },
@@ -27,6 +31,7 @@ Map<int, Map<String, dynamic>> containerStatus = {
       {"label": "Commence date", "prop": "startDeliverTime"},
       {"label": "Seal Number", "prop": "sealNumber"},
       {"label": "Seal Date", "prop": "sealDate"},
+      {"label": "Container photos", "prop": "photo", "type": "img"},
     ],
     "op": []
   }

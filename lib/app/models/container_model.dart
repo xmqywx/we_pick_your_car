@@ -7,16 +7,21 @@ class ContainerModel {
   String? startDeliverTime;
   int? status;
   String? sealDate;
+  String? photo;
+  String? departmentId;
 
-  ContainerModel(
-      {this.id,
-      this.createTime,
-      this.updateTime,
-      this.containerNumber,
-      this.sealNumber,
-      this.startDeliverTime,
-      this.status,
-      this.sealDate});
+  ContainerModel({
+    this.id,
+    this.createTime,
+    this.updateTime,
+    this.containerNumber,
+    this.sealNumber,
+    this.startDeliverTime,
+    this.status,
+    this.sealDate,
+    this.photo,
+    this.departmentId,
+  });
 
   ContainerModel.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
@@ -27,6 +32,8 @@ class ContainerModel {
     startDeliverTime = json['startDeliverTime'];
     status = json['status'];
     sealDate = json['sealDate'];
+    photo = json['photo'];
+    departmentId = json['departmentId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +46,8 @@ class ContainerModel {
     data['startDeliverTime'] = startDeliverTime;
     data['status'] = status;
     data['sealDate'] = sealDate;
+    data['photo'] = photo;
+    data['departmentId'] = departmentId;
     return data;
   }
 }

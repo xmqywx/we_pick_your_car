@@ -6,7 +6,6 @@ import 'app/routes/app_pages.dart';
 import 'package:flutter/services.dart';
 import './app/color/colors.dart';
 
-//// 你这个请求的数据多了，都用的一个变量控制，来都来不及
 void main() {
   //配置透明的状态栏
   SystemUiOverlayStyle systemUiOverlayStyle =

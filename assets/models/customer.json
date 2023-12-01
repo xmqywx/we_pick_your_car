@@ -1,0 +1,18 @@
+{
+    "id": 50,
+    "createTime": "2023-08-16 15:08:10",
+    "updateTime": "2023-09-14 10:58:02",
+    "firstName": "Laurent Liu",
+    "yardID": null,
+    "surname": null,
+    "emailAddress": "laurentliu0918@gmail.com",
+    "phoneNumber": "46546561",
+    "secNumber": "",
+    "address": "sss",
+    "licence": "",
+    "departmentId": "39",
+    "isDel": false,
+    "abn": "",
+    "workLocation": "",
+    "car": []
+}

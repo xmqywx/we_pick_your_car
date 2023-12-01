@@ -1,3 +1,4 @@
+import 'package:car_wrecker/app/color/colors.dart';
 import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:car_wrecker/app/text/paragraph.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class DynamicForm extends StatelessWidget {
   final Map<String, dynamic> formData;
   final void Function(String key, dynamic value) formDataChange;
   final GlobalKey<FormState> formKey;
+
   // final void Function(Map<String, dynamic> values) onSubmit;
 
   DynamicForm(
@@ -28,26 +30,38 @@ class DynamicForm extends StatelessWidget {
       child: Column(
         children: [
           ...formFields.map((field) {
-            String label = field['label'];
-            dynamic value = field['value'];
-            Map<String, dynamic> component = field['component'];
-            List<dynamic> rules = field['rules'];
+            String label = field['label'] ?? ''; // string
+            dynamic value = field['value'] ?? ''; // any
+            Map<String, dynamic> component =
+                field['component'] ?? {}; // type,fieldType,
+            List<dynamic> rules = field['rules'] ?? [];
             bool disabled = field['disabled'] ?? false;
             bool hidden = field['hidden'] ?? false;
             String prop = field['prop'] ?? label;
-
-            Future myValidator(value, validatorMsg, validator) async {
+            Widget fieldTop = field['fieldTop'] ?? const SizedBox();
+            Widget fieldBottom = field['fieldBottom'] ?? const SizedBox();
+            Widget widget = field['widget'] ?? const SizedBox();
+            var fieldKey = field['fieldKey'] ?? ObjectKey(value);
+            Future myValidator(value, validator, fieldKey) async {
               field['validatorMsg'] = null;
 
               // 进行异步验证
-              bool isValid = await validator(value);
+              String? errMsg = await validator(value);
 
-              if (!isValid) {
-                field['validatorMsg'] = validatorMsg;
-                formKey.currentState!.validate();
+              if (errMsg != null) {
+                field['validatorMsg'] = errMsg;
+                if (fieldKey is GlobalKey<FormFieldState>) {
+                  fieldKey.currentState!.validate();
+                } else {
+                  formKey.currentState!.validate();
+                }
               }
             }
 
+            AutovalidateMode trigger = AutovalidateMode.disabled;
+            if (component['trigger'] == 'change') {
+              trigger = AutovalidateMode.onUserInteraction;
+            }
             Function triggeredOnChange = field['triggeredOnChange'] ??
                 (value) {
                   print(value);
@@ -57,51 +71,100 @@ class DynamicForm extends StatelessWidget {
             }
 
             Widget formField;
+            if (component['type'] == 'widget') {
+              formField = widget;
+            } else if (component['type'] == 'input') {
+              formField = Column(
+                children: [
+                  fieldTop,
+                  TextFormField(
+                    autovalidateMode: trigger,
+                    initialValue: component['fieldType'] == 'number'
+                        ? (value == null ? '' : value.toString())
+                        : value,
+                    enabled: !disabled,
+                    key: fieldKey,
+                    // key: field1Key,
+                    keyboardType: component['fieldType'] == 'number'
+                        ? TextInputType.number
+                        : TextInputType.text,
+                    decoration: InputDecoration(
+                      labelText: label,
+                      hintText: component['placeholder'],
+                    ),
+                    style: TextStyle(fontFamily: 'Roboto-Medium'),
+                    validator: (value) {
+                      if (field['validatorMsg'] != null) {
+                        String msg = field['validatorMsg'];
+                        field['validatorMsg'] = null;
+                        return msg;
+                      }
 
-            if (component['type'] == 'input') {
-              formField = TextFormField(
-                initialValue: value,
-                enabled: !disabled,
-                decoration: InputDecoration(
-                  labelText: label,
-                  hintText: component['placeholder'],
-                ),
-                style: TextStyle(fontFamily: 'Roboto-Medium'),
-                validator: (value) {
-                  if (field['validatorMsg'] != null) {
-                    String msg = field['validatorMsg'];
-                    field['validatorMsg'] = null;
-                    return msg;
-                  }
-                  // 遍历rules进行校验
-                  for (var rule in rules) {
-                    if (rule.containsKey('require') &&
-                        rule['require'] == true) {
-                      if (formData[prop] == null) {
-                        return rule['message'];
+                      // 遍历rules进行校验
+                      for (var rule in rules) {
+                        // require pattern min,max validator
+                        if (rule.containsKey('require') &&
+                            rule['require'] == true) {
+                          if (formData[prop] == '' || formData[prop] == null) {
+                            return rule['message'];
+                          }
+                          if (component['fieldType'] == 'number') {
+                            if (formData[prop] == null) {
+                              return rule['message'];
+                            }
+                          }
+                        }
+                        if (rule.containsKey('min') &&
+                            rule.containsKey('max')) {
+                          int min = rule['min'];
+                          int max = rule['max'];
+                          if (formData[prop] != null &&
+                              (formData[prop].toString().length < min ||
+                                  formData[prop].toString().length > max)) {
+                            return rule['message'];
+                          }
+                        }
+                        if (rule.containsKey('pattern')) {
+                          if (!RegExp(rule['pattern'])
+                              .hasMatch(formData[prop].toString())) {
+                            return rule['message'];
+                          }
+                        }
+                        if (rule.containsKey('judge')) {
+                          if (rule['judge']) {
+                            return rule['message'];
+                          }
+                        }
+                        if (rule.containsKey('validator')) {
+                          Function validator = rule['validator'];
+                          myValidator(formData[prop], validator, fieldKey);
+                        }
                       }
-                    }
-                    if (rule.containsKey('min') && rule.containsKey('max')) {
-                      int min = rule['min'];
-                      int max = rule['max'];
-                      if (formData[prop] != null &&
-                          (formData[prop].toString().length < min ||
-                              formData[prop].toString().length > max)) {
-                        return rule['message'];
+                      return null;
+                    },
+                    onChanged: (value) {
+                      if (component['fieldType'] == 'number') {
+                        if (value == '') {
+                          formValues[prop] = null;
+                          formDataChange(prop, null);
+                        } else {
+                          if (double.tryParse(value) == null) {
+                            field['validatorMsg'] =
+                                'Please enter the correct number.';
+                          }
+                          formValues[prop] = double.parse(value);
+                          formDataChange(prop, double.parse(value));
+                        }
+                      } else {
+                        formValues[prop] = value;
+                        formDataChange(prop, value);
                       }
-                    }
-                    if (rule.containsKey('validator')) {
-                      Function validator = rule['validator'];
-                      myValidator(formData[prop], rule['message'], validator);
-                    }
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  formValues[prop] = value;
-                  formDataChange(prop, value);
-                  triggeredOnChange(value);
-                },
+
+                      triggeredOnChange(value);
+                    },
+                  ),
+                  fieldBottom
+                ],
               );
             } else if (component['type'] == 'select') {
               List<Map<String, dynamic>> options = component['options'];
@@ -109,29 +172,35 @@ class DynamicForm extends StatelessWidget {
               formField = AbsorbPointer(
                 absorbing: disabled,
                 child: DropdownButtonFormField<String>(
-                  value: value,
+                  value: formData[prop] == '' ? null : formData[prop],
                   onChanged: disabled
                       ? null
                       : (newValue) {
                           formValues[prop] = newValue;
-                          formDataChange(prop, value);
-                          triggeredOnChange(value);
+                          formDataChange(prop, formValues[prop]);
+                          triggeredOnChange(newValue);
                         },
                   items: options.map((option) {
                     return DropdownMenuItem<String>(
                       value: option['value'],
-                      child: Text(option['label']),
+                      child: MyParagraph(
+                        text: option['label'],
+                        fontSize: 55,
+                      ),
                     );
                   }).toList(),
                   decoration: InputDecoration(
                     labelText: label,
+                    labelStyle: TextStyle(fontFamily: 'Roboto-Medium'),
+                    hintText: component['placeholder'],
+                    hintStyle: TextStyle(fontFamily: 'Roboto-Medium'),
                   ),
                 ),
               );
             } else if (component['type'] == 'datepicker') {
               Widget datePickerField = InkWell(
                 onTap: () async {
-                  DateTime? selectedDate = await showDatePicker(
+                  await showDatePicker(
                     context: context,
                     initialDate: handleParse(date: formData[prop]),
                     firstDate: DateTime(2000),
@@ -195,7 +264,7 @@ class DynamicForm extends StatelessWidget {
                     }
                     if (rule.containsKey('validator')) {
                       Function validator = rule['validator'];
-                      myValidator(formData[prop], rule['message'], validator);
+                      myValidator(formData[prop], validator, formKey);
                     }
                   }
                   return null;
@@ -219,7 +288,7 @@ class DynamicForm extends StatelessWidget {
                             triggeredOnChange(value);
                           },
                   ),
-                  SizedBox(width: 8), // 设置合适的间距
+                  const SizedBox(width: 8), // 设置合适的间距
                 ],
               );
             } else if (component['type'] == 'textarea') {
@@ -232,10 +301,10 @@ class DynamicForm extends StatelessWidget {
                   labelText: label,
                   hintText: component['placeholder'],
                 ),
-                style: TextStyle(fontFamily: 'Roboto-Medium'),
-                validator: (value) {
-                  // Validation logic
-                },
+                style: const TextStyle(fontFamily: 'Roboto-Medium'),
+                // validator: (value) {
+                //   // Validation logic
+                // },
                 onChanged: (value) {
                   formValues[prop] = value;
                   formDataChange(prop, value);
@@ -245,12 +314,16 @@ class DynamicForm extends StatelessWidget {
             } else if (component['type'] == 'uploadImage') {
               List<String> imagesFile;
               if (formData[prop] != null) {
-                List cloneData = [];
-                cloneData = json
-                    .decode(formData[prop])
-                    .map((e) => e.toString())
-                    .toList();
-                imagesFile = cloneData.cast<String>().toList();
+                try {
+                  List cloneData = [];
+                  cloneData = json
+                      .decode(formData[prop])
+                      .map((e) => e.toString())
+                      .toList();
+                  imagesFile = cloneData.cast<String>().toList();
+                } catch (e) {
+                  imagesFile = <String>[];
+                }
               } else {
                 imagesFile = <String>[];
               }
@@ -266,14 +339,30 @@ class DynamicForm extends StatelessWidget {
                   ),
                   ImagePickerWidget(
                     onImagesChanged: (list) {
-                      print(list);
                       formValues[prop] = json.encode(list);
                       formDataChange(prop, formValues[prop]);
+                      triggeredOnChange(formValues[prop]);
                     },
                     images: imagesFile,
                     isEditable: !disabled,
                   ),
                 ],
+              );
+            } else if (component['type'] == 'switch') {
+              formField = SwitchFormField(
+                initialValue: !!(formData[prop] == 1),
+                onSaved: (newValue) {
+                  print(newValue);
+                  formValues[prop] = newValue;
+                  formDataChange(prop, newValue);
+                  triggeredOnChange(value);
+                },
+                disabled: disabled,
+                title: MyParagraph(
+                  text: label,
+                  fontSize: 55,
+                  color: AppColors.themeTextColor4,
+                ),
               );
             } else {
               formField = SizedBox.shrink();
@@ -299,4 +388,40 @@ class DynamicForm extends StatelessWidget {
     });
     return initialValues;
   }
+}
+
+class SwitchFormField extends FormField<bool> {
+  SwitchFormField({
+    Key? key,
+    required Widget title,
+    bool initialValue = false,
+    bool disabled = false,
+    FormFieldSetter<bool>? onSaved,
+  }) : super(
+          key: key,
+          initialValue: initialValue,
+          enabled: !disabled,
+          onSaved: onSaved,
+          builder: (FormFieldState<bool> state) {
+            return ListTile(
+              title: title,
+              contentPadding: EdgeInsets.zero,
+              trailing: disabled
+                  ? (initialValue
+                      ? MyParagraph(text: "YES")
+                      : MyParagraph(text: "NO"))
+                  : Switch(
+                      value: state.value!,
+                      onChanged: disabled
+                          ? null
+                          : (value) {
+                              state.didChange(value);
+                              onSaved!(value);
+                            },
+                      // inactiveThumbColor: AppColors.dark,
+                      // inactiveTrackColor: Colors.grey[300],
+                    ),
+            );
+          },
+        );
 }
