@@ -63,12 +63,12 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                                       if (controller.containerStatus >= 0 &&
                                           controller.containerStatus != 2)
                                         Expanded(
-                                            flex: 3,
+                                            flex: 2,
                                             child: PassButton(
                                               onPressed: controller
                                                   .handleDeleteComponentFromThisContainer,
                                               btnColor: AppColors.redColor,
-                                              text: 'Remove from container',
+                                              text: 'Remove',
                                             )),
                                       if (controller.containerStatus >= 0 &&
                                           controller.containerStatus != 2)
@@ -94,7 +94,8 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                                   btnColor: AppColors.logoBgc,
                                   disabled: !controller.canAddToContainer.value,
                                   text:
-                                      'Add to ${controller.argContainerNumber}',
+                                      // 'Add to ${controller.argContainerNumber}',
+                                      'Add',
                                 ),
                             ],
                           )

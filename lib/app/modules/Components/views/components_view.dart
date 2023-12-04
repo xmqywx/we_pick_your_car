@@ -18,18 +18,17 @@ class ComponentsView extends GetView<ComponentsController> {
         backgroundColor: AppColors.background,
         appBar: AppBar(
           title: MyParagraph(
-            text: controller.containerNumber.value,
+            text: controller.containerNumber.value ?? 'Container',
             fontSize: 65,
           ),
           centerTitle: true,
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.qr_code_scanner),
-          //     onPressed: () {
-          //       Get.toNamed("/container-detail", arguments: {"isEdit": false});
-          //     },
-          //   ),
-          // ],
+          actions: [
+            if (controller.isExist.value)
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: controller.containerEdit,
+              ),
+          ],
         ),
         floatingActionButton: Visibility(
           visible: containerStatus[controller.arguments.value['containerValue']
@@ -55,22 +54,22 @@ class ComponentsView extends GetView<ComponentsController> {
                       0, ScreenAdapter.height(12), 0, ScreenAdapter.height(24)),
                   children: controller.isExist.value
                       ? [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: ScreenAdapter.height(15),
-                                horizontal: ScreenAdapter.width(15)),
-                            child: MyParagraph(
-                              text: "Container info",
-                              fontSize: 55,
-                            ),
-                          ),
-                          ContainerInfo(
-                              edit: controller.containerEdit,
-                              add: controller.containerAdd,
-                              delete: controller.alertDeleteContainerDialog,
-                              info: controller
-                                      .arguments.value['containerValue'] ??
-                                  {}),
+                          // Padding(
+                          //   padding: EdgeInsets.symmetric(
+                          //       vertical: ScreenAdapter.height(15),
+                          //       horizontal: ScreenAdapter.width(15)),
+                          //   child: MyParagraph(
+                          //     text: "Container info",
+                          //     fontSize: 55,
+                          //   ),
+                          // ),
+                          // ContainerInfo(
+                          //     edit: controller.containerEdit,
+                          //     add: controller.containerAdd,
+                          //     delete: controller.alertDeleteContainerDialog,
+                          //     info: controller
+                          //             .arguments.value['containerValue'] ??
+                          //         {}),
                           // if (controller.componentList.isNotEmpty)
                           //   Padding(
                           //     padding: EdgeInsets.symmetric(

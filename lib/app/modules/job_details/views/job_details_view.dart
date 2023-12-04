@@ -59,9 +59,9 @@ class JobDetailsView extends GetView<JobDetailsController> {
           : Row(
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: PassButton(
-                    text: "Complete current job",
+                    text: "Complete",
                     btnColor: AppColors.logoBgc,
                     onPressed: controller.alertEndDialog,
                   ),
@@ -192,6 +192,14 @@ class JobDetailsView extends GetView<JobDetailsController> {
                   )
               ]),
               centerTitle: true,
+              actions: [
+                IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.transparent,
+                    ),
+                    onPressed: null),
+              ],
             )),
         body: Column(
           children: [
@@ -493,6 +501,12 @@ class JobDetailsView extends GetView<JobDetailsController> {
                         ],
                       ),
                     ))),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              height: controller.isKeyboardOpen.value
+                  ? ScreenAdapter.height(700)
+                  : 0,
+            ),
             ClipRect(
               child: Container(
                 // color: AppColors.accent,

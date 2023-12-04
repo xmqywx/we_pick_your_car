@@ -142,6 +142,7 @@ class ComponentDetailController extends GetxController {
       var response = await getComponentDetail(arguments.value['componentId']);
       wreckedData.value = Component.fromJson(response);
       containerStatus = wreckedData.value.containerStatus ?? -1;
+      print("containerStatus, ${containerStatus}");
       wreckedDataForm.value = {
         "id": wreckedData.value.id,
         "disassemblyDescription": wreckedData.value.disassemblyDescription,
@@ -151,6 +152,8 @@ class ComponentDetailController extends GetxController {
       if (arguments.value['addToContainer'] != null &&
           arguments.value['addToContainer']) {
         isAddToContainer.value = true;
+      } else {
+        isAddToContainer.value = false;
       }
       canAddToContainer.value = wreckedData.value.containerNumber == null;
       argContainerNumber.value = arguments.value['containerNumber'] ?? '';
@@ -170,7 +173,10 @@ class ComponentDetailController extends GetxController {
 
   final Rx<TextEditingController> textEditingController =
       TextEditingController().obs;
-  Future<void> handleRefresh() async {}
+  Future<void> handleRefresh() async {
+    setComponentDetail();
+  }
+
   onSearchChange(value) {
     barcodeTxt.value = value;
   }
@@ -193,7 +199,10 @@ class ComponentDetailController extends GetxController {
       "id": wreckedDataForm.value['id'],
       "containerNumber": argContainerNumber.value
     };
-    updatePart(data: updateData, op: 'add_to_container');
+    await updatePart(data: updateData, op: 'add_to_container', isNext: false);
+    isEdit.value = true;
+    arguments.value['addToContainer'] = false;
+    setComponentDetail();
   }
 
   handleDeleteComponentFromThisContainer() async {
@@ -231,7 +240,8 @@ class ComponentDetailController extends GetxController {
     }
   }
 
-  updatePart({required Map data, String op = 'update'}) async {
+  updatePart(
+      {required Map data, String op = 'update', bool isNext = true}) async {
     final response;
     if (op == 'add_to_container') {
       response = await apiAddToComponent(data);
@@ -242,7 +252,9 @@ class ComponentDetailController extends GetxController {
     }
 
     if (response != null && response.data['message'] == 'success') {
-      Get.back();
+      if (isNext) {
+        Get.back();
+      }
       if (arguments.value['refresh'] != null) {
         arguments.value['refresh']();
       }

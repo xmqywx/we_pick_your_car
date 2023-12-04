@@ -27,7 +27,8 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 
 class JobDetailsController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetSingleTickerProviderStateMixin, WidgetsBindingObserver {
+  RxBool isKeyboardOpen = false.obs;
   //TODO: Implement JobDetailsController
   RxMap arguments = {}.obs;
   RxBool isEdit = false.obs;
@@ -1693,6 +1694,7 @@ class JobDetailsController extends GetxController
     tabController = TabController(length: 6, vsync: this);
     arguments.value = Get.arguments;
     await handleRefresh();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -1702,7 +1704,14 @@ class JobDetailsController extends GetxController
 
   @override
   void onClose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.onClose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    isKeyboardOpen.value = bottomInset > 0.0;
   }
 }
 

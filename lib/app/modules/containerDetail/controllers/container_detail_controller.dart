@@ -189,8 +189,8 @@ class ContainerDetailController extends GetxController {
           var result = await Get.dialog(
               AlertDialog(
                 title: const Text("Prompt information!"),
-                content: const Text(
-                    "Are you sure you want to seal this container??"),
+                content:
+                    const Text("Are you sure you want to seal this container?"),
                 actions: <Widget>[
                   TextButton(
                     child: const Text("Cancel"),

@@ -35,6 +35,8 @@ class PassLoginController extends GetxController {
       if (response.data["message"] == "success") {
         //保存用户信息
         await Storage.setData("token", response.data["data"]["token"]);
+        await Storage.setData(
+            "refreshToken", response.data["data"]["refreshToken"]);
         await tabsController.getUserInfo();
         await userController.getUserInfo();
         // await tabsController.getJobList();

@@ -8,6 +8,7 @@ import 'dart:io';
 import 'dart:async';
 import '../controllers/is_loading_controller.dart';
 import '../widget/toast.dart';
+import '../api/user.dart';
 
 UserController userController = Get.Get.find<UserController>();
 final IsLoadingController isLoadingController =
@@ -51,23 +52,38 @@ class HttpsClient {
           // isLoadingController.isLoading.value = false;
           makeRequest();
         }
+        print(response);
         if (response.statusCode == 401) {
+          print("Login out on response");
           userController.loginOut();
           showCustomSnackbar(message: "Token expires", status: '3');
         }
         return handler.next(response);
       },
       onError: (DioError error, ErrorInterceptorHandler handler) async {
-        print(error);
         _loadingCount--;
         if (_loadingCount <= 0) {
           // Get.Get.back();
           makeRequest();
           // isLoadingController.isLoading.value = false;
         }
-        if (error.response?.statusCode == 401) {
+        if (error.response?.statusCode == 401 ||
+            error.response?.data?['message'] == "登录失效或无权限访问~") {
+          print("Login out on error");
+          // final refreshToken = await Storage.getData('refreshToken');
+          // var tokenData = await apiGetToken(refreshToken);
+          // if (tokenData.data != null && tokenData.data['code'] == 1000) {
+          //   // print("tokenData, ${tokenData.data['data']['token']}");
+          //   await Storage.setData("token", tokenData.data["data"]["token"]);
+          //   await Storage.setData(
+          //       "refreshToken", tokenData.data["data"]["refreshToken"]);
+          //   print("重新设置token, $tokenData");
+          // } else {
+          //   userController.loginOut();
+          //   showCustomSnackbar(message: "Login expired", status: '3');
+          // }
           userController.loginOut();
-          showCustomSnackbar(message: "Token expires", status: '3');
+          showCustomSnackbar(message: "Login expired", status: '3');
         }
         return handler.next(error);
       },
@@ -104,9 +120,6 @@ class HttpsClient {
       print(response);
       return response;
     } catch (e) {
-      print("======================= dio");
-      print(e);
-      print("======================= dio");
       return null;
     }
   }
