@@ -35,7 +35,7 @@ class ImagePickerWidget extends StatelessWidget {
                           "/admin/base/comm/upload",
                           file: File(pickedFile.path));
                       if (response != null) {
-                        showCustomSnackbar(message: 'Upload successful');
+                        // showCustomSnackbar(message: 'Upload successful');
                         images.add(response.data['data']);
                       } else {
                         showCustomSnackbar(

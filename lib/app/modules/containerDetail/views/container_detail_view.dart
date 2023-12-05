@@ -49,11 +49,12 @@ class ContainerDetailView extends GetView<ContainerDetailController> {
                                   ScreenAdapter.width(35)),
                               children: [
                                 DynamicForm(
-                                  formKey: controller.formKey,
-                                  formFields: controller.formList.value,
-                                  formData: controller.containerInfoForm.value,
-                                  formDataChange: controller.formDataChange,
-                                ),
+                                    formKey: controller.formKey,
+                                    formFields: controller.formList.value,
+                                    formData:
+                                        controller.containerInfoForm.value,
+                                    formDataChange: controller.formDataChange,
+                                    formRules: controller.formFieldJudge.value),
                               ]),
                           Row(
                             // mainAxisAlignment: MainAxisAlignment.end,

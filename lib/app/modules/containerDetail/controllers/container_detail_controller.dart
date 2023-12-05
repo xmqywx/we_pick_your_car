@@ -1,10 +1,12 @@
 import 'package:car_wrecker/app/widget/toast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import '../../../api/wrecker.dart';
 import '../../../models/container_model.dart';
 import 'package:flutter/material.dart';
 import '../../../services/format_date.dart';
 import '../../../services/storage.dart';
+import 'dart:async';
 
 class ContainerDetailController extends GetxController {
   //TODO: Implement ContainerDetailController
@@ -56,6 +58,21 @@ class ContainerDetailController extends GetxController {
     containerInfo.refresh();
   }
 
+  final fieldContainerNumberKey = GlobalKey<FormFieldState>();
+  final fieldSealedNumberKey = GlobalKey<FormFieldState>();
+  RxBool validating = false.obs;
+  RxMap<String, dynamic> formFieldJudge = {
+    "containerNumber": {
+      "judge": false,
+      "message": "The container number has already been used."
+    },
+    "sealNumber": {
+      "judge": false,
+      "message": "The seal number has already been used."
+    }
+  }.obs;
+  final debouncer = Debouncer(delay: Duration(milliseconds: 500));
+  final debouncer2 = Debouncer(delay: Duration(milliseconds: 500));
   setFormList() {
     formList.value = [
       {
@@ -67,31 +84,52 @@ class ContainerDetailController extends GetxController {
           "type": "input",
           "placeholder": "Please input the container number.",
         },
+        "fieldKey": fieldContainerNumberKey,
         "rules": [
           {
             "require": true,
             "message": "Container number cannot be empty.",
           },
-          if (!isEdit.value)
-            {
-              "validator": (containerNumber) async {
-                var res = await handleApi({
-                  "api": checkIsUniqueContainerNumber,
-                  "payload": {"containerNumber": containerNumber}
-                });
-                if (res != null) {
-                  if (res['isUnique']) {
-                    return null;
-                  } else {
-                    return "The container number has already been used.";
-                  }
-                } else {
-                  return "Unable to verify!";
-                }
-              },
-              "message": "The container number has already been used.",
-            },
+          // if (!isEdit.value)
+          //   {
+          //     "judge": formFieldJudge.value['containerNumber'],
+          //     "message": "The container number has already been used.",
+          //   },
+          // if (!isEdit.value)
+          //   {
+          //     "validator": (containerNumber) async {
+          //       var res = await handleApi({
+          //         "api": checkIsUniqueContainerNumber,
+          //         "payload": {"containerNumber": containerNumber}
+          //       });
+          //       if (res != null) {
+          //         if (res['isUnique']) {
+          //           // formFieldJudge.value['containerNumber'] = res['isUnique'];
+          //           return null;
+          //         } else {
+          //           return "The container number has already been used.";
+          //         }
+          //       } else {
+          //         return "Unable to verify!";
+          //       }
+          //     },
+          //     "message": "The container number has already been used.",
+          //   },
         ],
+        "triggeredOnChange": (data) {
+          debouncer(() async {
+            if (data == '' || data == null) {
+              return;
+            }
+            formFieldJudge.value['containerNumber']['judge'] =
+                !await validatorIsUnique(payload: {
+              "containerNumber": containerInfoForm.value['containerNumber']
+            }, api: checkIsUniqueContainerNumber);
+            setFormList();
+            fieldContainerNumberKey.currentState?.validate();
+          });
+          setFormList();
+        }
       },
       {
         "label": "Commence date",
@@ -142,36 +180,48 @@ class ContainerDetailController extends GetxController {
         // "hidden": !containerInfoForm.value['isSeal'],
         "component": {
           "type": "input",
+          "trigger": "change",
           "placeholder": "Please input the container number.",
         },
+        "fieldKey": fieldSealedNumberKey,
         "rules": [
           {
             "require": containerInfoForm.value['isSeal'],
             "message": "Seal number cannot be empty when sealed.",
           },
-          if (!isEdit.value)
-            {
-              "validator": (sealNumber) async {
-                var res = await handleApi({
-                  "api": checkIsUniqueSealedNumber,
-                  "payload": {"sealNumber": sealNumber}
-                });
-                if (res != null) {
-                  if (res['isUnique']) {
-                    return null;
-                  } else {
-                    return "The seal number has already been used.";
-                  }
-                } else {
-                  return "Unable to verify!";
-                }
-              },
-              "message": "The seal number has already been used.",
-            },
+          // if (!isEdit.value)
+          //   {
+          //     "judge": formFieldJudge.value['sealNumber'],
+          //     "message": "The seal number has already been used.",
+          //   },
         ],
+        "triggeredOnChange": (data) {
+          debouncer2(() async {
+            if (data == '' || data == null) {
+              return;
+            }
+            formFieldJudge.value['sealNumber']['judge'] =
+                !await validatorIsUnique(
+                    payload: {"sealNumber": data, "id": containerInfo.value.id},
+                    api: checkIsUniqueSealedNumber);
+
+            setFormList();
+            fieldSealedNumberKey.currentState?.validate();
+          });
+        }
       }
     ];
     formList.refresh();
+    print("set form list, ${formList.value[0]}");
+  }
+
+  validatorIsUnique({required Map payload, required api}) async {
+    var res = await handleApi({"api": api, "payload": payload});
+    if (res != null) {
+      return res['isUnique'];
+    } else {
+      return false;
+    }
   }
 
   Future<void> handleRefresh() async {
@@ -183,6 +233,21 @@ class ContainerDetailController extends GetxController {
   }
 
   formSubmit() async {
+    formFieldJudge.value['sealNumber']['judge'] =
+        !await validatorIsUnique(payload: {
+      "sealNumber": containerInfoForm.value['sealNumber'],
+      "id": containerInfo.value.id
+    }, api: checkIsUniqueSealedNumber);
+    formFieldJudge.value['containerNumber']['judge'] = !await validatorIsUnique(
+        payload: {
+          "containerNumber": containerInfoForm.value['containerNumber']
+        },
+        api: checkIsUniqueContainerNumber);
+    // setFormList();
+    fieldContainerNumberKey.currentState?.validate();
+    fieldSealedNumberKey.currentState?.validate();
+
+    // return;
     if (formKey.currentState != null && formKey.currentState!.validate()) {
       if (isEdit.value) {
         if (containerInfoForm.value['isSeal'] == true) {

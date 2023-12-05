@@ -11,12 +11,13 @@ class DynamicForm extends StatelessWidget {
   final Map<String, dynamic> formData;
   final void Function(String key, dynamic value) formDataChange;
   final GlobalKey<FormState> formKey;
-
+  Map<String, dynamic> formRules;
   // final void Function(Map<String, dynamic> values) onSubmit;
 
   DynamicForm(
       {required this.formFields,
       // required this.onSubmit,
+      this.formRules = const {},
       required this.formKey,
       required this.formData,
       required this.formDataChange});
@@ -58,6 +59,62 @@ class DynamicForm extends StatelessWidget {
               }
             }
 
+            String? inputValidator(String? value) {
+              if (field['validatorMsg'] != null) {
+                String msg = field['validatorMsg'];
+                field['validatorMsg'] = null;
+                return msg;
+              }
+
+              if (formRules[prop] != null) {
+                if (formRules[prop]['judge']) {
+                  return formRules[prop]['message'];
+                }
+              }
+
+              // 遍历rules进行校验
+              for (var rule in rules) {
+                // require pattern min,max validator
+                if (rule.containsKey('require') && rule['require'] == true) {
+                  if (formData[prop] == '' || formData[prop] == null) {
+                    return rule['message'];
+                  }
+                  if (component['fieldType'] == 'number') {
+                    if (formData[prop] == null) {
+                      return rule['message'];
+                    }
+                  }
+                }
+                if (rule.containsKey('min') && rule.containsKey('max')) {
+                  int min = rule['min'];
+                  int max = rule['max'];
+                  if (formData[prop] != null &&
+                      (formData[prop].toString().length < min ||
+                          formData[prop].toString().length > max)) {
+                    return rule['message'];
+                  }
+                }
+                if (rule.containsKey('pattern')) {
+                  if (!RegExp(rule['pattern'])
+                      .hasMatch(formData[prop].toString())) {
+                    return rule['message'];
+                  }
+                }
+                if (rule.containsKey('judge')) {
+                  print("${formData[prop]} ==================");
+                  if (rule['judge']) {
+                    return rule['message'];
+                  }
+                }
+
+                if (rule.containsKey('validator')) {
+                  Function validator = rule['validator'];
+                  myValidator(formData[prop], validator, fieldKey);
+                }
+              }
+              return null;
+            }
+
             AutovalidateMode trigger = AutovalidateMode.disabled;
             if (component['trigger'] == 'change') {
               trigger = AutovalidateMode.onUserInteraction;
@@ -93,55 +150,7 @@ class DynamicForm extends StatelessWidget {
                       hintText: component['placeholder'],
                     ),
                     style: TextStyle(fontFamily: 'Roboto-Medium'),
-                    validator: (value) {
-                      if (field['validatorMsg'] != null) {
-                        String msg = field['validatorMsg'];
-                        field['validatorMsg'] = null;
-                        return msg;
-                      }
-
-                      // 遍历rules进行校验
-                      for (var rule in rules) {
-                        // require pattern min,max validator
-                        if (rule.containsKey('require') &&
-                            rule['require'] == true) {
-                          if (formData[prop] == '' || formData[prop] == null) {
-                            return rule['message'];
-                          }
-                          if (component['fieldType'] == 'number') {
-                            if (formData[prop] == null) {
-                              return rule['message'];
-                            }
-                          }
-                        }
-                        if (rule.containsKey('min') &&
-                            rule.containsKey('max')) {
-                          int min = rule['min'];
-                          int max = rule['max'];
-                          if (formData[prop] != null &&
-                              (formData[prop].toString().length < min ||
-                                  formData[prop].toString().length > max)) {
-                            return rule['message'];
-                          }
-                        }
-                        if (rule.containsKey('pattern')) {
-                          if (!RegExp(rule['pattern'])
-                              .hasMatch(formData[prop].toString())) {
-                            return rule['message'];
-                          }
-                        }
-                        if (rule.containsKey('judge')) {
-                          if (rule['judge']) {
-                            return rule['message'];
-                          }
-                        }
-                        if (rule.containsKey('validator')) {
-                          Function validator = rule['validator'];
-                          myValidator(formData[prop], validator, fieldKey);
-                        }
-                      }
-                      return null;
-                    },
+                    validator: inputValidator,
                     onChanged: (value) {
                       if (component['fieldType'] == 'number') {
                         if (value == '') {

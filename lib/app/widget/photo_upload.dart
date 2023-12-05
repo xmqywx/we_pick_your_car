@@ -343,7 +343,7 @@ class ImagePickerWidget extends StatelessWidget {
                         if (response.data["message"] == "success") {
                           //保存
                           print(response.data["message"]);
-                          showCustomSnackbar(message: 'Upload successful');
+                          // showCustomSnackbar(message: 'Upload successful');
                           // setState(() {
                           //   // _images.add(response.data['data']);
                           // });
@@ -401,7 +401,7 @@ class ImagePickerWidget extends StatelessWidget {
                             images.add(response.data['data']);
                             onImagesChanged(images);
                             // print(_images);
-                            showCustomSnackbar(message: 'Upload successful');
+                            // showCustomSnackbar(message: 'Upload successful');
                           }
                         } else {
                           print('upload faild');

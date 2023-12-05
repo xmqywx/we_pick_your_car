@@ -8,14 +8,15 @@ import 'dart:io';
 import 'dart:async';
 import '../controllers/is_loading_controller.dart';
 import '../widget/toast.dart';
+import '../api/user.dart';
 
 UserController userController = Get.Get.find<UserController>();
 final IsLoadingController isLoadingController =
     Get.Get.find<IsLoadingController>();
 
 class HttpsClient {
-  static String domain = "http://13.54.137.62/api/";
-  // static String domain = "http://192.168.101.21:9000/dev/";
+  // static String domain = "http://13.54.137.62/api/";
+  static String domain = "http://192.168.101.21:9000/dev/";
 
   static Dio dio = Dio();
   static int _loadingCount = 0; // 记录当前显示的加载动画数量
@@ -51,23 +52,38 @@ class HttpsClient {
           // isLoadingController.isLoading.value = false;
           makeRequest();
         }
+
         if (response.statusCode == 401) {
+          print("Login out on response");
           userController.loginOut();
           showCustomSnackbar(message: "Token expires", status: '3');
         }
         return handler.next(response);
       },
       onError: (DioError error, ErrorInterceptorHandler handler) async {
-        print(error);
         _loadingCount--;
         if (_loadingCount <= 0) {
           // Get.Get.back();
           makeRequest();
           // isLoadingController.isLoading.value = false;
         }
-        if (error.response?.statusCode == 401) {
+        if (error.response?.statusCode == 401 ||
+            error.response?.data?['message'] == "登录失效或无权限访问~") {
+          print("Login out on error");
+          // final refreshToken = await Storage.getData('refreshToken');
+          // var tokenData = await apiGetToken(refreshToken);
+          // if (tokenData.data != null && tokenData.data['code'] == 1000) {
+          //   // print("tokenData, ${tokenData.data['data']['token']}");
+          //   await Storage.setData("token", tokenData.data["data"]["token"]);
+          //   await Storage.setData(
+          //       "refreshToken", tokenData.data["data"]["refreshToken"]);
+          //   print("重新设置token, $tokenData");
+          // } else {
+          //   userController.loginOut();
+          //   showCustomSnackbar(message: "Login expired", status: '3');
+          // }
           userController.loginOut();
-          showCustomSnackbar(message: "Token expires", status: '3');
+          showCustomSnackbar(message: "Login expired", status: '3');
         }
         return handler.next(error);
       },
@@ -75,6 +91,7 @@ class HttpsClient {
   }
 
   Future get(apiUrl) async {
+    print('apiUrl');
     try {
       var response = await dio.get(apiUrl);
       return response;
@@ -84,6 +101,7 @@ class HttpsClient {
   }
 
   Future uploadFile(String apiUrl, {required File file}) async {
+    print('apiUrl');
     try {
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -104,9 +122,6 @@ class HttpsClient {
       print(response);
       return response;
     } catch (e) {
-      print("======================= dio");
-      print(e);
-      print("======================= dio");
       return null;
     }
   }
