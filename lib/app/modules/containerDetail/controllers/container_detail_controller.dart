@@ -233,23 +233,24 @@ class ContainerDetailController extends GetxController {
   }
 
   formSubmit() async {
-    formFieldJudge.value['sealNumber']['judge'] =
-        !await validatorIsUnique(payload: {
-      "sealNumber": containerInfoForm.value['sealNumber'],
-      "id": containerInfo.value.id
-    }, api: checkIsUniqueSealedNumber);
-    formFieldJudge.value['containerNumber']['judge'] = !await validatorIsUnique(
-        payload: {
-          "containerNumber": containerInfoForm.value['containerNumber']
-        },
-        api: checkIsUniqueContainerNumber);
-    // setFormList();
-    fieldContainerNumberKey.currentState?.validate();
-    fieldSealedNumberKey.currentState?.validate();
+    // formFieldJudge.value['sealNumber']['judge'] =
+    //     !await validatorIsUnique(payload: {
+    //   "sealNumber": containerInfoForm.value['sealNumber'],
+    //   "id": containerInfo.value.id
+    // }, api: checkIsUniqueSealedNumber);
+    // formFieldJudge.value['containerNumber']['judge'] = !await validatorIsUnique(
+    //     payload: {
+    //       "containerNumber": containerInfoForm.value['containerNumber']
+    //     },
+    //     api: checkIsUniqueContainerNumber);
+    // // setFormList();
+    // fieldContainerNumberKey.currentState?.validate();
+    // fieldSealedNumberKey.currentState?.validate();
 
     // return;
     if (formKey.currentState != null && formKey.currentState!.validate()) {
       if (isEdit.value) {
+        print(containerInfoForm.value['isSeal']);
         if (containerInfoForm.value['isSeal'] == true) {
           var result = await Get.dialog(
               AlertDialog(
