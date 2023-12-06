@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:car_wrecker/app/color/colors.dart';
 import 'package:car_wrecker/app/text/paragraph.dart';
 import 'package:flutter/material.dart';
@@ -209,14 +211,13 @@ class JobDetailsView extends GetView<JobDetailsController> {
                     flex: 1,
                     child: Scaffold(
                       appBar: PreferredSize(
-                          preferredSize:
-                              Size.fromHeight(ScreenAdapter.width(120)),
+                          preferredSize: Size.fromHeight(50),
                           child: AppBar(
                             automaticallyImplyLeading: false, // 隐藏返回按钮
                             backgroundColor: Colors.transparent,
                             elevation: 0,
                             title: Container(
-                              height: ScreenAdapter.width(110),
+                              height: 45,
                               margin: EdgeInsets.zero,
                               child: TabBar(
                                 // indicatorSize: TabBarIndicatorSize.label,
@@ -501,12 +502,13 @@ class JobDetailsView extends GetView<JobDetailsController> {
                         ],
                       ),
                     ))),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 200),
-              height: controller.isKeyboardOpen.value
-                  ? ScreenAdapter.height(700)
-                  : 0,
-            ),
+            if (!Platform.isIOS)
+              AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                height: controller.isKeyboardOpen.value
+                    ? ScreenAdapter.height(700)
+                    : 0,
+              ),
             ClipRect(
               child: Container(
                 // color: AppColors.accent,
