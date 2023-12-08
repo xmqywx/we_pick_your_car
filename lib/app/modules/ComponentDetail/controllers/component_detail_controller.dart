@@ -71,6 +71,32 @@ class ComponentDetailController extends GetxController {
         ],
       },
       {
+        "label": "Catalytic Converter Name",
+        "prop": "catalyticConverterName",
+        "hidden":
+            wreckedData.value.disassemblyCategory != 'Catalytic Converter',
+        "disabled": true,
+        "value": wreckedData.value.catalyticConverterName ?? '',
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the Catalytic Converter Name.",
+        },
+        "rules": [],
+      },
+      {
+        "label": "Catalytic Converter Number",
+        "prop": "catalyticConverterNumber",
+        "hidden":
+            wreckedData.value.disassemblyCategory != 'Catalytic Converter',
+        "disabled": true,
+        "value": wreckedData.value.catalyticConverterNumber ?? '',
+        "component": {
+          "type": "input",
+          "placeholder": "",
+        },
+        "rules": [],
+      },
+      {
         "label": "Info",
         "value": wreckedData.value.disassmblingInformation ?? '[]',
         "prop": "disassmblingInformation",
@@ -147,7 +173,10 @@ class ComponentDetailController extends GetxController {
         "id": wreckedData.value.id,
         "disassemblyDescription": wreckedData.value.disassemblyDescription,
         "disassemblyImages": wreckedData.value.disassemblyImages,
-        "containerNumber": wreckedData.value.containerNumber
+        "containerNumber": wreckedData.value.containerNumber,
+        "disassmblingInformation": wreckedData.value.disassmblingInformation,
+        "catalyticConverterName": wreckedData.value.catalyticConverterName,
+        "catalyticConverterNumber": wreckedData.value.catalyticConverterNumber,
       };
       if (arguments.value['addToContainer'] != null &&
           arguments.value['addToContainer']) {

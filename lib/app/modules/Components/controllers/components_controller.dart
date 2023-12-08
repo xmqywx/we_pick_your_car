@@ -36,61 +36,65 @@ class ComponentsController extends GetxController {
     List<String> titles = [];
     List<Map<String, dynamic>> handleData = [];
     componentList.value.forEach((e) {
-      if(e["disassemblyCategory"] != 'Catalytic Converter') {
+      if (e["disassemblyCategory"] != 'Catalytic Converter') {
         int existingIndex = handleData.indexWhere((item) =>
-          item['disassmblingInformation'] == e['disassmblingInformation']);
-      if (existingIndex != -1) {
-        handleData[existingIndex]['components'].add({
-          "disassemblyNumber": e["disassemblyNumber"],
-          "disassemblyCategory": e["disassemblyCategory"],
-          "disassemblyDescription":
-              """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                  "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-        });
-      } else {
-        handleData.addAll([
-          {
-            "disassmblingInformation": e["disassmblingInformation"],
-            "disassemblyCategory": e["disassemblyCategory"],
-            "components": [
-              {
-                "disassemblyNumber": e["disassemblyNumber"],
-                "disassemblyCategory": e["disassemblyCategory"],
-                "disassemblyDescription":
-                    """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${(e['catalyticConverterName'] != null && e['catalyticConverterName'] != '') ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                        "${(e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '') ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-              }
-            ]
-          }
-        ]);
-      }
-      } else {
-        int existingIndex = handleData.indexWhere((item) =>
-          item['disassemblyCategory'] == 'Catalytic Converter');
-        if(existingIndex != -1) {
+            item['disassmblingInformation'] == e['disassmblingInformation']);
+        if (existingIndex != -1) {
           handleData[existingIndex]['components'].add({
-          "disassemblyNumber": e["disassemblyNumber"],
-          "disassemblyCategory": e["disassemblyCategory"],
-          "disassemblyDescription":
-              """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                  "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-        });
+            "disassemblyNumber": e["disassemblyNumber"],
+            "disassemblyCategory": e["disassemblyCategory"],
+            "disassemblyDescription":
+                """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
+                    "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
+          });
         } else {
           handleData.addAll([
-          {
-            "disassmblingInformation": e["disassmblingInformation"],
+            {
+              "disassmblingInformation": e["disassmblingInformation"],
+              "disassemblyCategory": e["disassemblyCategory"],
+              "components": [
+                {
+                  "disassemblyNumber": e["disassemblyNumber"],
+                  "disassemblyCategory": e["disassemblyCategory"],
+                  "disassemblyDescription":
+                      """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${(e['catalyticConverterName'] != null && e['catalyticConverterName'] != '') ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
+                          "${(e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '') ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
+                }
+              ]
+            }
+          ]);
+        }
+      } else {
+        int existingIndex = handleData.indexWhere(
+            (item) => item['disassemblyCategory'] == 'Catalytic Converter');
+        if (existingIndex != -1) {
+          handleData[existingIndex]['components'].add({
+            "disassemblyNumber": e["disassemblyNumber"],
             "disassemblyCategory": e["disassemblyCategory"],
-            "components": [
-              {
-                "disassemblyNumber": e["disassemblyNumber"],
-                "disassemblyCategory": e["disassemblyCategory"],
-                "disassemblyDescription":
-                    """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${(e['catalyticConverterName'] != null && e['catalyticConverterName'] != '') ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-                        "${(e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '') ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-              }
-            ]
-          }
-        ]);
+            "disassemblyDescription": e["disassemblyDescription"] ?? '----',
+            "ccDes":
+                """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
+                    "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
+          });
+        } else {
+          handleData.addAll([
+            {
+              "disassmblingInformation": e["disassmblingInformation"],
+              "disassemblyCategory": e["disassemblyCategory"],
+              "components": [
+                {
+                  "disassemblyNumber": e["disassemblyNumber"],
+                  "disassemblyCategory": e["disassemblyCategory"],
+                  "disassmblingInformation": e["disassmblingInformation"],
+                  "disassemblyDescription":
+                      e["disassemblyDescription"] ?? '----',
+                  "ccDes":
+                      """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
+                          "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
+                }
+              ]
+            }
+          ]);
         }
       }
     });
@@ -103,6 +107,7 @@ class ComponentsController extends GetxController {
             containerNumber: c['containerNumber'] ?? '',
             disassemblyNumber: c['disassemblyNumber'] ?? '',
             disassemblyDescription: c["disassemblyDescription"] ?? '',
+            ccDes: c['ccDes'],
             category: c['disassemblyCategory'],
           ),
           onTap: () => Get.toNamed("/component-detail", arguments: {

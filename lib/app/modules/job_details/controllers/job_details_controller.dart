@@ -23,6 +23,7 @@ import 'package:google_maps_webservice/places.dart';
 import '../templates/JobFormContainer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import '../templates/jobAgreenment.dart';
 
 const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 
@@ -214,6 +215,7 @@ class JobDetailsController extends GetxController
       {
         "label": "Deduction",
         "prop": "deduction",
+        "hidden": true,
         "disabled": deductionDisabled,
         "value": orderInfo.value.deduction ?? "",
         "component": {
@@ -627,6 +629,7 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.imageFileDir ?? '[]',
         "component": {
           "type": "uploadImage",
+          "isOnlyCamera": true,
         },
         "rules": [],
         "triggeredOnChange": (data) {
@@ -653,6 +656,7 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.driverLicense ?? '[]',
         "component": {
           "type": "uploadImage",
+          "isOnlyCamera": true,
         },
         "rules": [],
         "triggeredOnChange": (data) {
@@ -666,6 +670,7 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.registrationDoc ?? '[]',
         "component": {
           "type": "uploadImage",
+          "isOnlyCamera": true,
         },
         "rules": [],
         "triggeredOnChange": (data) {
@@ -1321,6 +1326,7 @@ class JobDetailsController extends GetxController
           "gotEasy": orderInfo.value.gotEasy,
           "gotBusy": orderInfo.value.gotBusy,
           "gotFlat": orderInfo.value.gotFlat,
+          "source": orderInfo.value.source,
           "commentText": orderInfo.value.commentText,
           "askingPrice": orderInfo.value.askingPrice,
           //Attachments
@@ -1433,13 +1439,13 @@ class JobDetailsController extends GetxController
     }
     if (customerFormKey.currentState != null) {
       if (!customerFormKey.currentState!.validate()) {
-        tabController.animateTo(3);
+        tabController.animateTo(4);
         return false;
       }
     }
     if (paymentFormKey.currentState != null) {
       if (!paymentFormKey.currentState!.validate()) {
-        tabController.animateTo(4);
+        tabController.animateTo(5);
         return false;
       }
     }
@@ -1672,20 +1678,51 @@ class JobDetailsController extends GetxController
     toUpdateFile();
   }
 
+  RxBool isAgreen = false.obs;
+  RxMap<String, SnackbarController> snackbarAgreenment =
+      <String, SnackbarController>{}.obs;
   openBottomSheet() {
     if (isEdit.value) {
-      Get.bottomSheet(
-        Container(
-          height: ScreenAdapter.height(2000),
-          // color: Colors.red,
-          child: GenerateSignature(
-            changeSignature: changeSignature,
+      if (Get.isSnackbarOpen) {
+        Get.closeCurrentSnackbar();
+      }
+      snackbarAgreenment = {
+        "key": showCustomPrompt(
+          marginBottom: 100,
+          duration: null,
+          tipWidget: JobAgreenment(
+            agreen: toAgreed,
+            cancel: disagreen,
           ),
-        ),
-        enableDrag: false,
-        isScrollControlled: true,
-      );
+        )
+      }.obs;
     }
+  }
+
+  toAgreed() {
+    snackbarAgreenment['key']?.close();
+    bool? a = Get.isBottomSheetOpen;
+    if (a != null) {
+      if (a) {
+        // if isBottomSheetOpen is true
+        return;
+      }
+    }
+    Get.bottomSheet(
+      Container(
+        height: ScreenAdapter.height(2000),
+        // color: Colors.red,
+        child: GenerateSignature(
+          changeSignature: changeSignature,
+        ),
+      ),
+      enableDrag: false,
+      isScrollControlled: true,
+    );
+  }
+
+  disagreen() {
+    snackbarAgreenment['key']?.close();
   }
 
   @override

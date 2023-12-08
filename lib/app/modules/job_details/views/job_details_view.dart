@@ -20,7 +20,6 @@ import '../../../widget/passButton.dart';
 
 class JobDetailsView extends GetView<JobDetailsController> {
   const JobDetailsView({Key? key}) : super(key: key);
-  @override
   Widget _StatusHandler() {
     print(controller.currentStatus);
     if (controller.currentStatus == 'Complete') {
@@ -87,7 +86,6 @@ class JobDetailsView extends GetView<JobDetailsController> {
     return Container();
   }
 
-  @override
   Widget _buildViewSignature() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,6 +231,9 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                     icon: Icon(Icons.car_crash),
                                   ),
                                   Tab(
+                                    icon: Icon(Icons.question_answer),
+                                  ),
+                                  Tab(
                                     icon: Icon(Icons.attachment_outlined),
                                   ),
                                   Tab(
@@ -240,9 +241,6 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                   ),
                                   Tab(
                                     icon: Icon(Icons.payment_sharp),
-                                  ),
-                                  Tab(
-                                    icon: Icon(Icons.question_answer),
                                   ),
                                 ],
                               ),
@@ -348,6 +346,28 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                         formData: controller.carInfoForm.value,
                                         formDataChange:
                                             controller.carFormDataChange),
+                                  )
+                                ])
+                              ]),
+                          JobFormContainer(
+                              handleRefresh: controller.handleRefresh,
+                              contents: [
+                                CardContainer(children: [
+                                  CardTitle(title: 'Info'),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        ScreenAdapter.width(35),
+                                        0,
+                                        ScreenAdapter.width(35),
+                                        ScreenAdapter.width(35)),
+                                    child: DynamicForm(
+                                      formKey: controller.questionnaireFormKey,
+                                      formFields: controller
+                                          .questionnaireFormList.value,
+                                      formData: controller.orderInfoForm.value,
+                                      formDataChange:
+                                          controller.orderFormDataChange,
+                                    ),
                                   )
                                 ])
                               ]),
@@ -470,28 +490,6 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                       formKey: controller.paymentFormKey,
                                       formFields:
                                           controller.paymentFormList.value,
-                                      formData: controller.orderInfoForm.value,
-                                      formDataChange:
-                                          controller.orderFormDataChange,
-                                    ),
-                                  )
-                                ])
-                              ]),
-                          JobFormContainer(
-                              handleRefresh: controller.handleRefresh,
-                              contents: [
-                                CardContainer(children: [
-                                  CardTitle(title: 'Questionnaire & Feedback'),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        ScreenAdapter.width(35),
-                                        0,
-                                        ScreenAdapter.width(35),
-                                        ScreenAdapter.width(35)),
-                                    child: DynamicForm(
-                                      formKey: controller.questionnaireFormKey,
-                                      formFields: controller
-                                          .questionnaireFormList.value,
                                       formData: controller.orderInfoForm.value,
                                       formDataChange:
                                           controller.orderFormDataChange,

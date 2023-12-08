@@ -103,18 +103,16 @@ void showCustomSnackbar({
       barBlur: 0);
 }
 
-void showCustomPrompt({
-  required Widget tipWidget,
-  Duration? duration = const Duration(seconds: 2),
-}) {
+SnackbarController showCustomPrompt(
+    {required Widget tipWidget,
+    Duration? duration = const Duration(seconds: 2),
+    double marginBottom = 200}) {
   if (Get.isSnackbarOpen) {
-    Get.back();
     Get.closeAllSnackbars();
   }
-  // Get.closeAllSnackbars();
-  Get.snackbar('', '',
+  return Get.snackbar('', '',
       duration: duration,
-      margin: EdgeInsets.only(bottom: ScreenAdapter.width(200)),
+      margin: EdgeInsets.only(bottom: ScreenAdapter.width(marginBottom)),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.transparent,
       messageText: tipWidget,

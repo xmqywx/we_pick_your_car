@@ -147,7 +147,7 @@ class ContainerDetailController extends GetxController {
         ],
       },
       {
-        "label": "Container photos",
+        "label": "Empty container photos",
         "prop": "photo",
         "value": containerInfo.value.photo ?? '[]',
         "component": {

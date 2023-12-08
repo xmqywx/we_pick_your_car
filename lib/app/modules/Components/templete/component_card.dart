@@ -14,19 +14,20 @@ class ComponentCard extends StatelessWidget {
   final String disassemblyDescription;
   final String disassemblyNumber;
   final String category;
-  const ComponentCard({
-    super.key,
-    required this.containerNumber,
-    required this.disassmblingInformation,
-    required this.category,
-    required this.disassemblyDescription,
-    required this.disassemblyNumber,
-  });
+  final String? ccDes;
+  const ComponentCard(
+      {super.key,
+      required this.containerNumber,
+      required this.disassmblingInformation,
+      required this.category,
+      required this.disassemblyDescription,
+      required this.disassemblyNumber,
+      this.ccDes = ''});
 
   @override
   Widget build(BuildContext context) {
     List<String> imagesFile = <String>[];
-
+    print("$disassmblingInformation =================");
     if (category == 'Catalytic Converter') {
       List cloneData = [];
       try {
@@ -64,6 +65,29 @@ class ComponentCard extends StatelessWidget {
             ],
           ),
         ),
+        ccDes != null && ccDes != ''
+            ? Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: MyParagraph(
+                          text: ccDes ?? '',
+                          fontSize: 55,
+                        ),
+                      ),
+                    )
+                    // MyParagraph(
+                    //   text: statusMap?['label'] ?? '-error-',
+                    //   color: statusMap?['color'] ?? AppColors.redColor,
+                    // )
+                  ],
+                ),
+              )
+            : SizedBox.shrink(),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
           child: category == 'Catalytic Converter'

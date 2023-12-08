@@ -39,6 +39,7 @@ class ComponentsView extends GetView<ComponentsController> {
                   .contains('add') &&
               controller.isExist.value,
           child: FloatingActionButton(
+            // onPressed: controller.scanQRCode,containerAdd
             onPressed: controller.containerAdd,
             child: Icon(Icons.qr_code_scanner),
           ),

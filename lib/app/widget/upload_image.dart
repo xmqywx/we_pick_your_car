@@ -14,16 +14,68 @@ class ImagePickerWidget extends StatelessWidget {
   final Function(List<String>) onImagesChanged;
   final List<String> images;
   final bool isEditable;
+  final bool? isOnlyCamera;
   ImagePickerWidget(
       {Key? key,
       required this.onImagesChanged,
       required this.images,
+      this.isOnlyCamera = false,
       this.isEditable = true})
       : super(key: key);
 
   final picker = ImagePicker();
 
   void _showSelectionMenu(BuildContext context) {
+    takePhoto() async {
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+      if (pickedFile != null) {
+        // var response = await httpsClient.uploadFile(
+        //     "/admin/base/comm/upload",
+        //     file: pickedFiles);
+        int fileSize = await pickedFile.length();
+        var response;
+        // 如果大于800K,进行压缩
+        if (fileSize > 800 * 1024) {
+// 压缩文件
+          File? compressedFile = await compressFile(File(pickedFile.path));
+// 上传压缩后的文件
+          if (compressedFile != null) {
+            response = await httpsClient.uploadFile(
+              "/admin/base/comm/upload",
+              file: compressedFile,
+            );
+          }
+        } else {
+// 文件本身小于800K,直接上传
+          response = await httpsClient.uploadFile(
+            "/admin/base/comm/upload",
+            file: File(pickedFile.path),
+          );
+        }
+        // response = await httpsClient.uploadFile(
+        //     "/admin/base/comm/upload",
+        //     file: File(pickedFile.path));
+        if (response != null) {
+          if (response.data["message"] == "success") {
+            //保存
+            print(response.data["message"]);
+            // showCustomSnackbar(message: 'Upload successful');
+            // setState(() {
+            //   // _images.add(response.data['data']);
+            // });
+            images.add(response.data['data']);
+          }
+        } else {
+          showCustomSnackbar(message: 'Upload failed', status: '3');
+        }
+        onImagesChanged(images);
+      }
+    }
+
+    if (isOnlyCamera != null && isOnlyCamera == true) {
+      takePhoto();
+      return;
+    }
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -34,55 +86,9 @@ class ImagePickerWidget extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.photo_camera),
                   title: Text('Take a photo'),
-                  onTap: () async {
+                  onTap: () {
                     Navigator.pop(context);
-                    final pickedFile =
-                        await picker.pickImage(source: ImageSource.camera);
-                    if (pickedFile != null) {
-                      // var response = await httpsClient.uploadFile(
-                      //     "/admin/base/comm/upload",
-                      //     file: pickedFiles);
-                      int fileSize = await pickedFile.length();
-                      var response;
-                      // 如果大于800K,进行压缩
-                      if (fileSize > 800 * 1024) {
-// 压缩文件
-                        File? compressedFile =
-                            await compressFile(File(pickedFile.path));
-// 上传压缩后的文件
-                        if (compressedFile != null) {
-                          response = await httpsClient.uploadFile(
-                            "/admin/base/comm/upload",
-                            file: compressedFile,
-                          );
-                        }
-                      } else {
-// 文件本身小于800K,直接上传
-                        response = await httpsClient.uploadFile(
-                          "/admin/base/comm/upload",
-                          file: File(pickedFile.path),
-                        );
-                      }
-                      // response = await httpsClient.uploadFile(
-                      //     "/admin/base/comm/upload",
-                      //     file: File(pickedFile.path));
-                      if (response != null) {
-                        if (response.data["message"] == "success") {
-                          //保存
-                          print(response.data["message"]);
-                          // showCustomSnackbar(message: 'Upload successful');
-                          // setState(() {
-                          //   // _images.add(response.data['data']);
-                          // });
-                          images.add(response.data['data']);
-                        }
-                      } else {
-                        showCustomSnackbar(
-                            message: 'Upload failed', status: '3');
-                      }
-                      print(images);
-                      onImagesChanged(images);
-                    }
+                    takePhoto();
                   },
                 ),
                 ListTile(

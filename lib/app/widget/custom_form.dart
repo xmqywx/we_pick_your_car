@@ -347,14 +347,14 @@ class DynamicForm extends StatelessWidget {
                     ),
                   ),
                   ImagePickerWidget(
-                    onImagesChanged: (list) {
-                      formValues[prop] = json.encode(list);
-                      formDataChange(prop, formValues[prop]);
-                      triggeredOnChange(formValues[prop]);
-                    },
-                    images: imagesFile,
-                    isEditable: !disabled,
-                  ),
+                      onImagesChanged: (list) {
+                        formValues[prop] = json.encode(list);
+                        formDataChange(prop, formValues[prop]);
+                        triggeredOnChange(formValues[prop]);
+                      },
+                      images: imagesFile,
+                      isEditable: !disabled,
+                      isOnlyCamera: component['isOnlyCamera']),
                 ],
               );
             } else if (component['type'] == 'switch') {

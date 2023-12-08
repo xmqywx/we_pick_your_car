@@ -136,8 +136,8 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                                 Get.closeAllSnackbars();
 
                                 Get.back();
-                                showCustomSnackbar(
-                                    message: 'Upload successful.');
+                                // showCustomSnackbar(
+                                //     message: 'Upload successful.');
                               }
                             } else {
                               showCustomSnackbar(
