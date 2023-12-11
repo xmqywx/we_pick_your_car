@@ -20,6 +20,7 @@ class ComponentDetailController extends GetxController {
   RxString argContainerNumber = ''.obs;
   final formKey = GlobalKey<FormState>();
   RxBool fieldsDisabled = false.obs;
+  final descriptionKey = GlobalKey();
   setFormList() {
     formList.value = [
       {
@@ -122,6 +123,7 @@ class ComponentDetailController extends GetxController {
         "prop": "disassemblyDescription",
         "value": wreckedData.value.disassemblyDescription ?? '',
         "disabled": isAddToContainer.value,
+        "fieldKey":descriptionKey,
         "component": {
           "type": "input",
           "placeholder": "Please input the part description.",

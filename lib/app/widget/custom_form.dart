@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:car_wrecker/app/color/colors.dart';
 import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:car_wrecker/app/text/paragraph.dart';
@@ -25,14 +28,15 @@ class DynamicForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formValues = _getInitialFormValues();
-
     return Form(
       key: formKey,
       child: Column(
         children: [
           ...formFields.map((field) {
             String label = field['label'] ?? ''; // string
-            dynamic value = field['value'] ?? ''; // any
+            dynamic value = formData[field['prop']];//field['value'] ?? ''; // any
+            value ??= field['value'] ?? '';
+            //dynamic value = field['value'] ?? ''; // any
             Map<String, dynamic> component =
                 field['component'] ?? {}; // type,fieldType,
             List<dynamic> rules = field['rules'] ?? [];
@@ -95,6 +99,7 @@ class DynamicForm extends StatelessWidget {
                   }
                 }
                 if (rule.containsKey('pattern')) {
+                  if(formData[prop] == '' || formData[prop] == null) return null;
                   if (!RegExp(rule['pattern'])
                       .hasMatch(formData[prop].toString())) {
                     return rule['message'];
@@ -131,14 +136,21 @@ class DynamicForm extends StatelessWidget {
             if (component['type'] == 'widget') {
               formField = widget;
             } else if (component['type'] == 'input') {
+               value??="";
+               if(value=='null'){
+                 value='';
+               }
               formField = Column(
                 children: [
                   fieldTop,
                   TextFormField(
+                    // controller: TextEditingController(text: component['fieldType'] == 'number'
+                    //     ? (value == null ? '' : value.toString())
+                    //     : value),
                     autovalidateMode: trigger,
-                    initialValue: component['fieldType'] == 'number'
+                    initialValue: '${component['fieldType'] == 'number'
                         ? (value == null ? '' : value.toString())
-                        : value,
+                        : value}',
                     enabled: !disabled,
                     key: fieldKey,
                     // key: field1Key,
@@ -161,8 +173,8 @@ class DynamicForm extends StatelessWidget {
                             field['validatorMsg'] =
                                 'Please enter the correct number.';
                           }
-                          formValues[prop] = double.parse(value);
-                          formDataChange(prop, double.parse(value));
+                          formValues[prop] = num.parse(value);
+                          formDataChange(prop, num.parse(value));
                         }
                       } else {
                         formValues[prop] = value;
@@ -305,6 +317,7 @@ class DynamicForm extends StatelessWidget {
                 initialValue: value,
                 enabled: !disabled,
                 maxLines: null,
+                key: fieldKey,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   labelText: label,

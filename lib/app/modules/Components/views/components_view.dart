@@ -40,7 +40,7 @@ class ComponentsView extends GetView<ComponentsController> {
               controller.isExist.value,
           child: FloatingActionButton(
             // onPressed: controller.scanQRCode,containerAdd
-            onPressed: controller.containerAdd,
+            onPressed: controller.scanQRCode,
             child: Icon(Icons.qr_code_scanner),
           ),
         ),
