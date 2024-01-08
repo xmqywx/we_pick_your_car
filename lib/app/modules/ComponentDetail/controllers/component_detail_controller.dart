@@ -123,7 +123,7 @@ class ComponentDetailController extends GetxController {
         "prop": "disassemblyDescription",
         "value": wreckedData.value.disassemblyDescription ?? '',
         "disabled": isAddToContainer.value,
-        "fieldKey":descriptionKey,
+        "fieldKey": descriptionKey,
         "component": {
           "type": "input",
           "placeholder": "Please input the part description.",
@@ -186,10 +186,16 @@ class ComponentDetailController extends GetxController {
       } else {
         isAddToContainer.value = false;
       }
-      canAddToContainer.value = wreckedData.value.containerNumber == null;
+      canAddToContainer.value = wreckedData.value.containerNumber == null ||
+          wreckedData.value.containerNumber == '';
       argContainerNumber.value = arguments.value['containerNumber'] ?? '';
-      if (isAddToContainer.value && !canAddToContainer.value) {
-        tip();
+      if (isAddToContainer.value) {
+        if (!canAddToContainer.value) {
+          tip();
+        } else if (wreckedData.value.disassemblyCategory ==
+            'Catalytic Converter') {
+          tipCC();
+        }
       }
       setFormList();
     }
@@ -199,6 +205,12 @@ class ComponentDetailController extends GetxController {
     showCustomSnackbar(
         message:
             'The component is in container ${wreckedData.value.containerNumber}.',
+        status: '3');
+  }
+
+  tipCC() {
+    showCustomSnackbar(
+        message: 'Unable to add Catalytic Converter to container.',
         status: '3');
   }
 

@@ -89,10 +89,18 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                               if (controller.isAddToContainer.value)
                                 PassButton(
                                   onPressed: controller.canAddToContainer.value
-                                      ? controller.handleToAddContainer
+                                      ? (controller.wreckedData.value
+                                                  .disassemblyCategory ==
+                                              'Catalytic Converter'
+                                          ? controller.tipCC
+                                          : controller.handleToAddContainer)
                                       : controller.tip,
                                   btnColor: AppColors.logoBgc,
-                                  disabled: !controller.canAddToContainer.value,
+                                  disabled:
+                                      !controller.canAddToContainer.value ||
+                                          controller.wreckedData.value
+                                                  .disassemblyCategory ==
+                                              'Catalytic Converter',
                                   text:
                                       // 'Add to ${controller.argContainerNumber}',
                                       'Add',

@@ -300,6 +300,8 @@ class ComponentsController extends GetxController {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       String? str = await Scan.parse(pickedFile.path);
+      print(
+          "===================================,$str, ====================================");
       String? dn = parseDn(str);
       handleScanResult(dn);
     }

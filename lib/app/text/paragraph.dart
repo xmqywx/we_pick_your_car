@@ -12,6 +12,7 @@ class MyParagraph extends StatelessWidget {
   TextAlign align;
   FontWeight fontWeight;
   TextDecoration textDecoration;
+  double height;
   MyParagraph(
       {super.key,
       required this.text,
@@ -20,6 +21,7 @@ class MyParagraph extends StatelessWidget {
       this.color = AppColors.themeTextColor1,
       this.align = TextAlign.left,
       this.fontWeight = FontWeight.normal,
+      this.height = 1,
       this.textDecoration = TextDecoration.none});
 
   @override
@@ -33,6 +35,7 @@ class MyParagraph extends StatelessWidget {
           fontSize: ScreenAdapter.fontSize(fontSize),
           color: color,
           fontWeight: fontWeight,
+          height: height,
           decoration: textDecoration),
     );
   }

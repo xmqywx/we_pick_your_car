@@ -17,6 +17,7 @@ import '../templates/JobFormContainer.dart';
 import '../../../widget/image_preview_screen.dart' as ImagePreviewScreenWidget;
 import '../../../services/format_date.dart';
 import '../../../widget/passButton.dart';
+import '../templates/jobAgreenmentView.dart';
 
 class JobDetailsView extends GetView<JobDetailsController> {
   const JobDetailsView({Key? key}) : super(key: key);
@@ -339,17 +340,16 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                         0,
                                         ScreenAdapter.width(35),
                                         ScreenAdapter.width(35)),
-                                    child: Builder(
-                                      builder: (context) {
-                                        return DynamicForm(
-                                            formKey: controller.carFormKey,
-                                            formFields:
-                                                controller.carFormList.value,
-                                            formData: controller.carInfoForm.value,
-                                            formDataChange:
-                                                controller.carFormDataChange);
-                                      }
-                                    ),
+                                    child: Builder(builder: (context) {
+                                      return DynamicForm(
+                                          formKey: controller.carFormKey,
+                                          formFields:
+                                              controller.carFormList.value,
+                                          formData:
+                                              controller.carInfoForm.value,
+                                          formDataChange:
+                                              controller.carFormDataChange);
+                                    }),
                                   )
                                 ])
                               ]),
@@ -403,6 +403,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                           SizedBox(
                                             height: ScreenAdapter.width(15),
                                           ),
+                                          JobAgreenmentView(),
                                           MyParagraph(
                                             text: "Signature",
                                             fontSize: 45,
@@ -425,21 +426,19 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                         0,
                                         ScreenAdapter.width(35),
                                         ScreenAdapter.width(35)),
-                                    child: Builder(
-                                      builder: (context) {
-                                        // print(controller.customerFormList.value,);
-                                        // print(controller.customerInfoForm.value,);
-                                        return DynamicForm(
-                                          formKey: controller.customerFormKey,
-                                          formFields:
-                                              controller.customerFormList.value,
-                                          formData:
-                                              controller.customerInfoForm.value,
-                                          formDataChange:
-                                              controller.customerFormDataChange,
-                                        );
-                                      }
-                                    ),
+                                    child: Builder(builder: (context) {
+                                      // print(controller.customerFormList.value,);
+                                      // print(controller.customerInfoForm.value,);
+                                      return DynamicForm(
+                                        formKey: controller.customerFormKey,
+                                        formFields:
+                                            controller.customerFormList.value,
+                                        formData:
+                                            controller.customerInfoForm.value,
+                                        formDataChange:
+                                            controller.customerFormDataChange,
+                                      );
+                                    }),
                                   ),
                                 ]),
                                 if (controller.isEdit.value)
@@ -472,24 +471,22 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                           0,
                                           ScreenAdapter.width(35),
                                           ScreenAdapter.width(35)),
-                                      child: Builder(
-                                        builder: (context) {
-                                          // print(controller
-                                          //     .secondaryPersonFormList.value);
-                                          // print(controller
-                                          //     .secondaryPersonInfoForm.value);
-                                          return DynamicForm(
-                                            formKey:
-                                                controller.secondaryPersonFormKey,
-                                            formFields: controller
-                                                .secondaryPersonFormList.value,
-                                            formData: controller
-                                                .secondaryPersonInfoForm.value,
-                                            formDataChange: controller
-                                                .secondaryPersonFormDataChange,
-                                          );
-                                        }
-                                      ),
+                                      child: Builder(builder: (context) {
+                                        // print(controller
+                                        //     .secondaryPersonFormList.value);
+                                        // print(controller
+                                        //     .secondaryPersonInfoForm.value);
+                                        return DynamicForm(
+                                          formKey:
+                                              controller.secondaryPersonFormKey,
+                                          formFields: controller
+                                              .secondaryPersonFormList.value,
+                                          formData: controller
+                                              .secondaryPersonInfoForm.value,
+                                          formDataChange: controller
+                                              .secondaryPersonFormDataChange,
+                                        );
+                                      }),
                                     )
                                   ])
                               ]),
@@ -504,30 +501,29 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                         0,
                                         ScreenAdapter.width(35),
                                         ScreenAdapter.width(35)),
-                                    child: Builder(
-                                      builder: (context) {
-
-                                        return Obx(() {
-                                          //print('------------------------------>${controller.isBankDetailShow.value}');
-                                          return DynamicForm(
-                                            formKey: controller.paymentFormKey,
-                                            formFields:
-                                            controller.paymentFormList.value,
-                                            formData: controller.orderInfoForm.value,
-                                            formDataChange:
-                                            controller.orderFormDataChange,
-                                          );
-                                        });
+                                    child: Builder(builder: (context) {
+                                      return Obx(() {
+                                        //print('------------------------------>${controller.isBankDetailShow.value}');
                                         return DynamicForm(
                                           formKey: controller.paymentFormKey,
                                           formFields:
                                               controller.paymentFormList.value,
-                                          formData: controller.orderInfoForm.value,
+                                          formData:
+                                              controller.orderInfoForm.value,
                                           formDataChange:
                                               controller.orderFormDataChange,
                                         );
-                                      }
-                                    ),
+                                      });
+                                      return DynamicForm(
+                                        formKey: controller.paymentFormKey,
+                                        formFields:
+                                            controller.paymentFormList.value,
+                                        formData:
+                                            controller.orderInfoForm.value,
+                                        formDataChange:
+                                            controller.orderFormDataChange,
+                                      );
+                                    }),
                                   )
                                 ])
                               ]),

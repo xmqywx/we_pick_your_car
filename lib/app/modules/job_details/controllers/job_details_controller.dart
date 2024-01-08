@@ -165,7 +165,7 @@ class JobDetailsController extends GetxController
         "prop": "deposit",
         "disabled": depositDisabled,
         "value": orderInfo.value.deposit ?? "",
-        "fieldKey":fieldDepositKey,
+        "fieldKey": fieldDepositKey,
         "component": {
           "type": "input",
           "fieldType": "number",
@@ -183,11 +183,13 @@ class JobDetailsController extends GetxController
           //     },
           //     "message": "The container number has already been used.",
           //   },
-          if(!depositDisabled && orderInfoForm.value['deposit'] != '' && orderInfoForm.value['deposit'] != null)
-          {
-            "pattern": r'^[0-9]*\.?[0-9]+$',
-            "message": "Deposit cannot be negative."
-          },
+          if (!depositDisabled &&
+              orderInfoForm.value['deposit'] != '' &&
+              orderInfoForm.value['deposit'] != null)
+            {
+              "pattern": r'^[0-9]*\.?[0-9]+$',
+              "message": "Deposit cannot be negative."
+            },
           {
             "judge": formatterToNum(orderInfoForm.value['deposit']) +
                     formatterToNum(orderInfoForm.value['deduction']) >
@@ -345,7 +347,7 @@ class JobDetailsController extends GetxController
         "disabled": !isEdit.value,
         "hidden": !isBankDetailShow.value,
         "value": orderInfo.value.customerName ?? "",
-        "fieldKey":customerKey,
+        "fieldKey": customerKey,
         "component": {
           "type": "input",
           "placeholder": "Please input the customer name."
@@ -360,7 +362,7 @@ class JobDetailsController extends GetxController
         "disabled": !isEdit.value,
         "hidden": !isBankDetailShow.value,
         "value": orderInfo.value.bankName ?? "",
-        "fieldKey":bankKey,
+        "fieldKey": bankKey,
         "component": {
           "type": "input",
           "placeholder": "Please input the bank name."
@@ -372,7 +374,7 @@ class JobDetailsController extends GetxController
       {
         "label": "BSB No",
         "prop": "bsbNo",
-        "fieldKey":bSBKey,
+        "fieldKey": bSBKey,
         "disabled": !isEdit.value,
         "hidden": !isBankDetailShow.value,
         "value": orderInfo.value.bsbNo,
@@ -389,7 +391,7 @@ class JobDetailsController extends GetxController
         "label": "Accounts No",
         "prop": "accountsNo",
         "disabled": !isEdit.value,
-        "fieldKey":accountNoKey,
+        "fieldKey": accountNoKey,
         "hidden": !isBankDetailShow.value,
         "value": orderInfo.value.accountsNo,
         "component": {
@@ -467,6 +469,7 @@ class JobDetailsController extends GetxController
       return true;
     }
   }
+
   late GlobalKey<State<StatefulWidget>> commentsKey = GlobalKey();
   late GlobalKey<State<StatefulWidget>> askExpectingKey = GlobalKey();
   setQuestionnaireFormList() {
@@ -606,7 +609,7 @@ class JobDetailsController extends GetxController
       {
         "label": "Comments",
         "prop": "commentText",
-        "fieldKey":commentsKey,
+        "fieldKey": commentsKey,
         "disabled": !isEdit.value,
         "value": orderInfo.value.commentText ?? '',
         "component": {
@@ -619,7 +622,7 @@ class JobDetailsController extends GetxController
         "label": "How much are you expecting for the car?",
         "prop": "askingPrice",
         "disabled": !isEdit.value,
-        "fieldKey":askExpectingKey,
+        "fieldKey": askExpectingKey,
         "value": orderInfo.value.askingPrice,
         "component": {
           "type": "input",
@@ -1469,7 +1472,7 @@ class JobDetailsController extends GetxController
       }
     }
 
-    if(secondaryPersonFormKey.currentState != null) {
+    if (secondaryPersonFormKey.currentState != null) {
       if (!secondaryPersonFormKey.currentState!.validate()) {
         tabController.animateTo(4);
         return false;
@@ -1716,33 +1719,51 @@ class JobDetailsController extends GetxController
   RxBool isAgreen = false.obs;
   RxMap<String, SnackbarController> snackbarAgreenment =
       <String, SnackbarController>{}.obs;
-  openBottomSheet() {
-    if (isEdit.value) {
-      if (Get.isSnackbarOpen) {
-        Get.closeCurrentSnackbar();
-      }
-      snackbarAgreenment = {
-        "key": showCustomPrompt(
-          marginBottom: 100,
-          duration: null,
-          tipWidget: JobAgreenment(
-            agreen: toAgreed,
-            cancel: disagreen,
-          ),
-        )
-      }.obs;
-    }
-  }
+  // openBottomSheet() {
+  //   if (isEdit.value) {
+  //     if (Get.isSnackbarOpen) {
+  //       Get.closeCurrentSnackbar();
+  //     }
+  //     snackbarAgreenment = {
+  //       "key": showCustomPrompt(
+  //         marginBottom: 100,
+  //         duration: null,
+  //         tipWidget: JobAgreenment(
+  //           agreen: toAgreed,
+  //           cancel: disagreen,
+  //         ),
+  //       )
+  //     }.obs;
+  //   }
+  // }
 
-  toAgreed() {
-    snackbarAgreenment['key']?.close();
-    bool? a = Get.isBottomSheetOpen;
-    if (a != null) {
-      if (a) {
-        // if isBottomSheetOpen is true
-        return;
-      }
-    }
+  // toAgreed() {
+  //   snackbarAgreenment['key']?.close();
+  //   bool? a = Get.isBottomSheetOpen;
+  //   if (a != null) {
+  //     if (a) {
+  //       // if isBottomSheetOpen is true
+  //       return;
+  //     }
+  //   }
+  //   Get.bottomSheet(
+  //     Container(
+  //       height: ScreenAdapter.height(2000),
+  //       // color: Colors.red,
+  //       child: GenerateSignature(
+  //         changeSignature: changeSignature,
+  //       ),
+  //     ),
+  //     enableDrag: false,
+  //     isScrollControlled: true,
+  //   );
+  // }
+
+  // disagreen() {
+  //   snackbarAgreenment['key']?.close();
+  // }
+
+  openBottomSheet() {
     Get.bottomSheet(
       Container(
         height: ScreenAdapter.height(2000),
@@ -1754,10 +1775,6 @@ class JobDetailsController extends GetxController
       enableDrag: false,
       isScrollControlled: true,
     );
-  }
-
-  disagreen() {
-    snackbarAgreenment['key']?.close();
   }
 
   @override
