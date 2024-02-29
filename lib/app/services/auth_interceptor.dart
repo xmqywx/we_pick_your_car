@@ -31,20 +31,20 @@ class AuthInterceptor extends Interceptor {
             handler.resolve(r);
           },
           onError: (e) {
-            userController.loginOut();
-            showCustomSnackbar(message: "Token expires", status: '3');
+            // userController.loginOut();
+            // showCustomSnackbar(message: "Token expires", status: '3');
             handler.reject(e);
           },
         ).whenComplete(() => _isRefreshingToken = false); // 刷新完成，无论成功与否，重置标志位
-        return;
+        
       } else if((err.response?.statusCode == 401 || err.response?.statusCode == 403) && _isRefreshingToken) {
         // 如果刷新token失败（可能是refreshToken也过期了），处理登录失效逻辑
         _isRefreshingToken = false; // 重置标志位
         userController.loginOut();
         showCustomSnackbar(message: "Token expires", status: '3');
         handler.next(err); // 使用next而不是reject，以避免再次触发onError
-        
       } else {
+        print("test 333333333");
         handler.next(err);
       }
       return;
