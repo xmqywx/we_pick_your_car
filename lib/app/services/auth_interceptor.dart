@@ -32,7 +32,7 @@ class AuthInterceptor extends Interceptor {
           },
           onError: (e) {
             userController.loginOut();
-            showCustomSnackbar(message: "Token expires", status: '3');
+            showCustomSnackbar(message: "Token expires 1111", status: '3');
             handler.reject(e);
           },
         ).whenComplete(() => _isRefreshingToken = false); // 刷新完成，无论成功与否，重置标志位
@@ -41,7 +41,7 @@ class AuthInterceptor extends Interceptor {
         // 如果刷新token失败（可能是refreshToken也过期了），处理登录失效逻辑
         _isRefreshingToken = false; // 重置标志位
         userController.loginOut();
-        showCustomSnackbar(message: "Token expires", status: '3');
+        showCustomSnackbar(message: "Token expires22222", status: '3');
         handler.next(err); // 使用next而不是reject，以避免再次触发onError
         return;
       }

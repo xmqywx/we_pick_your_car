@@ -15,8 +15,8 @@ UserController userController = Get.Get.find<UserController>();
 //     Get.Get.find<IsLoadingController>();
 
 class HttpsClient {
-  // static String domain = "http://13.54.137.62/api/";
-  static String domain = "http://192.168.101.21:9000/dev/";
+  static String domain = "http://13.54.137.62/api/";
+  // static String domain = "http://192.168.101.21:9000/dev/";
 
   static Dio dio = Dio();
   static int _loadingCount = 0; // 记录当前显示的加载动画数量
@@ -55,7 +55,7 @@ class HttpsClient {
         }
         if (response.statusCode == 401) {
           userController.loginOut();
-          showCustomSnackbar(message: "Token expires", status: '3');
+          showCustomSnackbar(message: "Token expires 33333", status: '3');
         }
         return handler.next(response);
       },
@@ -69,7 +69,7 @@ class HttpsClient {
         }
         if (error.response?.statusCode == 401) {
           userController.loginOut();
-          showCustomSnackbar(message: "Token expires", status: '3');
+          showCustomSnackbar(message: "Token expires 4444444", status: '3');
         }
         return handler.next(error);
       },
