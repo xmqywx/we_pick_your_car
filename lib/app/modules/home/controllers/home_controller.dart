@@ -38,6 +38,8 @@ class HomeController extends GetxController {
 
   final GlobalKey tableKey = GlobalKey();
 
+  RxBool isLoading = false.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -83,8 +85,10 @@ class HomeController extends GetxController {
     // }
 
     // scrollControllerListener();
+    isLoading.value = true;
     await myController.initializationList();
     await myController.initializationJobViewList();
+    isLoading.value = false;
     // changFlag.value = !changFlag.value;
 
     // final tableComplexExample = tableKey.currentState;
@@ -97,9 +101,11 @@ class HomeController extends GetxController {
   //handleRefresh
 
   Future<void> handleRefresh() async {
+    isLoading.value = true;
     await myController.initializationList();
     await myController.initializationJobViewList();
     changFlag.value = !changFlag.value;
+    isLoading.value = false;
   }
 
   @override

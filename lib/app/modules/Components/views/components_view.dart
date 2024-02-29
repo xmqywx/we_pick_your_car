@@ -108,63 +108,53 @@ class ComponentsView extends GetView<ComponentsController> {
                           // ),
                         ]
                       : [
-                          CardContainer(
-                              crossAlign: CrossAxisAlignment.start,
-                              padding: EdgeInsets.fromLTRB(
-                                  ScreenAdapter.width(20),
-                                  ScreenAdapter.width(10),
-                                  ScreenAdapter.width(20),
-                                  ScreenAdapter.width(10)),
+                          MyCardContainer(
+                              crossAlign: CrossAxisAlignment.center,
+                              padding: EdgeInsets.all(ScreenAdapter.width(20)),
                               children: [
                                 Container(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: ScreenAdapter.width(40)),
+                                  margin: EdgeInsets.only(
+                                      top: ScreenAdapter.width(20),
+                                      bottom: ScreenAdapter.width(20)),
                                   child: MyParagraph(
                                     text:
-                                        "You currently have no unsealed containers. Do you want to add one?",
-                                    fontSize: 65,
-                                    // fontWeight: FontWeight.bold,
+                                        "You currently have no unsealed containers. Would you like to add one?",
+                                    fontSize: 55,
                                     align: TextAlign.center,
                                   ),
                                 ),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                        child: ClipOval(
-                                          child: Container(
-                                            width: ScreenAdapter.width(140),
-                                            height: ScreenAdapter.width(140),
-                                            decoration: BoxDecoration(
-                                                color: AppColors.white,
-                                                border: Border.all(
-                                                    width:
-                                                        ScreenAdapter.width(2),
-                                                    color: AppColors.accent),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        ScreenAdapter.width(
-                                                            70))),
-                                            child: Center(
-                                                child: Icon(
-                                              Icons.add,
-                                              color: AppColors.accent,
-                                              size: ScreenAdapter.width(50),
-                                            )),
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          Get.toNamed("/container-detail",
-                                              arguments: {
-                                                "isEdit": false,
-                                                "refresh":
-                                                    controller.handleRefresh
-                                              });
-                                        },
-                                      )
-                                    ]),
+                                ElevatedButton.icon(
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: ScreenAdapter.width(30),
+                                  ),
+                                  label: Text(
+                                    "Add Container",
+                                    style: TextStyle(
+                                      fontSize: ScreenAdapter.width(30),
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: AppColors.primary,
+                                    onPrimary: AppColors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(ScreenAdapter.width(20)),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: ScreenAdapter.width(20),
+                                      horizontal: ScreenAdapter.width(40),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Get.toNamed("/container-detail",
+                                        arguments: {
+                                          "isEdit": false,
+                                          "refresh": controller.handleRefresh
+                                        });
+                                  },
+                                ),
                                 SizedBox(
-                                  height: ScreenAdapter.width(35),
+                                  height: ScreenAdapter.width(20),
                                 )
                               ])
                         ],

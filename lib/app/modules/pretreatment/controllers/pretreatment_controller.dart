@@ -13,6 +13,9 @@ class PretreatmentController extends GetxController {
       Get.find<IsLoadingController>();
 
   final count = 0.obs;
+
+  RxBool isLoading = false.obs;
+
   RxList<Widget> initListView() {
     RxList<Widget> list = RxList<Widget>();
     myController.jobListPageData.forEach((value) {

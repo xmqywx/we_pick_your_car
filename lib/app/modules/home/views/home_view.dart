@@ -243,7 +243,7 @@ class HomeView extends GetView<HomeController> {
                 return Stack(
                   children: [
                     _appBar(),
-                    !controller.isLoadingController.isLoading.value
+                    !controller.isLoading.value
                         ? (controller.userController.isLogin.value
                             ? _HomeContent()
                             : _NoLogin())

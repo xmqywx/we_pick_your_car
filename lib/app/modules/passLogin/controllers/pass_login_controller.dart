@@ -24,19 +24,24 @@ class PassLoginController extends GetxController {
     super.onClose();
   }
 
+  RxBool isLoading = false.obs;
+
   Future<MessageModel> doLogin() async {
+    isLoading.value = true;
     var response = await httpsClient.post("/admin/base/open/login", data: {
       "username": usernameController.text,
       "password": passController.text,
     });
 
+     isLoading.value = false;
+
     if (response != null) {
       print(response);
       if (response.data["message"] == "success") {
         //保存用户信息
-        await Storage.setData("token", response.data["data"]["token"]);
+        await Storage.setData("token", response.data["data"]["token"], expires: response.data["data"]["expire"]);
         await Storage.setData(
-            "refreshToken", response.data["data"]["refreshToken"]);
+            "refreshToken", response.data["data"]["refreshToken"], expires: response.data["data"]["refreshExpire"]);
         await tabsController.getUserInfo();
         await userController.getUserInfo();
         // await tabsController.getJobList();

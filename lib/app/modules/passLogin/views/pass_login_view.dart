@@ -17,7 +17,7 @@ class PassLoginView extends GetView<PassLoginController> {
   const PassLoginView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -54,6 +54,7 @@ class PassLoginView extends GetView<PassLoginController> {
           PassButton(
               text: "Login",
               btnColor: AppColors.logoBgc,
+              isLoading: controller.isLoading.value,
               onPressed: () async {
                 // print("获取验证码");
                 if (controller.usernameController.text == "") {
@@ -87,6 +88,6 @@ class PassLoginView extends GetView<PassLoginController> {
           // )
         ],
       ),
-    );
+    ));
   }
 }

@@ -143,46 +143,79 @@ class DynamicForm extends StatelessWidget {
               formField = Column(
                 children: [
                   fieldTop,
-                  TextFormField(
-                    // controller: TextEditingController(text: component['fieldType'] == 'number'
-                    //     ? (value == null ? '' : value.toString())
-                    //     : value),
-                    autovalidateMode: trigger,
-                    initialValue: '${component['fieldType'] == 'number'
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.grey.withOpacity(0.2),
+                      //     spreadRadius: 1,
+                      //     blurRadius: 6,
+                      //     offset: Offset(0, 3),
+                      //   ),
+                      // ],
+                    ),
+                    child: TextFormField(
+                      autovalidateMode: trigger,
+                      initialValue: '${component['fieldType'] == 'number'
                         ? (value == null ? '' : value.toString())
                         : value}',
-                    enabled: !disabled,
-                    key: fieldKey,
-                    // key: field1Key,
-                    keyboardType: component['fieldType'] == 'number'
-                        ? TextInputType.number
-                        : TextInputType.text,
-                    decoration: InputDecoration(
-                      labelText: label,
-                      hintText: component['placeholder'],
-                    ),
-                    style: TextStyle(fontFamily: 'Roboto-Medium'),
-                    validator: inputValidator,
-                    onChanged: (value) {
-                      if (component['fieldType'] == 'number') {
-                        if (value == '') {
-                          formValues[prop] = null;
-                          formDataChange(prop, null);
-                        } else {
-                          if (double.tryParse(value) == null) {
-                            field['validatorMsg'] =
-                                'Please enter the correct number.';
+                      enabled: !disabled,
+                      key: fieldKey,
+                      keyboardType: component['fieldType'] == 'number'
+                          ? TextInputType.number
+                          : TextInputType.text,
+                      decoration: InputDecoration(
+                        labelText: label,
+                        hintText: component['placeholder'],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
+                        labelStyle: TextStyle(
+                          color: Colors.grey, // Adjusted label color
+                          fontSize: 16, // Adjusted font size
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.always, // Ensures label is always visible and does not float
+                      ),
+                      style: TextStyle(fontFamily: 'Roboto-Medium', fontSize: 16),
+                      validator: inputValidator,
+                      onChanged: (value) {
+                        if (component['fieldType'] == 'number') {
+                          if (value == '') {
+                            formValues[prop] = null;
+                            formDataChange(prop, null);
+                          } else {
+                            if (double.tryParse(value) == null) {
+                              field['validatorMsg'] = 'Please enter the correct number.';
+                            }
+                            formValues[prop] = num.parse(value);
+                            formDataChange(prop, num.parse(value));
                           }
-                          formValues[prop] = num.parse(value);
-                          formDataChange(prop, num.parse(value));
+                        } else {
+                          formValues[prop] = value;
+                          formDataChange(prop, value);
                         }
-                      } else {
-                        formValues[prop] = value;
-                        formDataChange(prop, value);
-                      }
-
-                      triggeredOnChange(value);
-                    },
+                        triggeredOnChange(value);
+                      },
+                    ),
                   ),
                   fieldBottom
                 ],
@@ -190,31 +223,81 @@ class DynamicForm extends StatelessWidget {
             } else if (component['type'] == 'select') {
               List<Map<String, dynamic>> options = component['options'];
 
-              formField = AbsorbPointer(
-                absorbing: disabled,
-                child: DropdownButtonFormField<String>(
-                  value: formData[prop] == '' ? null : formData[prop],
-                  onChanged: disabled
-                      ? null
-                      : (newValue) {
-                          formValues[prop] = newValue;
-                          formDataChange(prop, formValues[prop]);
-                          triggeredOnChange(newValue);
-                        },
-                  items: options.map((option) {
-                    return DropdownMenuItem<String>(
-                      value: option['value'],
-                      child: MyParagraph(
-                        text: option['label'],
-                        fontSize: 55,
+              formField = Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  // boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.grey.withOpacity(0.2),
+                  //         spreadRadius: 1,
+                  //         blurRadius: 6,
+                  //         offset: Offset(0, 3),
+                  //       ),
+                  //     ],
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: AbsorbPointer(
+                  absorbing: disabled,
+                  child: DropdownButtonFormField<String>(
+                    value: formData[prop] == '' ? null : formData[prop],
+                    onChanged: disabled
+                        ? null
+                        : (newValue) {
+                            formValues[prop] = newValue;
+                            formDataChange(prop, formValues[prop]);
+                            triggeredOnChange(newValue);
+                          },
+                    items: options.map((option) {
+                      return DropdownMenuItem<String>(
+                        value: option['value'],
+                        child: Container(
+                          width: 200, // Adjusted width to make dropdown smaller
+                          child: Text(
+                            option['label'],
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Medium',
+                              fontSize: 16, // Adjusted font size to match input fields
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      labelText: label,
+                      hintText: component['placeholder'],
+                      
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
+                        ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted padding to match input fields
+                      labelStyle: TextStyle(
+                        color: Colors.grey, // Adjusted label color to match input fields
+                        fontFamily: 'Roboto-Medium',
+                        fontSize: 16, // Adjusted font size to match input fields
                       ),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: label,
-                    labelStyle: TextStyle(fontFamily: 'Roboto-Medium'),
-                    hintText: component['placeholder'],
-                    hintStyle: TextStyle(fontFamily: 'Roboto-Medium'),
+                      hintStyle: TextStyle(
+                        fontFamily: 'Roboto-Medium',
+                        fontSize: 16, // Adjusted font size to match input fields
+                      ),
+                    ),
+                    isExpanded: false, // Adjusted to reduce the width of the dropdown
                   ),
                 ),
               );
@@ -248,16 +331,111 @@ class DynamicForm extends StatelessWidget {
 
               formField = FormField<DateTime?>(
                 builder: (FormFieldState<DateTime?> state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      datePickerField,
-                      if (state.errorText != null)
-                        Text(
-                          state.errorText!,
-                          style: TextStyle(color: Colors.red),
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.grey.withOpacity(0.2),
+                      //     spreadRadius: 1,
+                      //     blurRadius: 6,
+                      //     offset: Offset(0, 3),
+                      //   ),
+                      // ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () async {
+                                  await showDatePicker(
+                                    context: context,
+                                    initialDate: handleParse(date: formData[prop]),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                  ).then((value) {
+                                    if (value == null) return;
+                                    formValues[prop] =
+                                        handleFormat(date: value, format: "dd-MM-yyyy");
+                                    formDataChange(prop, formValues[prop]);
+                                    triggeredOnChange(value);
+                                  }).catchError((e) {
+                                    print(e);
+                                  });
+                                },
+                                child: InputDecorator(
+                                  decoration: InputDecoration(
+                                    labelText: label,
+                                    hintText: component['placeholder'],
+                                    border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
                         ),
-                    ],
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
+                        ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontFamily: 'Roboto-Medium',
+                                      fontSize: 16,
+                                    ),
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Roboto-Medium',
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  child: MyParagraph(text: formData[prop] ?? component['placeholder']),
+                                ),
+                              ),
+                            ),
+                            // IconButton(
+                            //   icon: Icon(Icons.calendar_today),
+                            //   onPressed: () async {
+                            //     await showDatePicker(
+                            //       context: context,
+                            //       initialDate: handleParse(date: formData[prop]),
+                            //       firstDate: DateTime(2000),
+                            //       lastDate: DateTime(2100),
+                            //     ).then((value) {
+                            //       if (value == null) return;
+                            //       formValues[prop] =
+                            //           handleFormat(date: value, format: "dd-MM-yyyy");
+                            //       formDataChange(prop, formValues[prop]);
+                            //       triggeredOnChange(value);
+                            //     }).catchError((e) {
+                            //       print(e);
+                            //     });
+                            //   },
+                            // ),
+                          ],
+                        ),
+                        if (state.errorText != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              state.errorText!,
+                              style: TextStyle(color: Colors.red, fontSize: 14),
+                            ),
+                          ),
+                      ],
+                    ),
                   );
                 },
                 validator: (value) {
@@ -266,10 +444,8 @@ class DynamicForm extends StatelessWidget {
                     field['validatorMsg'] = null;
                     return msg;
                   }
-                  // 遍历rules进行校验
                   for (var rule in rules) {
-                    if (rule.containsKey('require') &&
-                        rule['require'] == true) {
+                    if (rule.containsKey('require') && rule['require'] == true) {
                       if (formData[prop] == null) {
                         return rule['message'];
                       }
@@ -292,46 +468,109 @@ class DynamicForm extends StatelessWidget {
                 },
               );
             } else if (component['type'] == 'checkbox') {
-              formField = Row(
-                children: [
-                  SizedBox(
-                    child: MyParagraph(
-                      text: label,
+              formField = Container(
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                margin: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey.withOpacity(0.3), width: 1),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 16,
+                          fontFamily: 'Roboto-Bold',
+                        ),
+                      ),
                     ),
-                  ),
-                  Checkbox(
-                    value: !!formData[prop],
-                    onChanged: disabled
-                        ? null
-                        : (newValue) {
-                            formValues[prop] = newValue;
-                            formDataChange(prop, newValue);
-                            triggeredOnChange(value);
-                          },
-                  ),
-                  const SizedBox(width: 8), // 设置合适的间距
-                ],
+                    Transform.scale(
+                      scale: 1.5,
+                      child: Checkbox(
+                        value: formData[prop] ?? false,
+                        onChanged: disabled
+                            ? null
+                            : (newValue) {
+                                formValues[prop] = newValue;
+                                formDataChange(prop, newValue);
+                                triggeredOnChange(value);
+                              },
+                        activeColor: AppColors.primary,
+                        checkColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else if (component['type'] == 'textarea') {
-              formField = TextFormField(
-                initialValue: value,
-                enabled: !disabled,
-                maxLines: null,
-                key: fieldKey,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  labelText: label,
-                  hintText: component['placeholder'],
+              formField = Container(
+                // padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                margin: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.withOpacity(0.2),
+                  //     spreadRadius: 1,
+                  //     blurRadius: 6,
+                  //     offset: Offset(0, 3),
+                  //   ),
+                  // ],
                 ),
-                style: const TextStyle(fontFamily: 'Roboto-Medium'),
-                // validator: (value) {
-                //   // Validation logic
-                // },
-                onChanged: (value) {
-                  formValues[prop] = value;
-                  formDataChange(prop, value);
-                  triggeredOnChange(value);
-                },
+                child: TextFormField(
+                  initialValue: value,
+                  enabled: !disabled,
+                  maxLines: null,
+                  key: fieldKey,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    labelText: label,
+                    hintText: component['placeholder'],
+                    border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
+                        labelStyle: TextStyle(
+                          color: Colors.grey, // Adjusted label color
+                          fontSize: 16, // Adjusted font size
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.always, 
+                  ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily: 'Roboto-Medium',
+                  ),
+                  onChanged: (value) {
+                    formValues[prop] = value;
+                    formDataChange(prop, value);
+                    triggeredOnChange(value);
+                  },
+                ),
               );
             } else if (component['type'] == 'uploadImage') {
               List<String> imagesFile;
@@ -354,9 +593,13 @@ class DynamicForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: ScreenAdapter.width(15)),
+                    margin: EdgeInsets.only(left: 15),
                     child: MyParagraph(
                       text: label,
+                      // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
+                      color: Colors.grey, // Adjusted label color
+                        // fontSize: 16,
+                        fontFamily: 'Roboto-Medium'
                     ),
                   ),
                   ImagePickerWidget(
@@ -368,6 +611,7 @@ class DynamicForm extends StatelessWidget {
                       images: imagesFile,
                       isEditable: !disabled,
                       isOnlyCamera: component['isOnlyCamera']),
+                      SizedBox(height: 10,)
                 ],
               );
             } else if (component['type'] == 'switch') {

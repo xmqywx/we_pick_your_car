@@ -219,6 +219,7 @@ class ImagePickerWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.themeBorderColor1),
                 borderRadius: BorderRadius.circular(5),
+                color: AppColors.white
               ),
               alignment: Alignment.center,
               child: images.isEmpty

@@ -65,6 +65,7 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                                         Expanded(
                                             flex: 2,
                                             child: PassButton(
+                                              isLoading: controller.isLoading.value,
                                               onPressed: controller
                                                   .handleDeleteComponentFromThisContainer,
                                               btnColor: AppColors.redColor,
@@ -78,6 +79,7 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                                       Expanded(
                                         flex: 2,
                                         child: PassButton(
+                                          isLoading: controller.isLoading.value,
                                           onPressed: controller.formSubmit,
                                           btnColor: AppColors.logoBgc,
                                           text: 'Update',
@@ -88,6 +90,7 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
                                 ),
                               if (controller.isAddToContainer.value)
                                 PassButton(
+                                  isLoading: controller.isLoading.value,
                                   onPressed: controller.canAddToContainer.value
                                       ? (controller.wreckedData.value
                                                   .disassemblyCategory ==

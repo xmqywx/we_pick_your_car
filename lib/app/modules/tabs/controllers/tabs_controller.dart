@@ -94,6 +94,7 @@ class TabsController extends GetxController {
       searchData.addAll(filterDataCopy.value);
     }
     print(searchData);
+    jobListIsLoading.value = true;
     var response =
         await httpsClient.post('/admin/job/info/list', data: searchData);
     if (response != null && response.data['message'] == 'success') {
@@ -102,6 +103,7 @@ class TabsController extends GetxController {
     } else {
       print(response.data['message']);
     }
+    jobListIsLoading.value = false;
   }
 
   getOrderList() async {
@@ -126,10 +128,14 @@ class TabsController extends GetxController {
     update();
   }
 
+  RxBool jobListIsLoading = false.obs;
+
   initializationJobViewList({Map? filterData}) async {
     // await getUserInfo();
+    jobListIsLoading.value = true;
     await userController.getUserInfo();
     await getJobListPageData(filterData: filterData);
+    jobListIsLoading.value = false;
   }
 
   initTabs() async {

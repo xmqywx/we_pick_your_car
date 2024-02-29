@@ -416,60 +416,36 @@ class _CalendarHeader extends StatelessWidget {
             width: 120.0,
             child: Text(
               headerText,
-              style: TextStyle(fontSize: 26.0),
+              style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onTodayButtonTap,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
-                margin: EdgeInsets.only(right: 10, left: 10),
-                child: Image.asset(
-                  "assets/images/icon_date.png",
-                  width: ScreenAdapter.fontSize(50),
-                ),
-              ),
-            ),
+          IconButton(
+            icon: Icon(Icons.today, color: AppColors.themeColor1),
+            onPressed: onTodayButtonTap,
+            tooltip: 'Go to today',
           ),
           if (clearButtonVisible)
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: onClearButtonTap,
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
-                  margin: EdgeInsets.only(right: 10, left: 10),
-                  child: Image.asset(
-                    "assets/images/icon_clear.png",
-                    width: ScreenAdapter.fontSize(50),
-                  ),
-                ),
-              ),
+            IconButton(
+              icon: Icon(Icons.clear_all, color: AppColors.darkRedColor),
+              onPressed: onClearButtonTap,
+              tooltip: 'Clear selection',
             ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: reflashButton,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
-                margin: EdgeInsets.only(right: 10, left: 10),
-                child: Image.asset(
-                  "assets/images/icon_refresh.png",
-                  width: ScreenAdapter.fontSize(62),
-                ),
-              ),
-            ),
+          IconButton(
+            icon: Icon(Icons.refresh, color: AppColors.darkGreenColor),
+            onPressed: reflashButton,
+            tooltip: 'Refresh',
           ),
           const Spacer(),
           IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: Icon(Icons.chevron_left, color: AppColors.darkBlueColor),
             onPressed: onLeftArrowTap,
+            tooltip: 'Previous month',
           ),
           IconButton(
-            icon: Icon(Icons.chevron_right),
+            icon: Icon(Icons.chevron_right, color: AppColors.darkBlueColor),
             onPressed: onRightArrowTap,
+            tooltip: 'Next month',
           ),
         ],
       ),

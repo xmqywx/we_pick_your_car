@@ -11,6 +11,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import '../color/colors.dart';
+import './dashedRect.dart';
 
 Future<File?> saveImageToFile(Uint8List? imageBytes) async {
   if (imageBytes == null) {
@@ -76,15 +77,18 @@ class _GenerateSignatureState extends State<GenerateSignature> {
         children: <Widget>[
           Expanded(
             child: Container(
-              color: AppColors.themeTextColor3,
+              color: AppColors.white,
               child: Container(
                 margin: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  border:
-                      Border.all(color: AppColors.themeTextColor3, width: 1),
+                  // border: Border.all(
+                  //   color: AppColors.themeTextColor3,
+                  //   width: 1,
+                  //   style: BorderStyle.solid, // Simulating a dotted line effect by alternating between solid and transparent colors
+                  // ),
                   color: AppColors.white,
                 ),
-                child: Signature(
+                child: DashedRect(child: Signature(
                   color: color,
                   key: _sign,
                   onSign: () {
@@ -94,7 +98,7 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                   },
                   backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                   strokeWidth: strokeWidth,
-                ),
+                ),)
               ),
             ),
           ),
@@ -104,7 +108,8 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                   maxHeight: 200.0,
                   child: Image.memory(_img.buffer.asUint8List())),
           Container(
-            color: AppColors.themeTextColor3,
+            color: AppColors.white,
+            padding: EdgeInsets.only(bottom: 8),
             child: Column(
               children: <Widget>[
                 Row(
@@ -160,34 +165,43 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                           debugPrint("cleared");
                         },
                         child: Text("Clear")),
+                         SizedBox(
+                      width: 10,
+                    ),
+                    MaterialButton(
+                        color: AppColors.themeTextColor3,
+                        onPressed: () {
+                        Get.back();
+                        },
+                        child: Text("Cancel")),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    MaterialButton(
-                        onPressed: () {
-                          setState(() {
-                            color = color == Colors.black
-                                ? AppColors.logoBgc
-                                : Colors.black;
-                          });
-                          debugPrint("change color");
-                        },
-                        child: Text("Change color")),
-                    MaterialButton(
-                        onPressed: () {
-                          setState(() {
-                            int min = 1;
-                            int max = 10;
-                            int selection = min + (Random().nextInt(max - min));
-                            strokeWidth = selection.roundToDouble();
-                            debugPrint("change stroke width to $selection");
-                          });
-                        },
-                        child: Text("Change stroke width")),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: <Widget>[
+                //     MaterialButton(
+                //         onPressed: () {
+                //           setState(() {
+                //             color = color == Colors.black
+                //                 ? AppColors.logoBgc
+                //                 : Colors.black;
+                //           });
+                //           debugPrint("change color");
+                //         },
+                //         child: Text("Change color")),
+                //     MaterialButton(
+                //         onPressed: () {
+                //           setState(() {
+                //             int min = 1;
+                //             int max = 10;
+                //             int selection = min + (Random().nextInt(max - min));
+                //             strokeWidth = selection.roundToDouble();
+                //             debugPrint("change stroke width to $selection");
+                //           });
+                //         },
+                //         child: Text("Change stroke width")),
+                //   ],
+                // ),
               ],
             ),
           )

@@ -36,7 +36,7 @@ class PretreatmentView extends GetView<PretreatmentController> {
                               0,
                               ScreenAdapter.height(24)),
                           children: [
-                            !controller.isLoadingController.isLoading.value
+                            !controller.myController.jobListIsLoading.value
                                 ? (Column(
                                     children:
                                         controller.initListView().length > 0
@@ -116,31 +116,53 @@ class _CustomAppBarState extends State<CustomAppBar> {
             child: Container(
               // height: ScreenAdapter.height(86.4),
               padding: EdgeInsets.zero,
-              margin: EdgeInsets.zero,
+              margin: const EdgeInsets.symmetric(vertical: 12),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     // flex: 1,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 5),
-                      // height: ScreenAdapter.height(86.4),
+                      constraints: BoxConstraints(maxHeight: 30),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(43.2)),
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
                       child: TextField(
                         focusNode: _focusNode,
                         controller: widget.searchController,
-                        // scrollPadding: EdgeInsets.zero,
                         decoration: InputDecoration(
-                            hintText: 'Search',
-                            border: InputBorder.none,
-                            isDense: true,
-                            contentPadding: EdgeInsets.zero,
-                            // filled: true,
-                            // 设置背景色
-                            fillColor: AppColors.lightBlueColor),
+                          hintText: 'Search',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: AppColors.white,
+                          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                          suffixIcon: Container(
+                            padding: EdgeInsets.only(top: 0),
+                            margin: EdgeInsets.only(right: 0),
+                            constraints: BoxConstraints(maxHeight: 30, maxWidth: 30), 
+                            child: IconButton(
+                              onPressed: () {
+                                widget.keyWordFilter!();
+                                _focusNode.unfocus();
+                              },
+                              icon: Icon(Icons.search, color: AppColors.darkBlueColor, size: 24), 
+                              padding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ),
                         style: TextStyle(
                           fontFamily: "Roboto-Medium",
                         ),
@@ -148,53 +170,75 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      widget.keyWordFilter!();
-                      _focusNode.unfocus();
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      color: AppColors.darkBlueColor,
+                  // IconButton(
+                  //   padding: EdgeInsets.zero,
+                  //   onPressed: () {
+                  //     widget.keyWordFilter!();
+                  //     _focusNode.unfocus();
+                  //   },
+                  //   icon: Icon(
+                  //     Icons.search,
+                  //     color: AppColors.darkBlueColor,
+                  //   ),
+                  //   iconSize: ScreenAdapter.height(86.4),
+                  // ),
+                  SizedBox(width: 10,),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(15), // Adjusted for a 30x30 size to maintain circular shape
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    iconSize: ScreenAdapter.height(86.4),
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      widget.clearFilter!();
-                      _focusNode.unfocus();
-                    },
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.grey,
+                    child: IconButton(
+                      onPressed: () {
+                        widget.clearFilter!();
+                        _focusNode.unfocus();
+                      },
+                      icon: Icon(
+                        Icons.refresh,
+                        color: Colors.blueGrey[900],
+                        size: 18, // Adjusted icon size for the new container size
+                      ),
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ],
               ),
             )),
         Container(
-          height: ScreenAdapter.height(112.32),
+          height: ScreenAdapter.height(120),
           color: AppColors.white,
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                  flex: 1,
-                  // width: ScreenAdapter.width(300),
-                  child: Center(
+                flex: 1,
+                child: Container(
+                  height: ScreenAdapter.height(90),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.greyColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: widget.selectStatusValue,
-                      underline: Text(""),
+                      isExpanded: true,
+                      icon: Icon(Icons.keyboard_arrow_down, color: AppColors.darkBlueColor),
                       style: TextStyle(
-                          fontFamily: "Roboto-Medium",
-                          color: AppColors.themeTextColor1),
-                      // dropdownColor: Colors.transparent,
-                      // icon: const Icon(Icons.arrow_drop_down),
-                      // alignment: AlignmentDirectional.center,
-                      iconSize: 24,
-                      // elevation: 16,
+                        fontFamily: "Roboto-Medium",
+                        color: AppColors.themeTextColor1,
+                      ),
                       onChanged: (String? newValue) {
                         setState(() {
                           _statusDropdownValue = newValue!;
@@ -209,27 +253,34 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         );
                       }).toList(),
                     ),
-                  )),
+                  ),
+                ),
+              ),
+              SizedBox(width: 20),
               Container(
                 width: 1,
                 height: ScreenAdapter.height(54.72),
-                color: AppColors.verDrvider,
+                color: AppColors.greyColor,
               ),
+              SizedBox(width: 20),
               Expanded(
-                  // width: ScreenAdapter.width(300),
-                  flex: 1,
-                  child: Center(
+                flex: 1,
+                child: Container(
+                  height: ScreenAdapter.height(90),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.greyColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: widget.selectValue,
-                      underline: Text(""),
-                      // dropdownColor: Colors.transparent,
-                      // icon: const Icon(Icons.arrow_drop_down),
-                      // alignment: AlignmentDirectional.center,
-                      iconSize: 24,
+                      isExpanded: true,
+                      icon: Icon(Icons.keyboard_arrow_down, color: AppColors.darkBlueColor),
                       style: TextStyle(
-                          fontFamily: "Roboto-Medium",
-                          color: AppColors.themeTextColor1),
-                      // elevation: 16,
+                        fontFamily: "Roboto-Medium",
+                        color: AppColors.themeTextColor1,
+                      ),
                       onChanged: (String? newValue) {
                         setState(() {
                           _dropdownValue = newValue!;
@@ -244,11 +295,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         );
                       }).toList(),
                     ),
-                  )),
-              // Expanded(
-              //   flex: 1,
-              //   child:
-              // ),
+                  ),
+                ),
+              ),
             ],
           ),
         )

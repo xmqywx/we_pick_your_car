@@ -45,6 +45,8 @@ class JobDetailsController extends GetxController
     orderInfoForm.refresh();
   }
 
+  RxBool isLoading = false.obs;
+
   // job =======
   RxList otherJobs = [].obs;
   var jobInfo = Job().obs;
@@ -290,34 +292,55 @@ class JobDetailsController extends GetxController
         "component": {"type": "widget"},
         "widget": Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top: ScreenAdapter.width(35)),
-            padding: EdgeInsets.all(ScreenAdapter.width(25)),
+            margin: EdgeInsets.only(top: ScreenAdapter.width(20)),
+            padding: EdgeInsets.symmetric(
+                vertical: ScreenAdapter.width(20),
+                horizontal: ScreenAdapter.width(15)),
             decoration: BoxDecoration(
-                border: Border.all(
-              width: ScreenAdapter.width(1),
-            )),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(ScreenAdapter.width(30)),
+                border: Border.all(color: Colors.grey.withOpacity(0.3), width: 1)),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyParagraph(text: 'Price(ex GST)'),
-                    MyParagraph(text: '${orderInfoForm.value["priceExGST"]}'),
+                    MyParagraph(
+                      text: 'Price(ex GST)',
+                      fontWeight: FontWeight.normal,
+                    ),
+                    MyParagraph(
+                      text: '${orderInfoForm.value["priceExGST"]}',
+                      color: Colors.green,
+                    ),
                   ],
                 ),
+                SizedBox(height: ScreenAdapter.height(10)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyParagraph(text: 'GST'),
-                    MyParagraph(text: '${orderInfoForm.value["gst"]}'),
+                    MyParagraph(
+                      text: 'GST',
+                      fontWeight: FontWeight.normal,
+                    ),
+                    MyParagraph(
+                      text: '${orderInfoForm.value["gst"]}',
+                      color: Colors.red,
+                    ),
                   ],
                 ),
-                Divider(),
+                Divider(color: Colors.grey),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyParagraph(text: 'Price(inc GST)'),
-                    MyParagraph(text: '${orderInfoForm.value["gstAmount"]}'),
+                    MyParagraph(
+                      text: 'Price(inc GST)',
+                      fontWeight: FontWeight.normal,
+                    ),
+                    MyParagraph(
+                      text: '${orderInfoForm.value["gstAmount"]}',
+                      color: Colors.blue,
+                    ),
                   ],
                 ),
               ],
@@ -725,15 +748,41 @@ class JobDetailsController extends GetxController
                   if (orderInfoForm.value['pickupAddress'] != null)
                     tapToViewMap(orderInfoForm.value['pickupAddress']);
                 },
-          child: InputDecorator(
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: InputDecorator(
             decoration: InputDecoration(
               labelText: "Pickup Address",
-              labelStyle: TextStyle(fontFamily: 'Roboto-Medium'),
               hintText: "Please input the pickup address.",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
+              labelStyle: TextStyle(
+                color: Colors.grey, // Adjusted label color
+                fontSize: 16,
+                fontFamily: 'Roboto-Medium'
+              ),
+              floatingLabelBehavior: FloatingLabelBehavior.always, 
             ),
             child:
                 MyParagraph(text: orderInfoForm.value['pickupAddress'] ?? ''),
-          ),
+          ),)
         )
       },
       // {
@@ -1263,10 +1312,12 @@ class JobDetailsController extends GetxController
 
   //=======
   toGetJobAll() async {
+    isLoading.value = true;
     var res = await handleApi({
       "api": apiGetJobAll,
       "payload": {"jobID": arguments['id'], "orderID": arguments['orderID']}
     });
+    isLoading.value = false;
     if (res != null) {
       if (res['otherJobs'] != null) {
         otherJobs.value = res['otherJobs'];
@@ -1424,10 +1475,14 @@ class JobDetailsController extends GetxController
   }
    */
   toUpdate(data) async {
-    return await handleApi({"api": apiUpdateJobAll, "payload": data});
+    isLoading.value = true;
+    final res = await handleApi({"api": apiUpdateJobAll, "payload": data});
+    isLoading.value = false;
+    return res;
   }
 
   toUpdateFile() async {
+    isLoading.value = true;
     var res = await toUpdate({
       "orderDetail": {
         "id": orderInfoForm.value['id'],
@@ -1438,6 +1493,7 @@ class JobDetailsController extends GetxController
         "registrationDoc": orderInfoForm.value['registrationDoc'],
       },
     });
+    isLoading.value = false;
     if (res != null) {
       showCustomSnackbar(message: 'Successfully updated.', status: '1');
       await handleRefresh();
@@ -1670,11 +1726,13 @@ class JobDetailsController extends GetxController
         ),
         barrierDismissible: false);
     if (result == 'Ok') {
+      isLoading.value = true;
       var sendRes = await apiSendInvoice(
           name: customerInfoForm.value['firstName'],
           id: orderInfoForm.value['id'],
           price: orderInfoForm.value['actualPaymentPrice'],
           email: customerInfoForm.value['emailAddress']);
+      isLoading.value = false;
       if (sendRes == null) {
         showCustomSnackbar(
             message: 'Send failed, please try again later.', status: '3');

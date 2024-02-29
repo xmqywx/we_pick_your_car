@@ -64,6 +64,7 @@ class ContainerDetailView extends GetView<ContainerDetailController> {
                                 Expanded(
                                     flex: 1,
                                     child: PassButton(
+                                      isLoading: controller.isLoading.value,
                                       onPressed:
                                           controller.alertDeleteContainerDialog,
                                       btnColor: AppColors.redColor,
@@ -77,6 +78,7 @@ class ContainerDetailView extends GetView<ContainerDetailController> {
                               Expanded(
                                   flex: 1,
                                   child: PassButton(
+                                    isLoading: controller.isLoading.value,
                                     onPressed: controller.formSubmit,
                                     btnColor: AppColors.logoBgc,
                                     text: 'Submit',

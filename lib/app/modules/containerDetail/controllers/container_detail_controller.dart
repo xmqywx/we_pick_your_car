@@ -23,9 +23,13 @@ class ContainerDetailController extends GetxController {
     containerInfoForm.refresh();
   }
 
+  RxBool isLoading = false.obs;
+
   Future getContainerInfo() async {
+    isLoading.value = true;
     var response =
         await apiGetContainerInfo(id: arguments.value['containerValue']['id']);
+    isLoading.value = false;
     print(response);
     if (response != null && response.data['message'] == 'success') {
       return response.data['data'];
@@ -35,7 +39,9 @@ class ContainerDetailController extends GetxController {
   }
 
   Future handleApi(data) async {
+    isLoading.value = true;
     var response = await data['api'](data['payload']);
+    isLoading.value = false;
     if (response != null && response.data['message'] == 'success') {
       return response.data['data'];
     } else {
@@ -137,7 +143,7 @@ class ContainerDetailController extends GetxController {
         "value": containerInfo.value.startDeliverTime ?? '',
         "component": {
           "type": "datepicker",
-          "placeholder": "Please input the container number.",
+          "placeholder": "Please select the commence date.",
         },
         "rules": [
           {
@@ -356,10 +362,12 @@ class ContainerDetailController extends GetxController {
       containerInfoForm.value['status'] = 2;
       containerInfoForm.value['sealDate'] = getCurrentDate();
     }
+    isLoading.value = true;
     var response = await apiUpdateContainerById({
       ...containerInfoForm.value,
       "id": arguments.value['containerValue']['id']
     });
+    isLoading.value = false;
     if (response != null && response.data['message'] == 'success') {
       Get.back();
       if (arguments.value['refresh'] != null) {

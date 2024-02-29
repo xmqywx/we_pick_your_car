@@ -21,6 +21,9 @@ class ComponentDetailController extends GetxController {
   final formKey = GlobalKey<FormState>();
   RxBool fieldsDisabled = false.obs;
   final descriptionKey = GlobalKey();
+
+  RxBool isLoading = false.obs;
+
   setFormList() {
     formList.value = [
       {
@@ -157,7 +160,9 @@ class ComponentDetailController extends GetxController {
   }
 
   getComponentDetail(partId) async {
+    isLoading.value = true;
     var response = await apiGetComponentInfo(partId: partId);
+    isLoading.value = false;
     if (response != null && response.data['message'] == 'success') {
       return response.data['data'];
     } else {
@@ -167,7 +172,9 @@ class ComponentDetailController extends GetxController {
 
   setComponentDetail() async {
     if (arguments.value['componentId'] != null) {
+      isLoading.value = true;
       var response = await getComponentDetail(arguments.value['componentId']);
+      isLoading.value = false;
       wreckedData.value = Component.fromJson(response);
       containerStatus = wreckedData.value.containerStatus ?? -1;
       print("containerStatus, ${containerStatus}");
@@ -286,6 +293,7 @@ class ComponentDetailController extends GetxController {
   updatePart(
       {required Map data, String op = 'update', bool isNext = true}) async {
     final response;
+    isLoading.value = true;
     if (op == 'add_to_container') {
       response = await apiAddToComponent(data);
     } else if (op == 'delete_from_this_container') {
@@ -293,6 +301,8 @@ class ComponentDetailController extends GetxController {
     } else {
       response = await apiUpdateComponent(data);
     }
+
+    isLoading.value = false;
 
     if (response != null && response.data['message'] == 'success') {
       if (isNext) {

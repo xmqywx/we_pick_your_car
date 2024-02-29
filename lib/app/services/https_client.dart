@@ -8,14 +8,15 @@ import 'dart:io';
 import 'dart:async';
 import '../controllers/is_loading_controller.dart';
 import '../widget/toast.dart';
+import './auth_interceptor.dart';
 
 UserController userController = Get.Get.find<UserController>();
-final IsLoadingController isLoadingController =
-    Get.Get.find<IsLoadingController>();
+// final IsLoadingController isLoadingController =
+//     Get.Get.find<IsLoadingController>();
 
 class HttpsClient {
-  static String domain = "http://13.54.137.62/api/";
-  // static String domain = "http://192.168.101.21:9000/dev/";
+  // static String domain = "http://13.54.137.62/api/";
+  static String domain = "http://192.168.101.21:9000/dev/";
 
   static Dio dio = Dio();
   static int _loadingCount = 0; // 记录当前显示的加载动画数量
@@ -23,6 +24,7 @@ class HttpsClient {
 
   HttpsClient() {
     dio.options.baseUrl = domain;
+    dio.interceptors.add(AuthInterceptor());
     dio.options.connectTimeout = 20000;
     dio.options.receiveTimeout = 20000;
     dio.interceptors.add(InterceptorsWrapper(
@@ -31,17 +33,17 @@ class HttpsClient {
         if (token != null) {
           options.headers['Authorization'] = token;
         }
-        if (_loadingCount <= 0) {
-          // Get.Get.dialog(
-          //   Center(
-          //     child: CircularProgressIndicator(),
-          //   ),
-          //   barrierDismissible: false,
-          // );
+        // if (_loadingCount <= 0) {
+        //   // Get.Get.dialog(
+        //   //   Center(
+        //   //     child: CircularProgressIndicator(),
+        //   //   ),
+        //   //   barrierDismissible: false,
+        //   // );
 
-          isLoadingController.isLoading.value = true;
-        }
-        _loadingCount++;
+        //   isLoadingController.isLoading.value = true;
+        // }
+        // _loadingCount++;
         handler.next(options);
       },
       onResponse: (Response response, ResponseInterceptorHandler handler) {
@@ -101,7 +103,6 @@ class HttpsClient {
   Future post(String apiUrl, {Map? data}) async {
     try {
       var response = await dio.post(apiUrl, data: data);
-      print(response);
       return response;
     } catch (e) {
       print("======================= dio");
@@ -113,14 +114,14 @@ class HttpsClient {
 
   Future<void> makeRequest() async {
     // 发出请求，启动计时器
-    _timer = Timer(Duration(milliseconds: 500), () {
-      // 在500毫秒后检查是否有其他请求在等待
-      if (_loadingCount == 0) {
-        // 没有其他请求，停止计时器并将isLoadingController.isLoading.value设置为false
-        _timer?.cancel();
-        isLoadingController.isLoading.value = false;
-      }
-    });
+    // _timer = Timer(Duration(milliseconds: 500), () {
+    //   // 在500毫秒后检查是否有其他请求在等待
+    //   if (_loadingCount == 0) {
+    //     // 没有其他请求，停止计时器并将isLoadingController.isLoading.value设置为false
+    //     _timer?.cancel();
+    //     isLoadingController.isLoading.value = false;
+    //   }
+    // });
   }
 
   static replaeUri(picUrl) {

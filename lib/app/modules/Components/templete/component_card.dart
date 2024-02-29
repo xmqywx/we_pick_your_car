@@ -43,21 +43,24 @@ class ComponentCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       // height: 300,
-      child: CardContainer(children: [
+      child: MyCardContainer(children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          padding: disassemblyDescription != ''
+              ? EdgeInsets.fromLTRB(10, 10, 10, 10)
+              : EdgeInsets.fromLTRB(0, 10, 0, 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: MyParagraph(
-                    text: disassemblyDescription,
-                    fontSize: 55,
+              if (disassemblyDescription != '')
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: MyParagraph(
+                      text: disassemblyDescription,
+                      fontSize: 55,
+                    ),
                   ),
-                ),
-              )
+                )
               // MyParagraph(
               //   text: statusMap?['label'] ?? '-error-',
               //   color: statusMap?['color'] ?? AppColors.redColor,
