@@ -27,36 +27,40 @@ class PassLoginController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<MessageModel> doLogin() async {
-    isLoading.value = true;
-    var response = await httpsClient.post("/admin/base/open/login", data: {
-      "username": usernameController.text,
-      "password": passController.text,
-    });
+    try{
+      isLoading.value = true;
+      var response = await httpsClient.post("/admin/base/open/login", data: {
+        "username": usernameController.text,
+        "password": passController.text,
+      });
 
-     isLoading.value = false;
+      isLoading.value = false;
 
-    if (response != null) {
-      print(response);
-      if (response.data["message"] == "success") {
-        //保存用户信息
-        await Storage.setData("token", response.data["data"]["token"], expires: response.data["data"]["expire"]);
-        await Storage.setData(
-            "refreshToken", response.data["data"]["refreshToken"], expires: response.data["data"]["refreshExpire"]);
-        await tabsController.getUserInfo();
-        await userController.getUserInfo();
-        // await tabsController.getJobList();
-        // await tabsController.getOrderList();
-        // await tabsController.initializationList();
-        return MessageModel(message: "Login success", success: true);
+      if (response != null) {
+        print(response);
+        if (response.data["message"] == "success") {
+          //保存用户信息
+          await Storage.setData("token", response.data["data"]["token"], expires: response.data["data"]["expire"]);
+          await Storage.setData(
+              "refreshToken", response.data["data"]["refreshToken"], expires: response.data["data"]["refreshExpire"]);
+          await tabsController.getUserInfo();
+          await userController.getUserInfo();
+          // await tabsController.getJobList();
+          // await tabsController.getOrderList();
+          // await tabsController.initializationList();
+          return MessageModel(message: "Login success", success: true);
+        }
+
+        if (response.data["message"] == "Incorrect account or password~") {
+          return MessageModel(
+              message: "Incorrect user name or password~", success: false);
+        }
+        return MessageModel(message: response.data["message"], success: false);
+      } else {
+        return MessageModel(message: "Internet error", success: false);
       }
-
-      if (response.data["message"] == "Incorrect account or password~") {
-        return MessageModel(
-            message: "Incorrect user name or password~", success: false);
-      }
-      return MessageModel(message: response.data["message"], success: false);
-    } else {
-      return MessageModel(message: "Internet error", success: false);
+    }catch(e){
+     return MessageModel(message: e.toString(), success: false);
     }
   }
 }

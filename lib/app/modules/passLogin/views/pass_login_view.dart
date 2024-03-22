@@ -70,8 +70,8 @@ class PassLoginView extends GetView<PassLoginController> {
                   if (result.success) {
                     // await Get.find<TabsController>().getUserInfo();
                     // await Get.find<UserController>().getUserInfo();
+                    await Get.offAllNamed("/tabs");
                     showCustomSnackbar(message: 'Login successful.');
-                    Get.offAllNamed("/tabs");
                   } else {
                     showCustomSnackbar(
                       message: result.message,
