@@ -44,7 +44,6 @@ class AuthInterceptor extends Interceptor {
         showCustomSnackbar(message: "Token expires", status: '3');
         handler.next(err); // 使用next而不是reject，以避免再次触发onError
       } else {
-        print("test 333333333");
         handler.next(err);
       }
       return;

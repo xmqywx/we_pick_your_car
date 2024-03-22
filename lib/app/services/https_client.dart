@@ -55,7 +55,6 @@ class HttpsClient {
         }
         if (response.statusCode == 401) {
           userController.loginOut();
-          print('ccccccccccccccc 111111111111 ========================================');
           showCustomSnackbar(message: "Token expires", status: '3');
         }
         return handler.next(response);
