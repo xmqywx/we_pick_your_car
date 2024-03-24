@@ -135,8 +135,8 @@ class ComponentsView extends GetView<ComponentsController> {
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    primary: AppColors.primary,
-                                    onPrimary: AppColors.white,
+                                    // primary: AppColors.primary,
+                                    // onPrimary: AppColors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(ScreenAdapter.width(20)),
                                     ),
