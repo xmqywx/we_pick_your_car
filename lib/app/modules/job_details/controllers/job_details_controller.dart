@@ -24,6 +24,7 @@ import '../templates/JobFormContainer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import '../templates/jobAgreenment.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 
@@ -897,8 +898,23 @@ class JobDetailsController extends GetxController
           "type": "input",
           "trigger": "change",
           "fieldType": "number",
-          "placeholder": "Please input the phone number."
+          "placeholder": "Please input the phone number.",
         },
+         "fieldRight": !isEdit.value && customerInfoForm.value['phoneNumber']?.isNotEmpty == true ? Container(
+          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+           decoration: BoxDecoration(
+             color: AppColors.bgCard, // Change this color to your preference
+             borderRadius: BorderRadius.circular(8),
+           ),
+           child: IconButton(
+             icon: Icon(Icons.phone, color: AppColors.accent),
+             onPressed: () async {
+                await FlutterPhoneDirectCaller
+                    .callNumber(
+                        customerInfoForm.value['phoneNumber'].toString());
+              },
+           ),
+         ) : SizedBox(),
         "rules": [
           {"require": true, "message": "Phone number cannot be empty."}
         ]
@@ -914,6 +930,21 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the secondary phone number."
         },
+        "fieldRight": !isEdit.value && customerInfoForm.value['secNumber']?.isNotEmpty == true ? Container(
+          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+           decoration: BoxDecoration(
+             color: AppColors.bgCard, // Change this color to your preference
+             borderRadius: BorderRadius.circular(8),
+           ),
+           child: IconButton(
+             icon: Icon(Icons.phone, color: AppColors.accent),
+             onPressed: () async {
+                await FlutterPhoneDirectCaller
+                    .callNumber(
+                        customerInfoForm.value['secNumber'].toString());
+              },
+           ),
+         ) : SizedBox(),
         "rules": [
           // {
           //   "require": true,
@@ -1038,6 +1069,21 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the phone number."
         },
+        "fieldRight": !isEdit.value && secondaryPersonInfoForm.value['personPhone']?.isNotEmpty == true ? Container(
+          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+           decoration: BoxDecoration(
+             color: AppColors.bgCard, // Change this color to your preference
+             borderRadius: BorderRadius.circular(8),
+           ),
+           child: IconButton(
+             icon: Icon(Icons.phone, color: AppColors.accent),
+             onPressed: () async {
+                await FlutterPhoneDirectCaller
+                    .callNumber(
+                        secondaryPersonInfoForm.value['personPhone'].toString());
+              },
+           ),
+         ) : SizedBox(),
         "rules": [
           {"require": true, "message": "Phone number cannot be empty."}
         ]
@@ -1053,6 +1099,21 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the secondary phone number."
         },
+        "fieldRight": !isEdit.value && secondaryPersonInfoForm.value['personSecNumber']?.isNotEmpty == true ? Container(
+          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+           decoration: BoxDecoration(
+             color: AppColors.bgCard, // Change this color to your preference
+             borderRadius: BorderRadius.circular(8),
+           ),
+           child: IconButton(
+             icon: Icon(Icons.phone, color: AppColors.accent),
+             onPressed: () async {
+                await FlutterPhoneDirectCaller
+                    .callNumber(
+                        secondaryPersonInfoForm.value['personSecNumber'].toString());
+              },
+           ),
+         ) : SizedBox(),
         "rules": [
           // {
           //   "require": true,
@@ -1701,7 +1762,11 @@ class JobDetailsController extends GetxController
 
   // send invoice
   sendInvoice() {
-    alertSendInvoiceDialog();
+    if(customerInfoForm.value['emailAddress'].toString().isNotEmpty) {
+      alertSendInvoiceDialog();
+      return;
+    }
+    showCustomSnackbar(message: "The current customer's email is empty", status: '3');
   }
 
   Future<void> alertSendInvoiceDialog() async {

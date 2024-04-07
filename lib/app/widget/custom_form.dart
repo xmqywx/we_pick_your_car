@@ -45,6 +45,7 @@ class DynamicForm extends StatelessWidget {
             String prop = field['prop'] ?? label;
             Widget fieldTop = field['fieldTop'] ?? const SizedBox();
             Widget fieldBottom = field['fieldBottom'] ?? const SizedBox();
+            Widget fieldRight = field['fieldRight'] ?? const SizedBox();
             Widget widget = field['widget'] ?? const SizedBox();
             var fieldKey = field['fieldKey'] ?? ObjectKey(value);
             Future myValidator(value, validator, fieldKey) async {
@@ -143,79 +144,79 @@ class DynamicForm extends StatelessWidget {
               formField = Column(
                 children: [
                   fieldTop,
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //     spreadRadius: 1,
-                      //     blurRadius: 6,
-                      //     offset: Offset(0, 3),
-                      //   ),
-                      // ],
-                    ),
-                    child: TextFormField(
-                      autovalidateMode: trigger,
-                      initialValue: '${component['fieldType'] == 'number'
-                        ? (value == null ? '' : value.toString())
-                        : value}',
-                      enabled: !disabled,
-                      key: fieldKey,
-                      keyboardType: component['fieldType'] == 'number'
-                          ? TextInputType.number
-                          : TextInputType.text,
-                      decoration: InputDecoration(
-                        labelText: label,
-                        hintText: component['placeholder'],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
-                        labelStyle: TextStyle(
-                          color: Colors.grey, // Adjusted label color
-                          fontSize: 16, // Adjusted font size
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.always, // Ensures label is always visible and does not float
+                  Row(
+                    children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      style: TextStyle(fontFamily: 'Roboto-Medium', fontSize: 16),
-                      validator: inputValidator,
-                      onChanged: (value) {
-                        if (component['fieldType'] == 'number') {
-                          if (value == '') {
-                            formValues[prop] = null;
-                            formDataChange(prop, null);
-                          } else {
-                            if (double.tryParse(value) == null) {
-                              field['validatorMsg'] = 'Please enter the correct number.';
+                      child: TextFormField(
+                        autovalidateMode: trigger,
+                        initialValue: '${component['fieldType'] == 'number'
+                          ? (value == null ? '' : value.toString())
+                          : value}',
+                        enabled: !disabled,
+                        key: fieldKey,
+                        keyboardType: component['fieldType'] == 'number'
+                            ? TextInputType.number
+                            : TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: label,
+                          hintText: component['placeholder'],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), 
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), 
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), 
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), 
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), 
+                          labelStyle: TextStyle(
+                            color: Colors.grey, 
+                            fontSize: 16, 
+                          ),
+                          floatingLabelBehavior: FloatingLabelBehavior.always, 
+                        ),
+                        style: TextStyle(fontFamily: 'Roboto-Medium', fontSize: 16),
+                        validator: inputValidator,
+                        onChanged: (value) {
+                          if (component['fieldType'] == 'number') {
+                            if (value == '') {
+                              formValues[prop] = null;
+                              formDataChange(prop, null);
+                            } else {
+                              if (double.tryParse(value) == null) {
+                                field['validatorMsg'] = 'Please enter the correct number.';
+                              }
+                              formValues[prop] = num.parse(value);
+                              formDataChange(prop, num.parse(value));
                             }
-                            formValues[prop] = num.parse(value);
-                            formDataChange(prop, num.parse(value));
+                          } else {
+                            formValues[prop] = value;
+                            formDataChange(prop, value);
                           }
-                        } else {
-                          formValues[prop] = value;
-                          formDataChange(prop, value);
-                        }
-                        triggeredOnChange(value);
-                      },
+                          triggeredOnChange(value);
+                        },
+                      ),
                     ),
+                    ),
+                    fieldRight
+                    ],
                   ),
                   fieldBottom
                 ],
