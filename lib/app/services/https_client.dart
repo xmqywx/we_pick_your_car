@@ -15,7 +15,7 @@ UserController userController = Get.Get.find<UserController>();
 //     Get.Get.find<IsLoadingController>();
 
 class HttpsClient {
-  static String domain = "http://13.54.137.62/api/";
+  static String domain = "https://apexpoint.com.au/api/";
   // static String domain = "http://192.168.101.21:9000/dev/";
 
   static Dio dio = Dio();

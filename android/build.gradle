@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.9.23'
     repositories {
         // 这里导致报错,所以注释或删除掉即可。
         google()
