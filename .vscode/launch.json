@@ -5,18 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "pickyourcar",
+      "name": "apexpoint",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "pickyourcar (profile mode)",
+      "name": "apexpoint (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "pickyourcar (release mode)",
+      "name": "apexpoint (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"
