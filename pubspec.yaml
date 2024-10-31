@@ -42,6 +42,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/pickYourCar.png
+    - assets/images/apexpoint.png
     - assets/images/carIcon.jpg
     - assets/images/loadingFailed.jpg
     - assets/images/top_bar_bgk.png

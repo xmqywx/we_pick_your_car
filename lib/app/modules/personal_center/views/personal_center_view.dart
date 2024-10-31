@@ -30,7 +30,7 @@ class PersonalCenterView extends GetView<PersonalCenterController> {
               //       fontSize: ScreenAdapter.fontSize(55),
               //       fontWeight: FontWeight.w500),
               // ),
-              const Logo(),
+              // Logo(),
               Column(
                 children: [
                   InfoFileds(

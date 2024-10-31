@@ -3,25 +3,31 @@ import '../services/screen_adapter.dart';
 
 class Logo extends StatelessWidget {
   final double logoWidth;
-  const Logo({super.key, this.logoWidth = 550});
+  bool isDark;
+  Logo(
+      {super.key,
+      this.logoWidth = 650,
+      this.isDark = false}); // Increased default width
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.all(ScreenAdapter.width(40)),
+      margin: EdgeInsets.all(ScreenAdapter.width(0)),
       child: SizedBox(
-          // width: ScreenAdapter.width(220),
-          // height: ScreenAdapter.width(220),
-          child: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.all(ScreenAdapter.width(40)),
-        child: SizedBox(
-          width: ScreenAdapter.width(logoWidth),
-          child:
-              Image.asset("assets/images/pickYourCar.png", fit: BoxFit.contain),
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.all(ScreenAdapter.width(0)),
+          child: SizedBox(
+            width: ScreenAdapter.width(logoWidth),
+            child: isDark
+                ? Image.asset("assets/images/pickYourCar.png",
+                    fit: BoxFit.contain)
+                : Image.asset("assets/images/apexpoint.png",
+                    fit: BoxFit.contain),
+          ),
         ),
-      )),
+      ),
     );
   }
 }
