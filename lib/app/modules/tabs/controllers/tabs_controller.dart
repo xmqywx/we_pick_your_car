@@ -16,6 +16,8 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../user/controllers/user_controller.dart';
 import '../../../templete/event.dart';
 import '../../NoRole/views/no_role_view.dart';
+import '../../dismantlers/views/dismantlers_view.dart';
+import '../../dismantlers_stats/views/dismantlers_stats_view.dart';
 
 class TabsController extends GetxController {
   RxInt currentIndex = 0.obs; //可改变，需要给obs
@@ -100,9 +102,7 @@ class TabsController extends GetxController {
     if (response != null && response.data['message'] == 'success') {
       jobListPageData.value = response.data['data'];
       print('OK');
-    } else {
-      print(response.data['message']);
-    }
+    } else {}
     jobListIsLoading.value = false;
   }
 
@@ -140,15 +140,14 @@ class TabsController extends GetxController {
 
   initTabs() async {
     final userinfo = await Storage.getData('userinfo');
-    print('---------------------------');
-    print(userinfo);
-    print('---------------------------');
+
     if (userinfo == null) {
       userController.loginOut();
       return;
     }
     if (userinfo['roleName'] != null &&
-        containsRoles(userinfo['roleName'], ['Driver', 'Container'])) {
+        containsRoles(
+            userinfo['roleName'], ['Driver', 'Container', 'Dismantlers'])) {
       // 如果添加Wrecker角色的话需要添加Wrecker
       bottomNavigationBarItems.value = [
         const BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
@@ -167,7 +166,9 @@ class TabsController extends GetxController {
         pages.refresh();
       }
       if (userinfo['roleName'].contains('Driver')) {
-        List<StatelessWidget> pagesToAdd = const [HomeView(), TaskListView()];
+        List<StatelessWidget> pagesToAdd = const [
+          HomeView(), /* TaskListView() */
+        ];
         pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
         // List<BottomNavigationBarItem> items = [
         //   BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
@@ -175,7 +176,23 @@ class TabsController extends GetxController {
         // ];
         bottomNavigationBarItems.value = [
           const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          const BottomNavigationBarItem(icon: Icon(Icons.task), label: "Job"),
+          // const BottomNavigationBarItem(icon: Icon(Icons.task), label: "Job"),
+          ...bottomNavigationBarItems
+        ];
+        pages.refresh();
+      }
+      // 如果添加Dismantlers角色的话
+      if (userinfo['roleName'].contains('Dismantlers')) {
+        List<StatelessWidget> pagesToAdd = const [
+          DismantlersView(),
+          DismantlersStatsView()
+        ];
+        pagesCopy.insertAll(0, pagesToAdd.cast<StatelessWidget>());
+        bottomNavigationBarItems.value = [
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.build), label: "Dismantlers"),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.countertops), label: "Stats"),
           ...bottomNavigationBarItems
         ];
         pages.refresh();

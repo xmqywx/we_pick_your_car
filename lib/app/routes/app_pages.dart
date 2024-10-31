@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../modules/ComponentDetail/bindings/component_detail_binding.dart';
 import '../modules/ComponentDetail/views/component_detail_view.dart';
-// import '../modules/Components/bindings/components_binding.dart';
 import '../modules/Components/views/components_view.dart';
 import '../modules/Container/views/container_view.dart';
 import '../modules/NoRole/bindings/no_role_binding.dart';
@@ -14,6 +13,10 @@ import '../modules/completed/bindings/completed_binding.dart';
 import '../modules/completed/views/completed_view.dart';
 import '../modules/containerDetail/bindings/container_detail_binding.dart';
 import '../modules/containerDetail/views/container_detail_view.dart';
+import '../modules/dismantlers/bindings/dismantlers_binding.dart';
+import '../modules/dismantlers/views/dismantlers_view.dart';
+import '../modules/dismantlers_stats/bindings/dismantlers_stats_binding.dart';
+import '../modules/dismantlers_stats/views/dismantlers_stats_view.dart';
 import '../modules/generate_signature/bindings/generate_signature_binding.dart';
 import '../modules/generate_signature/views/generate_signature_view.dart';
 import '../modules/have_in_hand/bindings/have_in_hand_binding.dart';
@@ -44,6 +47,8 @@ import '../modules/unaccomplished/bindings/unaccomplished_binding.dart';
 import '../modules/unaccomplished/views/unaccomplished_view.dart';
 import '../modules/user/controllers/user_controller.dart';
 import '../modules/user/views/user_view.dart';
+
+// import '../modules/Components/bindings/components_binding.dart';
 
 part 'app_routes.dart';
 
@@ -145,6 +150,16 @@ class AppPages {
       page: () => const JobDetailsView(),
       binding: JobDetailsBinding(),
     ),
+    // GetPage(
+    //   name: _Paths.DISMANTLERS,
+    //   page: () => const DismantlersView(),
+    //   binding: DismantlersBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.DISMANTLERS_STATS,
+    //   page: () => const DismantlersStatsView(),
+    //   binding: DismantlersStatsBinding(),
+    // ),
   ];
 }
 

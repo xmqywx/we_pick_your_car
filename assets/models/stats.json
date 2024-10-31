@@ -1,0 +1,26 @@
+{
+    "forRecyclingCars": {
+        "total": 4,
+        "disassembled": 1,
+        "parts": {
+            "total": 10,
+            "dismentaled": 4
+        }
+    },
+    "forPartsCars": {
+        "total": 6,
+        "disassembled": 0,
+        "parts": {
+            "total": 34,
+            "dismentaled": 29
+        }
+    },
+    "allCars": {
+        "total": 10,
+        "disassembled": 1,
+        "parts": {
+            "total": 44,
+            "dismentaled": 33
+        }
+    }
+}

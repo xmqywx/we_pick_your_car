@@ -39,8 +39,8 @@ class ComponentsView extends GetView<ComponentsController> {
                   .contains('add') &&
               controller.isExist.value,
           child: FloatingActionButton(
-            // onPressed: controller.containerAdd,
-            onPressed: controller.scanQRCode,
+            onPressed: controller.containerAdd,
+            // onPressed: controller.scanQRCode,
             child: Icon(Icons.qr_code_scanner),
           ),
         ),
@@ -138,7 +138,8 @@ class ComponentsView extends GetView<ComponentsController> {
                                     // primary: AppColors.primary,
                                     // onPrimary: AppColors.white,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(ScreenAdapter.width(20)),
+                                      borderRadius: BorderRadius.circular(
+                                          ScreenAdapter.width(20)),
                                     ),
                                     padding: EdgeInsets.symmetric(
                                       vertical: ScreenAdapter.width(20),

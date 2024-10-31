@@ -40,7 +40,7 @@ class _JobAgreenmentState extends State<JobAgreenment> {
           Container(
             padding: EdgeInsets.only(top: 15),
             child: MyParagraph(
-              text: "We Pick Your Car",
+              text: "Apexpoint",
               fontSize: 70,
             ),
           ),

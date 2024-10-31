@@ -53,7 +53,7 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'WE PICK YOUR CAR',
+                  'Apexpoint',
                   style: TextStyle(fontSize: ScreenAdapter.fontSize(63)),
                 ),
                 SizedBox(

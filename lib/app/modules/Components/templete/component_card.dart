@@ -13,13 +13,13 @@ class ComponentCard extends StatelessWidget {
   final String disassmblingInformation;
   final String disassemblyDescription;
   final String disassemblyNumber;
-  final String category;
+  final String? category;
   final String? ccDes;
   const ComponentCard(
       {super.key,
       required this.containerNumber,
       required this.disassmblingInformation,
-      required this.category,
+      this.category = '',
       required this.disassemblyDescription,
       required this.disassemblyNumber,
       this.ccDes = ''});
@@ -28,18 +28,18 @@ class ComponentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> imagesFile = <String>[];
     print("$disassmblingInformation =================");
-    if (category == 'Catalytic Converter') {
-      List cloneData = [];
-      try {
-        cloneData = json
-            .decode(disassmblingInformation)
-            .map((e) => e.toString())
-            .toList();
-      } catch (e) {
-        cloneData = [];
-      }
-      imagesFile = cloneData.cast<String>().toList();
-    }
+    // if (category == 'Catalytic Converter') {
+    //   List cloneData = [];
+    //   try {
+    //     cloneData = json
+    //         .decode(disassmblingInformation)
+    //         .map((e) => e.toString())
+    //         .toList();
+    //   } catch (e) {
+    //     cloneData = [];
+    //   }
+    //   imagesFile = cloneData.cast<String>().toList();
+    // }
     return Container(
       width: double.infinity,
       // height: 300,

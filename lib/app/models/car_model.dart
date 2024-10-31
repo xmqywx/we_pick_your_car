@@ -3,7 +3,6 @@ class Car {
   String? createTime;
   String? updateTime;
   int? customerID;
-  dynamic yardID;
   String? name;
   int? year;
   String? brand;
@@ -33,13 +32,20 @@ class Car {
   String? departmentId;
   dynamic carWreckedInfo;
   bool? isVFP;
+  String? engineCode;
+  String? recyclingStatus;
+  dynamic stolenInfo;
+  dynamic fuel;
+  dynamic power;
+  dynamic engineNumber;
+  dynamic transmission;
+  String? dismantlingStatus;
 
   Car(
       {this.id,
       this.createTime,
       this.updateTime,
       this.customerID,
-      this.yardID,
       this.name,
       this.year,
       this.brand,
@@ -68,14 +74,21 @@ class Car {
       this.identificationSighted,
       this.departmentId,
       this.carWreckedInfo,
-      this.isVFP});
+      this.isVFP,
+      this.engineCode,
+      this.recyclingStatus,
+      this.stolenInfo,
+      this.fuel,
+      this.power,
+      this.engineNumber,
+      this.transmission,
+      this.dismantlingStatus});
 
   Car.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     createTime = json['createTime'];
     updateTime = json['updateTime'];
     customerID = json['customerID'];
-    yardID = json['yardID'];
     name = json['name'];
     year = json['year'];
     brand = json['brand'];
@@ -103,8 +116,16 @@ class Car {
     registered = json['registered'];
     identificationSighted = json['identificationSighted'];
     departmentId = json['departmentId'];
-    carWreckedInfo = json['CarWreckedInfo'];
+    carWreckedInfo = json['carWreckedInfo'];
     isVFP = json['isVFP'];
+    engineCode = json['engineCode'];
+    recyclingStatus = json['recyclingStatus'];
+    stolenInfo = json['stolenInfo'];
+    fuel = json['fuel'];
+    power = json['power'];
+    engineNumber = json['engineNumber'];
+    transmission = json['transmission'];
+    dismantlingStatus = json['dismantlingStatus'];
   }
 
   Map<String, dynamic> toJson() {
@@ -113,7 +134,6 @@ class Car {
     data['createTime'] = createTime;
     data['updateTime'] = updateTime;
     data['customerID'] = customerID;
-    data['yardID'] = yardID;
     data['name'] = name;
     data['year'] = year;
     data['brand'] = brand;
@@ -141,8 +161,16 @@ class Car {
     data['registered'] = registered;
     data['identificationSighted'] = identificationSighted;
     data['departmentId'] = departmentId;
-    data['CarWreckedInfo'] = carWreckedInfo;
+    data['carWreckedInfo'] = carWreckedInfo;
     data['isVFP'] = isVFP;
+    data['engineCode'] = engineCode;
+    data['recyclingStatus'] = recyclingStatus;
+    data['stolenInfo'] = stolenInfo;
+    data['fuel'] = fuel;
+    data['power'] = power;
+    data['engineNumber'] = engineNumber;
+    data['transmission'] = transmission;
+    data['dismantlingStatus'] = dismantlingStatus;
     return data;
   }
 }

@@ -24,6 +24,8 @@ abstract class Routes {
   static const COMPONENT_DETAIL = _Paths.COMPONENT_DETAIL;
   static const SCAN = _Paths.SCAN;
   static const JOB_DETAILS = _Paths.JOB_DETAILS;
+  // static const DISMANTLERS = _Paths.DISMANTLERS;
+  // static const DISMANTLERS_STATS = _Paths.DISMANTLERS_STATS;
 }
 
 abstract class _Paths {
@@ -49,4 +51,6 @@ abstract class _Paths {
   static const COMPONENT_DETAIL = '/component-detail';
   static const SCAN = '/scan';
   static const JOB_DETAILS = '/job-details';
+  // static const DISMANTLERS = '/dismantlers';
+  // static const DISMANTLERS_STATS = '/dismantlers-stats';
 }

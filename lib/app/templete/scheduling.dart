@@ -32,7 +32,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
   );
 
   late PageController _pageController;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
@@ -180,8 +180,8 @@ class TableComplexExampleState extends State<TableComplexExample> {
                   },
                 ),
                 TableCalendar<Event>(
-                  firstDay: kFirstDay,
-                  lastDay: kLastDay,
+                  firstDay: kFirstDayOfWeek,
+                  lastDay: kLastDayOfWeek,
                   focusedDay: _focusedDay.value,
                   headerVisible: false,
                   calendarStyle: CalendarStyle(
@@ -193,6 +193,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
                       // outsideDecoration: BoxDecoration(
                       //   color: Colors.cyan,
                       // ),
+
                       markersMaxCount: 1,
                       selectedDecoration: BoxDecoration(
                         color: AppColors.themeColor1,
@@ -208,7 +209,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
                         color: AppColors.subTextColor,
                         shape: BoxShape.circle,
                       ),
-                      outsideTextStyle: TextStyle(color: AppColors.outSideText),
+                      outsideTextStyle: TextStyle(color: AppColors.textColor),
                       // markerSizeScale: 5,
                       markerDecoration: BoxDecoration(
                           color: Colors.orange.shade700,
@@ -231,9 +232,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
                       _pageController = controller,
                   onPageChanged: (focusedDay) => _focusedDay.value = focusedDay,
                   onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() => _calendarFormat = format);
-                    }
+                    // Disable format change
                   },
                 ),
                 const SizedBox(height: 8.0),
@@ -420,33 +419,33 @@ class _CalendarHeader extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.today, color: AppColors.themeColor1),
-            onPressed: onTodayButtonTap,
-            tooltip: 'Go to today',
-          ),
-          if (clearButtonVisible)
-            IconButton(
-              icon: Icon(Icons.clear_all, color: AppColors.darkRedColor),
-              onPressed: onClearButtonTap,
-              tooltip: 'Clear selection',
-            ),
+          // IconButton(
+          //   icon: Icon(Icons.today, color: AppColors.themeColor1),
+          //   onPressed: onTodayButtonTap,
+          //   tooltip: 'Go to today',
+          // ),
           IconButton(
             icon: Icon(Icons.refresh, color: AppColors.darkGreenColor),
             onPressed: reflashButton,
             tooltip: 'Refresh',
           ),
+          if (clearButtonVisible)
+            IconButton(
+              icon: Icon(Icons.close, color: AppColors.darkRedColor),
+              onPressed: onClearButtonTap,
+              tooltip: 'Clear selection',
+            ),
           const Spacer(),
-          IconButton(
-            icon: Icon(Icons.chevron_left, color: AppColors.darkBlueColor),
-            onPressed: onLeftArrowTap,
-            tooltip: 'Previous month',
-          ),
-          IconButton(
-            icon: Icon(Icons.chevron_right, color: AppColors.darkBlueColor),
-            onPressed: onRightArrowTap,
-            tooltip: 'Next month',
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.chevron_left, color: AppColors.darkBlueColor),
+          //   onPressed: onLeftArrowTap,
+          //   tooltip: 'Previous month',
+          // ),
+          // IconButton(
+          //   icon: Icon(Icons.chevron_right, color: AppColors.darkBlueColor),
+          //   onPressed: onRightArrowTap,
+          //   tooltip: 'Next month',
+          // ),
         ],
       ),
     );

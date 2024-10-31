@@ -27,7 +27,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
       return PassButton(
         isLoading: controller.isLoading.value,
         isBorder: true,
-                    btnBorderCorlor: AppColors.logoBgc,
+        btnBorderCorlor: AppColors.logoBgc,
         text: controller.orderInfo.value.invoice == null
             ? 'Send invoice'
             : 'Resend invoice',
@@ -69,32 +69,32 @@ class JobDetailsView extends GetView<JobDetailsController> {
             )
           : Row(
               children: [
-                Expanded(
-                  flex: 1,
-                  child: PassButton(
-                    isLoading: controller.isLoading.value,
-                    text: "Complete",
-                    isBorder: true,
-                    btnBorderCorlor: AppColors.logoBgc,
-                    btnColor: AppColors.logoBgc,
-                    onPressed: controller.alertEndDialog,
-                  ),
-                ),
-                SizedBox(
-                  width: ScreenAdapter.width(20),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: PassButton(
-                    isLoading: controller.isLoading.value,
-                    text: "Edit",
-                    isBorder: true,
-                    btnBorderCorlor: AppColors.white,
-                    btnColor: AppColors.white,
-                    textColor: AppColors.themeTextColor1,
-                    onPressed: controller.toChangeEdit,
-                  ),
-                )
+                // Expanded(
+                //   flex: 1,
+                //   child: PassButton(
+                //     isLoading: controller.isLoading.value,
+                //     text: "Complete",
+                //     isBorder: true,
+                //     btnBorderCorlor: AppColors.logoBgc,
+                //     btnColor: AppColors.logoBgc,
+                //     onPressed: controller.alertEndDialog,
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: ScreenAdapter.width(20),
+                // ),
+                // Expanded(
+                //   flex: 1,
+                //   child: PassButton(
+                //     isLoading: controller.isLoading.value,
+                //     text: "Edit",
+                //     isBorder: true,
+                //     btnBorderCorlor: AppColors.white,
+                //     btnColor: AppColors.white,
+                //     textColor: AppColors.themeTextColor1,
+                //     onPressed: controller.toChangeEdit,
+                //   ),
+                // )
               ],
             );
     }
@@ -120,13 +120,16 @@ class JobDetailsView extends GetView<JobDetailsController> {
                       width: ScreenAdapter.width(2),
                       color: AppColors.themeBorderColor1,
                     ),
-                    borderRadius: BorderRadius.circular(ScreenAdapter.width(20)),
+                    borderRadius:
+                        BorderRadius.circular(ScreenAdapter.width(20)),
                     color: Colors.white,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add, size: ScreenAdapter.width(50), color: AppColors.themeTextColor1),
+                      Icon(Icons.add,
+                          size: ScreenAdapter.width(50),
+                          color: AppColors.themeTextColor1),
                       SizedBox(height: ScreenAdapter.width(10)),
                       Text(
                         'Add Signature',
@@ -154,9 +157,11 @@ class JobDetailsView extends GetView<JobDetailsController> {
                       width: ScreenAdapter.width(2),
                       color: AppColors.themeBorderColor1,
                     ),
-                    borderRadius: BorderRadius.circular(ScreenAdapter.width(20)),
+                    borderRadius:
+                        BorderRadius.circular(ScreenAdapter.width(20)),
                     image: DecorationImage(
-                      image: NetworkImage(controller.orderInfoForm.value['signature']),
+                      image: NetworkImage(
+                          controller.orderInfoForm.value['signature']),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -167,23 +172,29 @@ class JobDetailsView extends GetView<JobDetailsController> {
                           child: GestureDetector(
                             onTap: controller.openBottomSheet,
                             child: Container(
-                              padding: EdgeInsets.all(15), // Increased padding for a larger touch area
+                              padding: EdgeInsets.all(
+                                  15), // Increased padding for a larger touch area
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.85), // Slightly transparent for aesthetics
-                                borderRadius: BorderRadius.circular(25), // More rounded corners for the button
+                                color: Colors.white.withOpacity(
+                                    0.85), // Slightly transparent for aesthetics
+                                borderRadius: BorderRadius.circular(
+                                    25), // More rounded corners for the button
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 2,
                                     blurRadius: 4,
-                                    offset: Offset(0, 3), // changes position of shadow
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: Icon(
-                                Icons.edit, // Changed to an icon for a more intuitive button
+                                Icons
+                                    .edit, // Changed to an icon for a more intuitive button
                                 color: AppColors.themeTextColor1,
-                                size: ScreenAdapter.fontSize(60), // Adjusted icon size for better visibility
+                                size: ScreenAdapter.fontSize(
+                                    60), // Adjusted icon size for better visibility
                               ),
                             ),
                           ),
@@ -225,7 +236,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                   )
               ]),
               centerTitle: true,
-              actions: [
+              actions: const [
                 IconButton(
                     icon: Icon(
                       Icons.edit,
@@ -234,6 +245,16 @@ class JobDetailsView extends GetView<JobDetailsController> {
                     onPressed: null),
               ],
             )),
+        floatingActionButton: Visibility(
+          visible: !controller.isEdit.value &&
+              controller.currentStatus.value == 'Waiting',
+          child: FloatingActionButton(
+            onPressed: controller.toChangeEdit,
+            child: Icon(
+              Icons.edit,
+            ),
+          ),
+        ),
         body: Column(
           children: [
             DefaultTabController(
@@ -439,12 +460,12 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                           Container(
                                             margin: EdgeInsets.only(left: 15),
                                             child: MyParagraph(
-                                              text: "Signature",
-                                              // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
-                                              color: Colors.grey, // Adjusted label color
+                                                text: "Signature",
+                                                // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
+                                                color: Colors
+                                                    .grey, // Adjusted label color
                                                 // fontSize: 16,
-                                                fontFamily: 'Roboto-Medium'
-                                            ),
+                                                fontFamily: 'Roboto-Medium'),
                                           ),
                                           _buildViewSignature()
                                         ],
@@ -573,23 +594,25 @@ class JobDetailsView extends GetView<JobDetailsController> {
                     ? ScreenAdapter.height(700)
                     : 0,
               ),
-            ClipRect(
-              child: Container(
-                // color: AppColors.accent,
-                padding: EdgeInsets.fromLTRB(
-                    ScreenAdapter.width(34.56),
-                    ScreenAdapter.height(15),
-                    ScreenAdapter.width(34.56),
-                    ScreenAdapter.height(51.84)),
-                decoration: BoxDecoration(
-                    border: Border(
-                        top: BorderSide(
-                            color: AppColors.themeTextColor4, width: 2))),
-                child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                    child: Obx(() => _StatusHandler())),
-              ),
-            )
+            if (!(controller.currentStatus == 'Waiting' &&
+                !controller.isEdit.value))
+              ClipRect(
+                child: Container(
+                  // color: AppColors.accent,
+                  padding: EdgeInsets.fromLTRB(
+                      ScreenAdapter.width(34.56),
+                      ScreenAdapter.height(15),
+                      ScreenAdapter.width(34.56),
+                      ScreenAdapter.height(51.84)),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          top: BorderSide(
+                              color: AppColors.themeTextColor4, width: 2))),
+                  child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Obx(() => _StatusHandler())),
+                ),
+              )
           ],
         )));
   }

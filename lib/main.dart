@@ -42,7 +42,7 @@ void main() {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
-          title: 'We pick your car',
+          title: 'Apexpoint',
           theme: ThemeData(
               primarySwatch: AppColors.primarySwatch, fontFamily: "Bebas"),
           getPages: AppPages.routes,

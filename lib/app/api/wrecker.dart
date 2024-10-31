@@ -12,7 +12,7 @@ Future apiGetContainerInfo({required int id}) async {
 }
 
 Future apiGetComponentPageByContainerId(data) async {
-  return await httpsClient.post('/admin/car/carWrecked/page', data: data);
+  return await httpsClient.post('/admin/car/carParts/page', data: data);
 }
 
 Future apiDeleteContainerById(data) async {
@@ -27,22 +27,22 @@ Future apiUpdateContainerById(data) async {
   return await httpsClient.post('/admin/container/base/add', data: data);
 }
 
-Future apiGetComponentInfo({required String partId}) async {
+Future apiGetComponentInfo({required partId}) async {
   return await httpsClient
-      .post("/admin/car/carWrecked/infoByDn", data: {"partId": partId});
+      .post("/admin/car/carParts/infoByDn", data: {"partId": partId});
 }
 
 Future apiUpdateComponent(data) async {
-  return await httpsClient.post("/admin/car/carWrecked/update", data: data);
+  return await httpsClient.post("/admin/car/carParts/update", data: data);
 }
 
 Future apiAddToComponent(data) async {
-  return await httpsClient.post("/admin/car/carWrecked/putToContainer",
+  return await httpsClient.post("/admin/car/carParts/putToContainer",
       data: data);
 }
 
 Future apiDeleteComponentFromThisContainer(data) async {
-  return await httpsClient.post("/admin/car/carWrecked/moveOutFromContainer",
+  return await httpsClient.post("/admin/car/carParts/moveOutFromContainer",
       data: data);
 }
 

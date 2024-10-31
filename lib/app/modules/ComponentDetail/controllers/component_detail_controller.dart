@@ -27,7 +27,7 @@ class ComponentDetailController extends GetxController {
   setFormList() {
     formList.value = [
       {
-        "label": "Number",
+        "label": "Number #",
         "prop": "disassemblyNumber",
         "disabled": true,
         "value": wreckedData.value.disassemblyNumber ?? '',
@@ -58,57 +58,55 @@ class ComponentDetailController extends GetxController {
           },
         ],
       },
-      {
-        "label": "Category",
-        "prop": "disassemblyCategory",
-        "disabled": true,
-        "value": wreckedData.value.disassemblyCategory ?? '',
-        "component": {
-          "type": "input",
-          "placeholder": "Please input the category.",
-        },
-        "rules": [
-          {
-            "pattern": r'^[a-zA-Z]+$',
-            "errorMessage": "Name should contain only alphabets",
-          },
-        ],
-      },
-      {
-        "label": "Catalytic Converter Name",
-        "prop": "catalyticConverterName",
-        "hidden":
-            wreckedData.value.disassemblyCategory != 'Catalytic Converter',
-        "disabled": true,
-        "value": wreckedData.value.catalyticConverterName ?? '',
-        "component": {
-          "type": "input",
-          "placeholder": "Please input the Catalytic Converter Name.",
-        },
-        "rules": [],
-      },
-      {
-        "label": "Catalytic Converter Number",
-        "prop": "catalyticConverterNumber",
-        "hidden":
-            wreckedData.value.disassemblyCategory != 'Catalytic Converter',
-        "disabled": true,
-        "value": wreckedData.value.catalyticConverterNumber ?? '',
-        "component": {
-          "type": "input",
-          "placeholder": "",
-        },
-        "rules": [],
-      },
+      // {
+      //   "label": "Category",
+      //   "prop": "disassemblyCategory",
+      //   "disabled": true,
+      //   "value": wreckedData.value.disassemblyCategory ?? '',
+      //   "component": {
+      //     "type": "input",
+      //     "placeholder": "Please input the category.",
+      //   },
+      //   "rules": [
+      //     {
+      //       "pattern": r'^[a-zA-Z]+$',
+      //       "errorMessage": "Name should contain only alphabets",
+      //     },
+      //   ],
+      // },
+      // {
+      //   "label": "Catalytic Converter Name",
+      //   "prop": "catalyticConverterName",
+      //   "hidden":
+      //       wreckedData.value.disassemblyCategory != 'Catalytic Converter',
+      //   "disabled": true,
+      //   "value": wreckedData.value.catalyticConverterName ?? '',
+      //   "component": {
+      //     "type": "input",
+      //     "placeholder": "Please input the Catalytic Converter Name.",
+      //   },
+      //   "rules": [],
+      // },
+      // {
+      //   "label": "Catalytic Converter Number",
+      //   "prop": "catalyticConverterNumber",
+      //   "hidden":
+      //       wreckedData.value.disassemblyCategory != 'Catalytic Converter',
+      //   "disabled": true,
+      //   "value": wreckedData.value.catalyticConverterNumber ?? '',
+      //   "component": {
+      //     "type": "input",
+      //     "placeholder": "",
+      //   },
+      //   "rules": [],
+      // },
       {
         "label": "Info",
         "value": wreckedData.value.disassmblingInformation ?? '[]',
         "prop": "disassmblingInformation",
         "disabled": true,
         "component": {
-          "type": wreckedData.value.disassemblyCategory == 'Catalytic Converter'
-              ? "uploadImage"
-              : "input",
+          "type": "input",
           "placeholder": "Please input the part info.",
         },
         "triggeredOnChange": (data) {
@@ -131,12 +129,7 @@ class ComponentDetailController extends GetxController {
           "type": "input",
           "placeholder": "Please input the part description.",
         },
-        "rules": [
-          {
-            "pattern": r'^[a-zA-Z]+$',
-            "errorMessage": "Name should contain only alphabets",
-          },
-        ],
+        "rules": [],
       },
       {
         "label": "Part Images",
@@ -147,7 +140,161 @@ class ComponentDetailController extends GetxController {
           "type": "uploadImage",
         },
         "rules": [],
-      }
+      },
+      {
+        "label": "REGO",
+        "value": wreckedData.value.registrationNumber ?? '',
+        "prop": "registrationNumber",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "VIN",
+        "value": wreckedData.value.vin ?? '',
+        "prop": "vin",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Year",
+        "value": wreckedData.value.year ?? '',
+        "prop": "year",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Make",
+        "value": wreckedData.value.make ?? '',
+        "prop": "make",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Model",
+        "value": wreckedData.value.model ?? '',
+        "prop": "model",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Series",
+        "value": wreckedData.value.series ?? '',
+        "prop": "series",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Fuel Type",
+        "value": wreckedData.value.fuel ?? '',
+        "prop": "fuel",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Transmission",
+        "value": wreckedData.value.transmission ?? '',
+        "prop": "transmission",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Cylinders",
+        "value": wreckedData.value.cylinders ?? '',
+        "prop": "cylinders",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Engine Number",
+        "value": wreckedData.value.engineNumber ?? '',
+        "prop": "engineNumber",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
+      {
+        "label": "Engine Code",
+        "value": wreckedData.value.engineCode ?? '',
+        "prop": "engineCode",
+        "disabled": true,
+        "component": {
+          "type": "input",
+          "placeholder": "----",
+        },
+        "triggeredOnChange": (data) {
+          setFormList();
+        },
+        "rules": [],
+      },
     ];
     formList.refresh();
   }
@@ -184,8 +331,8 @@ class ComponentDetailController extends GetxController {
         "disassemblyImages": wreckedData.value.disassemblyImages,
         "containerNumber": wreckedData.value.containerNumber,
         "disassmblingInformation": wreckedData.value.disassmblingInformation,
-        "catalyticConverterName": wreckedData.value.catalyticConverterName,
-        "catalyticConverterNumber": wreckedData.value.catalyticConverterNumber,
+        // "catalyticConverterName": wreckedData.value.catalyticConverterName,
+        // "catalyticConverterNumber": wreckedData.value.catalyticConverterNumber,
       };
       if (arguments.value['addToContainer'] != null &&
           arguments.value['addToContainer']) {
@@ -199,10 +346,11 @@ class ComponentDetailController extends GetxController {
       if (isAddToContainer.value) {
         if (!canAddToContainer.value) {
           tip();
-        } else if (wreckedData.value.disassemblyCategory ==
-            'Catalytic Converter') {
-          tipCC();
         }
+        // else if (wreckedData.value.disassemblyCategory ==
+        //     'Catalytic Converter') {
+        //   tipCC();
+        // }
       }
       setFormList();
     }

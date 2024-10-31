@@ -24,7 +24,7 @@ import '../templates/JobFormContainer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import '../templates/jobAgreenment.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import '../../../widget/passButton.dart';
 
 const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 
@@ -300,7 +300,8 @@ class JobDetailsController extends GetxController
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(ScreenAdapter.width(30)),
-                border: Border.all(color: Colors.grey.withOpacity(0.3), width: 1)),
+                border:
+                    Border.all(color: Colors.grey.withOpacity(0.3), width: 1)),
             child: Column(
               children: [
                 Row(
@@ -426,7 +427,27 @@ class JobDetailsController extends GetxController
         "rules": [
           {"require": true, "message": "BSB No cannot be empty."}
         ]
-      }
+      },
+      {
+        "label": "Complete",
+        "component": {"type": "widget"},
+        "widget": Row(
+          children: [
+            if (!isEdit.value && currentStatus.value == 'Waiting')
+              Expanded(
+                flex: 1,
+                child: PassButton(
+                  isLoading: isLoading.value,
+                  text: "Complete",
+                  isBorder: true,
+                  btnBorderCorlor: AppColors.logoBgc,
+                  btnColor: AppColors.logoBgc,
+                  onPressed: alertEndDialog,
+                ),
+              )
+          ],
+        )
+      },
     ];
     paymentFormList.refresh();
   }
@@ -743,48 +764,58 @@ class JobDetailsController extends GetxController
           {"require": true, "message": "Pickup address cannot be empty."}
         ],
         "widget": InkWell(
-          onTap: isEdit.value
-              ? googleAutoCompleteOnTap
-              : () {
-                  if (orderInfoForm.value['pickupAddress'] != null)
-                    tapToViewMap(orderInfoForm.value['pickupAddress']);
-                },
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: InputDecorator(
-            decoration: InputDecoration(
-              labelText: "Pickup Address",
-              hintText: "Please input the pickup address.",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
+            onTap: isEdit.value
+                ? googleAutoCompleteOnTap
+                : () {
+                    if (orderInfoForm.value['pickupAddress'] != null)
+                      tapToViewMap(orderInfoForm.value['pickupAddress']);
+                  },
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  labelText: "Pickup Address",
+                  hintText: "Please input the pickup address.",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.3),
+                        width: 1), // Added light grey border
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.3),
+                        width: 1), // Added light grey border for enabled state
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.3),
+                        width: 1), // Added light grey border for enabled state
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                        color: AppColors.primary.withOpacity(0.5),
+                        width:
+                            1.5), // Added slightly darker grey border for focused state
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10), // Adjusted vertical padding
+                  labelStyle: TextStyle(
+                      color: Colors.grey, // Adjusted label color
+                      fontSize: 16,
+                      fontFamily: 'Roboto-Medium'),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
+                child: MyParagraph(
+                    text: orderInfoForm.value['pickupAddress'] ?? ''),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
-              labelStyle: TextStyle(
-                color: Colors.grey, // Adjusted label color
-                fontSize: 16,
-                fontFamily: 'Roboto-Medium'
-              ),
-              floatingLabelBehavior: FloatingLabelBehavior.always, 
-            ),
-            child:
-                MyParagraph(text: orderInfoForm.value['pickupAddress'] ?? ''),
-          ),)
-        )
+            ))
       },
       // {
       //   "label": "Preferred Pick Up Time",
@@ -900,21 +931,24 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the phone number.",
         },
-         "fieldRight": !isEdit.value && customerInfoForm.value['phoneNumber']?.isNotEmpty == true ? Container(
-          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
-           decoration: BoxDecoration(
-             color: AppColors.bgCard, // Change this color to your preference
-             borderRadius: BorderRadius.circular(8),
-           ),
-           child: IconButton(
-             icon: Icon(Icons.phone, color: AppColors.accent),
-             onPressed: () async {
-                await FlutterPhoneDirectCaller
-                    .callNumber(
+        "fieldRight": !isEdit.value &&
+                customerInfoForm.value['phoneNumber']?.isNotEmpty == true
+            ? Container(
+                margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+                decoration: BoxDecoration(
+                  color:
+                      AppColors.bgCard, // Change this color to your preference
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  onPressed: () async {
+                    await FlutterPhoneDirectCaller.callNumber(
                         customerInfoForm.value['phoneNumber'].toString());
-              },
-           ),
-         ) : SizedBox(),
+                  },
+                ),
+              )
+            : SizedBox(),
         "rules": [
           {"require": true, "message": "Phone number cannot be empty."}
         ]
@@ -930,21 +964,24 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the secondary phone number."
         },
-        "fieldRight": !isEdit.value && customerInfoForm.value['secNumber']?.isNotEmpty == true ? Container(
-          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
-           decoration: BoxDecoration(
-             color: AppColors.bgCard, // Change this color to your preference
-             borderRadius: BorderRadius.circular(8),
-           ),
-           child: IconButton(
-             icon: Icon(Icons.phone, color: AppColors.accent),
-             onPressed: () async {
-                await FlutterPhoneDirectCaller
-                    .callNumber(
+        "fieldRight": !isEdit.value &&
+                customerInfoForm.value['secNumber']?.isNotEmpty == true
+            ? Container(
+                margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+                decoration: BoxDecoration(
+                  color:
+                      AppColors.bgCard, // Change this color to your preference
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  onPressed: () async {
+                    await FlutterPhoneDirectCaller.callNumber(
                         customerInfoForm.value['secNumber'].toString());
-              },
-           ),
-         ) : SizedBox(),
+                  },
+                ),
+              )
+            : SizedBox(),
         "rules": [
           // {
           //   "require": true,
@@ -1069,21 +1106,25 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the phone number."
         },
-        "fieldRight": !isEdit.value && secondaryPersonInfoForm.value['personPhone']?.isNotEmpty == true ? Container(
-          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
-           decoration: BoxDecoration(
-             color: AppColors.bgCard, // Change this color to your preference
-             borderRadius: BorderRadius.circular(8),
-           ),
-           child: IconButton(
-             icon: Icon(Icons.phone, color: AppColors.accent),
-             onPressed: () async {
-                await FlutterPhoneDirectCaller
-                    .callNumber(
-                        secondaryPersonInfoForm.value['personPhone'].toString());
-              },
-           ),
-         ) : SizedBox(),
+        "fieldRight": !isEdit.value &&
+                secondaryPersonInfoForm.value['personPhone']?.isNotEmpty == true
+            ? Container(
+                margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+                decoration: BoxDecoration(
+                  color:
+                      AppColors.bgCard, // Change this color to your preference
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  onPressed: () async {
+                    await FlutterPhoneDirectCaller.callNumber(
+                        secondaryPersonInfoForm.value['personPhone']
+                            .toString());
+                  },
+                ),
+              )
+            : SizedBox(),
         "rules": [
           {"require": true, "message": "Phone number cannot be empty."}
         ]
@@ -1099,21 +1140,26 @@ class JobDetailsController extends GetxController
           "fieldType": "number",
           "placeholder": "Please input the secondary phone number."
         },
-        "fieldRight": !isEdit.value && secondaryPersonInfoForm.value['personSecNumber']?.isNotEmpty == true ? Container(
-          margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
-           decoration: BoxDecoration(
-             color: AppColors.bgCard, // Change this color to your preference
-             borderRadius: BorderRadius.circular(8),
-           ),
-           child: IconButton(
-             icon: Icon(Icons.phone, color: AppColors.accent),
-             onPressed: () async {
-                await FlutterPhoneDirectCaller
-                    .callNumber(
-                        secondaryPersonInfoForm.value['personSecNumber'].toString());
-              },
-           ),
-         ) : SizedBox(),
+        "fieldRight": !isEdit.value &&
+                secondaryPersonInfoForm.value['personSecNumber']?.isNotEmpty ==
+                    true
+            ? Container(
+                margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+                decoration: BoxDecoration(
+                  color:
+                      AppColors.bgCard, // Change this color to your preference
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  onPressed: () async {
+                    await FlutterPhoneDirectCaller.callNumber(
+                        secondaryPersonInfoForm.value['personSecNumber']
+                            .toString());
+                  },
+                ),
+              )
+            : SizedBox(),
         "rules": [
           // {
           //   "require": true,
@@ -1306,19 +1352,19 @@ class JobDetailsController extends GetxController
           // {"require": true, "message": "Series cannot be empty."}
         ]
       },
-      {
-        "label": "Engine",
-        "prop": "engine",
-        "disabled": !isEdit.value,
-        "value": carInfo.value.engine ?? "",
-        "component": {
-          "type": "input",
-          "placeholder": "Please input the Engine."
-        },
-        "rules": [
-          // {"require": true, "message": "Engine cannot be empty."}
-        ]
-      },
+      // {
+      //   "label": "Engine",
+      //   "prop": "engine",
+      //   "disabled": !isEdit.value,
+      //   "value": carInfo.value.engine ?? "",
+      //   "component": {
+      //     "type": "input",
+      //     "placeholder": "Please input the Engine."
+      //   },
+      //   "rules": [
+      //     // {"require": true, "message": "Engine cannot be empty."}
+      //   ]
+      // },
       {
         "label": "Colour",
         "prop": "colour",
@@ -1356,6 +1402,81 @@ class JobDetailsController extends GetxController
         },
         "rules": [
           // {"require": true, "message": "Vin Number cannot be empty."}
+        ]
+      },
+      {
+        "label": "Engine Code",
+        "prop": "engineCode",
+        "disabled": !isEdit.value,
+        "value": carInfo.value.engineCode ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the engine code."
+        },
+        "rules": [
+          // {"require": true, "message": "Engine cannot be empty."}
+        ]
+      },
+      {
+        "label": "Engine Number",
+        "prop": "engineNumber",
+        "disabled": !isEdit.value,
+        "value": carInfo.value.engineNumber ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the engine number."
+        },
+        "rules": [
+          // {"require": true, "message": "Engine cannot be empty."}
+        ]
+      },
+      {
+        "label": "Power",
+        "prop": "power",
+        "disabled": !isEdit.value,
+        "value": carInfo.value.power ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the power."
+        },
+        "rules": [
+          // {"require": true, "message": "Engine cannot be empty."}
+        ]
+      },
+      {
+        "label": "Cylinders",
+        "prop": "cylinders",
+        "disabled": !isEdit.value,
+        "value": carInfo.value.cylinders ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the cylinders."
+        },
+        "rules": [
+          // {"require": true, "message": "Engine cannot be empty."}
+        ]
+      },
+      {
+        "label": "Fuel",
+        "prop": "fuel",
+        "disabled": !isEdit.value,
+        "value": carInfo.value.fuel ?? "",
+        "component": {"type": "input", "placeholder": "Please input the fuel."},
+        "rules": [
+          // {"require": true, "message": "Engine cannot be empty."}
+        ]
+      },
+      {
+        "label": "Transmission",
+        "prop": "transmission",
+        "disabled": !isEdit.value,
+        "value": carInfo.value.transmission ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the transmission."
+        },
+        "rules": [
+          // {"require": true, "message": "Engine cannot be empty."}
         ]
       },
     ];
@@ -1762,11 +1883,12 @@ class JobDetailsController extends GetxController
 
   // send invoice
   sendInvoice() {
-    if(customerInfoForm.value['emailAddress'].toString().isNotEmpty) {
+    if (customerInfoForm.value['emailAddress'].toString().isNotEmpty) {
       alertSendInvoiceDialog();
       return;
     }
-    showCustomSnackbar(message: "The current customer's email is empty", status: '3');
+    showCustomSnackbar(
+        message: "The current customer's email is empty", status: '3');
   }
 
   Future<void> alertSendInvoiceDialog() async {
