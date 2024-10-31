@@ -209,7 +209,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-        resizeToAvoidBottomInset: true,
+        // resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(ScreenAdapter.width(130)),
             child: AppBar(
@@ -588,13 +588,13 @@ class JobDetailsView extends GetView<JobDetailsController> {
                         ],
                       ),
                     ))),
-            if (!Platform.isIOS)
-              AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                height: controller.isKeyboardOpen.value
-                    ? ScreenAdapter.height(700)
-                    : 0,
-              ),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              height: controller.isKeyboardOpen.value
+                  ? ScreenAdapter.height(700)
+                  : 0,
+            ),
+            // if (!Platform.isIOS)
             if (!(controller.currentStatus == 'Waiting' &&
                 !controller.isEdit.value))
               ClipRect(
