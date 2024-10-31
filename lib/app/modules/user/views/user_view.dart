@@ -25,15 +25,17 @@ class UserView extends GetView<UserController> {
                   // SizedBox(
                   //   width: ScreenAdapter.width(55),
                   // ),
-                  Container(
-                      height: ScreenAdapter.height(450),
-                      width: ScreenAdapter.width(500),
-                      margin: EdgeInsets.only(
-                          left: ScreenAdapter.width(40),
-                          right: ScreenAdapter.width(40)),
-                      child: Logo(
-                        logoWidth: ScreenAdapter.width(1000),
-                      )),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        // height: ScreenAdapter.height(450),
+                        // width: ScreenAdapter.width(500),
+                        // margin: EdgeInsets.only(
+                        //     left: ScreenAdapter.width(40),
+                        //     right: ScreenAdapter.width(40)),
+                        child: Logo()),
+                  ),
+
                   Expanded(
                       flex: 1,
                       child: Column(
