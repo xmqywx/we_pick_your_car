@@ -209,6 +209,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(ScreenAdapter.width(130)),
             child: AppBar(
