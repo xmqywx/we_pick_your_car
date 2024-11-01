@@ -291,9 +291,9 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                   Tab(
                                     icon: Icon(Icons.attachment_outlined),
                                   ),
-                                  Tab(
-                                    icon: Icon(Icons.person),
-                                  ),
+                                  // Tab(
+                                  //   icon: Icon(Icons.person),
+                                  // ),
                                   Tab(
                                     icon: Icon(Icons.payment_sharp),
                                   ),
@@ -307,28 +307,102 @@ class JobDetailsView extends GetView<JobDetailsController> {
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
                               contents: [
+                                CardContainer(
+                                  children: [
+                                    CardTitle(title: 'Schedule'),
+                                    Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            ScreenAdapter.width(35),
+                                            ScreenAdapter.width(35),
+                                            ScreenAdapter.width(35),
+                                            ScreenAdapter.width(35)),
+                                        child: Column(
+                                          children: [
+                                            DynamicForm(
+                                              formKey:
+                                                  controller.scheduleFormKey,
+                                              formFields: controller
+                                                  .scheduleFormList.value,
+                                              formData: controller
+                                                  .orderInfoForm.value,
+                                              formDataChange: controller
+                                                  .orderFormDataChange,
+                                            ),
+                                          ],
+                                        )),
+                                  ],
+                                ),
                                 CardContainer(children: [
-                                  CardTitle(title: 'Schedule'),
+                                  CardTitle(title: 'Customer'),
                                   Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        ScreenAdapter.width(35),
+                                        ScreenAdapter.width(35),
+                                        ScreenAdapter.width(35),
+                                        ScreenAdapter.width(35)),
+                                    child: Builder(builder: (context) {
+                                      // print(controller.customerFormList.value,);
+                                      // print(controller.customerInfoForm.value,);
+                                      return DynamicForm(
+                                        formKey: controller.customerFormKey,
+                                        formFields:
+                                            controller.customerFormList.value,
+                                        formData:
+                                            controller.customerInfoForm.value,
+                                        formDataChange:
+                                            controller.customerFormDataChange,
+                                      );
+                                    }),
+                                  ),
+                                ]),
+                                if (controller.isEdit.value)
+                                  InkWell(
+                                    child: Container(
+                                        width: double.infinity,
+                                        margin: EdgeInsets.only(
+                                            top: ScreenAdapter.width(35),
+                                            bottom: ScreenAdapter.width(35),
+                                            right: ScreenAdapter.width(35)),
+                                        child: MyParagraph(
+                                          text: controller
+                                                  .isAddSecondaryPerson.value
+                                              ? 'Close Secondary Person'
+                                              : 'Add Secondary Person',
+                                          color: AppColors.themeTextColor4,
+                                          align: TextAlign.right,
+                                        )),
+                                    onTap:
+                                        controller.toChangeIsAddSecondaryPerson,
+                                  ),
+                                if (controller.isAddSecondaryPerson.value)
+                                  CardContainer(children: [
+                                    CardTitle(
+                                        title:
+                                            'Sec. Phone & Person for Car Meet'),
+                                    Padding(
                                       padding: EdgeInsets.fromLTRB(
                                           ScreenAdapter.width(35),
                                           ScreenAdapter.width(35),
                                           ScreenAdapter.width(35),
                                           ScreenAdapter.width(35)),
-                                      child: Column(
-                                        children: [
-                                          DynamicForm(
-                                            formKey: controller.scheduleFormKey,
-                                            formFields: controller
-                                                .scheduleFormList.value,
-                                            formData:
-                                                controller.orderInfoForm.value,
-                                            formDataChange:
-                                                controller.orderFormDataChange,
-                                          ),
-                                        ],
-                                      )),
-                                ])
+                                      child: Builder(builder: (context) {
+                                        // print(controller
+                                        //     .secondaryPersonFormList.value);
+                                        // print(controller
+                                        //     .secondaryPersonInfoForm.value);
+                                        return DynamicForm(
+                                          formKey:
+                                              controller.secondaryPersonFormKey,
+                                          formFields: controller
+                                              .secondaryPersonFormList.value,
+                                          formData: controller
+                                              .secondaryPersonInfoForm.value,
+                                          formDataChange: controller
+                                              .secondaryPersonFormDataChange,
+                                        );
+                                      }),
+                                    )
+                                  ])
                               ]),
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
@@ -473,81 +547,81 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                       )),
                                 ])
                               ]),
-                          JobFormContainer(
-                              handleRefresh: controller.handleRefresh,
-                              contents: [
-                                CardContainer(children: [
-                                  CardTitle(title: 'Customer'),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        ScreenAdapter.width(35),
-                                        ScreenAdapter.width(35),
-                                        ScreenAdapter.width(35),
-                                        ScreenAdapter.width(35)),
-                                    child: Builder(builder: (context) {
-                                      // print(controller.customerFormList.value,);
-                                      // print(controller.customerInfoForm.value,);
-                                      return DynamicForm(
-                                        formKey: controller.customerFormKey,
-                                        formFields:
-                                            controller.customerFormList.value,
-                                        formData:
-                                            controller.customerInfoForm.value,
-                                        formDataChange:
-                                            controller.customerFormDataChange,
-                                      );
-                                    }),
-                                  ),
-                                ]),
-                                if (controller.isEdit.value)
-                                  InkWell(
-                                    child: Container(
-                                        width: double.infinity,
-                                        margin: EdgeInsets.only(
-                                            top: ScreenAdapter.width(35),
-                                            bottom: ScreenAdapter.width(35),
-                                            right: ScreenAdapter.width(35)),
-                                        child: MyParagraph(
-                                          text: controller
-                                                  .isAddSecondaryPerson.value
-                                              ? 'Close Secondary Person'
-                                              : 'Add Secondary Person',
-                                          color: AppColors.themeTextColor4,
-                                          align: TextAlign.right,
-                                        )),
-                                    onTap:
-                                        controller.toChangeIsAddSecondaryPerson,
-                                  ),
-                                if (controller.isAddSecondaryPerson.value)
-                                  CardContainer(children: [
-                                    CardTitle(
-                                        title:
-                                            'Sec. Phone & Person for Car Meet'),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          ScreenAdapter.width(35),
-                                          ScreenAdapter.width(35),
-                                          ScreenAdapter.width(35),
-                                          ScreenAdapter.width(35)),
-                                      child: Builder(builder: (context) {
-                                        // print(controller
-                                        //     .secondaryPersonFormList.value);
-                                        // print(controller
-                                        //     .secondaryPersonInfoForm.value);
-                                        return DynamicForm(
-                                          formKey:
-                                              controller.secondaryPersonFormKey,
-                                          formFields: controller
-                                              .secondaryPersonFormList.value,
-                                          formData: controller
-                                              .secondaryPersonInfoForm.value,
-                                          formDataChange: controller
-                                              .secondaryPersonFormDataChange,
-                                        );
-                                      }),
-                                    )
-                                  ])
-                              ]),
+                          // JobFormContainer(
+                          //     handleRefresh: controller.handleRefresh,
+                          //     contents: [
+                          //       CardContainer(children: [
+                          //         CardTitle(title: 'Customer'),
+                          //         Padding(
+                          //           padding: EdgeInsets.fromLTRB(
+                          //               ScreenAdapter.width(35),
+                          //               ScreenAdapter.width(35),
+                          //               ScreenAdapter.width(35),
+                          //               ScreenAdapter.width(35)),
+                          //           child: Builder(builder: (context) {
+                          //             // print(controller.customerFormList.value,);
+                          //             // print(controller.customerInfoForm.value,);
+                          //             return DynamicForm(
+                          //               formKey: controller.customerFormKey,
+                          //               formFields:
+                          //                   controller.customerFormList.value,
+                          //               formData:
+                          //                   controller.customerInfoForm.value,
+                          //               formDataChange:
+                          //                   controller.customerFormDataChange,
+                          //             );
+                          //           }),
+                          //         ),
+                          //       ]),
+                          //       if (controller.isEdit.value)
+                          //         InkWell(
+                          //           child: Container(
+                          //               width: double.infinity,
+                          //               margin: EdgeInsets.only(
+                          //                   top: ScreenAdapter.width(35),
+                          //                   bottom: ScreenAdapter.width(35),
+                          //                   right: ScreenAdapter.width(35)),
+                          //               child: MyParagraph(
+                          //                 text: controller
+                          //                         .isAddSecondaryPerson.value
+                          //                     ? 'Close Secondary Person'
+                          //                     : 'Add Secondary Person',
+                          //                 color: AppColors.themeTextColor4,
+                          //                 align: TextAlign.right,
+                          //               )),
+                          //           onTap:
+                          //               controller.toChangeIsAddSecondaryPerson,
+                          //         ),
+                          //       if (controller.isAddSecondaryPerson.value)
+                          //         CardContainer(children: [
+                          //           CardTitle(
+                          //               title:
+                          //                   'Sec. Phone & Person for Car Meet'),
+                          //           Padding(
+                          //             padding: EdgeInsets.fromLTRB(
+                          //                 ScreenAdapter.width(35),
+                          //                 ScreenAdapter.width(35),
+                          //                 ScreenAdapter.width(35),
+                          //                 ScreenAdapter.width(35)),
+                          //             child: Builder(builder: (context) {
+                          //               // print(controller
+                          //               //     .secondaryPersonFormList.value);
+                          //               // print(controller
+                          //               //     .secondaryPersonInfoForm.value);
+                          //               return DynamicForm(
+                          //                 formKey:
+                          //                     controller.secondaryPersonFormKey,
+                          //                 formFields: controller
+                          //                     .secondaryPersonFormList.value,
+                          //                 formData: controller
+                          //                     .secondaryPersonInfoForm.value,
+                          //                 formDataChange: controller
+                          //                     .secondaryPersonFormDataChange,
+                          //               );
+                          //             }),
+                          //           )
+                          //         ])
+                          //     ]),
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
                               contents: [
@@ -591,7 +665,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
               height: controller.isKeyboardOpen.value
-                  ? ScreenAdapter.height(700)
+                  ? ScreenAdapter.height(620)
                   : 0,
             ),
             // if (!Platform.isIOS)

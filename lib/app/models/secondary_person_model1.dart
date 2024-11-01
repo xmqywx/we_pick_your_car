@@ -9,13 +9,8 @@ class SecondaryPerson {
   String? personABN;
   String? personAddress;
   String? personLocation;
-  dynamic personRelation;
+  String? personRelation;
   String? personSecNumber;
-  dynamic licenseClass;
-  dynamic cardNumber;
-  dynamic dateOfBirth;
-  dynamic expiryDate;
-  dynamic backCardNumber;
 
   SecondaryPerson(
       {this.id,
@@ -29,12 +24,7 @@ class SecondaryPerson {
       this.personAddress,
       this.personLocation,
       this.personRelation,
-      this.personSecNumber,
-      this.licenseClass,
-      this.cardNumber,
-      this.dateOfBirth,
-      this.expiryDate,
-      this.backCardNumber});
+      this.personSecNumber});
 
   SecondaryPerson.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -49,11 +39,6 @@ class SecondaryPerson {
     personLocation = json['personLocation'];
     personRelation = json['personRelation'];
     personSecNumber = json['personSecNumber'];
-    licenseClass = json['licenseClass'];
-    cardNumber = json['cardNumber'];
-    dateOfBirth = json['dateOfBirth'];
-    expiryDate = json['expiryDate'];
-    backCardNumber = json['backCardNumber'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,11 +55,6 @@ class SecondaryPerson {
     data['personLocation'] = personLocation;
     data['personRelation'] = personRelation;
     data['personSecNumber'] = personSecNumber;
-    data['licenseClass'] = licenseClass;
-    data['cardNumber'] = cardNumber;
-    data['dateOfBirth'] = dateOfBirth;
-    data['expiryDate'] = expiryDate;
-    data['backCardNumber'] = backCardNumber;
     return data;
   }
 }

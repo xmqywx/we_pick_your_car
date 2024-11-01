@@ -3,6 +3,7 @@ class Customer {
   String? createTime;
   String? updateTime;
   String? firstName;
+  dynamic yardID;
   dynamic surname;
   String? emailAddress;
   String? phoneNumber;
@@ -13,17 +14,14 @@ class Customer {
   bool? isDel;
   String? abn;
   String? workLocation;
-  String? licenseClass;
-  String? cardNumber;
-  String? dateOfBirth;
-  String? expiryDate;
-  dynamic backCardNumber;
+  List<Null>? car;
 
   Customer(
       {this.id,
       this.createTime,
       this.updateTime,
       this.firstName,
+      this.yardID,
       this.surname,
       this.emailAddress,
       this.phoneNumber,
@@ -34,17 +32,14 @@ class Customer {
       this.isDel,
       this.abn,
       this.workLocation,
-      this.licenseClass,
-      this.cardNumber,
-      this.dateOfBirth,
-      this.expiryDate,
-      this.backCardNumber});
+      this.car});
 
   Customer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     createTime = json['createTime'];
     updateTime = json['updateTime'];
     firstName = json['firstName'];
+    yardID = json['yardID'];
     surname = json['surname'];
     emailAddress = json['emailAddress'];
     phoneNumber = json['phoneNumber'];
@@ -55,11 +50,6 @@ class Customer {
     isDel = json['isDel'];
     abn = json['abn'];
     workLocation = json['workLocation'];
-    licenseClass = json['licenseClass'];
-    cardNumber = json['cardNumber'];
-    dateOfBirth = json['dateOfBirth'];
-    expiryDate = json['expiryDate'];
-    backCardNumber = json['backCardNumber'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +58,7 @@ class Customer {
     data['createTime'] = createTime;
     data['updateTime'] = updateTime;
     data['firstName'] = firstName;
+    data['yardID'] = yardID;
     data['surname'] = surname;
     data['emailAddress'] = emailAddress;
     data['phoneNumber'] = phoneNumber;
@@ -78,11 +69,6 @@ class Customer {
     data['isDel'] = isDel;
     data['abn'] = abn;
     data['workLocation'] = workLocation;
-    data['licenseClass'] = licenseClass;
-    data['cardNumber'] = cardNumber;
-    data['dateOfBirth'] = dateOfBirth;
-    data['expiryDate'] = expiryDate;
-    data['backCardNumber'] = backCardNumber;
     return data;
   }
 }

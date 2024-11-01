@@ -59,10 +59,10 @@ class HomeView extends GetView<HomeController> {
                 SizedBox(
                   height: ScreenAdapter.height(6),
                 ),
-                Text(
-                  'CASH-FOR-CARS',
-                  style: TextStyle(fontSize: ScreenAdapter.fontSize(40)),
-                ),
+                // Text(
+                //   'CASH-FOR-CARS',
+                //   style: TextStyle(fontSize: ScreenAdapter.fontSize(40)),
+                // ),
               ],
             ),
           )
@@ -95,8 +95,8 @@ class HomeView extends GetView<HomeController> {
               // ),
               // _currentTask(),
               Container(
-                margin: EdgeInsets.only(top: ScreenAdapter.height(185)),
-                height: ScreenAdapter.height(1975),
+                margin: EdgeInsets.only(top: ScreenAdapter.height(120)),
+                height: ScreenAdapter.height(2040),
                 width: ScreenAdapter.width(1080),
                 child: TableComplexExample(refresh: controller.handleRefresh),
               ),

@@ -134,7 +134,12 @@ class DynamicForm extends StatelessWidget {
             if (hidden) {
               return SizedBox.shrink();
             }
-
+            bool isEmptyAndRed = ((value == null) ||
+                    (value is String && value.isEmpty) ||
+                    (value is int && value == 0) ||
+                    (value is List && value.isEmpty) ||
+                    (value is Map && value.isEmpty)) &&
+                (component['placeholderEmptyRed'] ?? false);
             Widget formField;
             if (component['type'] == 'widget') {
               formField = widget;
@@ -143,6 +148,7 @@ class DynamicForm extends StatelessWidget {
               if (value == 'null') {
                 value = '';
               }
+
               formField = Column(
                 children: [
                   fieldTop,
@@ -168,6 +174,9 @@ class DynamicForm extends StatelessWidget {
                             decoration: InputDecoration(
                               labelText: label,
                               hintText: component['placeholder'],
+                              hintStyle: TextStyle(
+                                color: isEmptyAndRed ? Colors.red : Colors.grey,
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                                 borderSide: BorderSide(
@@ -206,6 +215,9 @@ class DynamicForm extends StatelessWidget {
                             style: TextStyle(
                                 fontFamily: 'Roboto-Medium', fontSize: 16),
                             validator: inputValidator,
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: () =>
+                                FocusScope.of(context).unfocus(),
                             onChanged: (value) {
                               if (component['fieldType'] == 'number') {
                                 if (value == '') {
@@ -330,6 +342,7 @@ class DynamicForm extends StatelessWidget {
                         fontFamily: 'Roboto-Medium',
                         fontSize:
                             16, // Adjusted font size to match input fields
+                        color: isEmptyAndRed ? Colors.red : Colors.grey,
                       ),
                     ),
                     isExpanded:
@@ -360,6 +373,13 @@ class DynamicForm extends StatelessWidget {
                     labelText: label,
                     labelStyle: TextStyle(fontFamily: 'Roboto-Medium'),
                     hintText: component['placeholder'],
+                    hintStyle: TextStyle(
+                      color: (formData[prop] == null ||
+                              (formData[prop] is String &&
+                                  formData[prop].isEmpty))
+                          ? Colors.red
+                          : Colors.grey,
+                    ),
                   ),
                   child: MyParagraph(text: formData[prop] ?? ''),
                 ),
@@ -372,14 +392,6 @@ class DynamicForm extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //     spreadRadius: 1,
-                      //     blurRadius: 6,
-                      //     offset: Offset(0, 3),
-                      //   ),
-                      // ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,94 +400,104 @@ class DynamicForm extends StatelessWidget {
                           children: [
                             Expanded(
                               child: InkWell(
-                                onTap: () async {
-                                  await showDatePicker(
-                                    context: context,
-                                    initialDate:
-                                        handleParse(date: formData[prop]),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2100),
-                                  ).then((value) {
-                                    if (value == null) return;
-                                    formValues[prop] = handleFormat(
-                                        date: value, format: "dd-MM-yyyy");
-                                    formDataChange(prop, formValues[prop]);
-                                    triggeredOnChange(value);
-                                  }).catchError((e) {
-                                    print(e);
-                                  });
-                                },
-                                child: InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelText: label,
-                                    hintText: component['placeholder'],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          width: 1), // Added light grey border
+                                  onTap: disabled
+                                      ? null
+                                      : () async {
+                                          // FocusScope.of(context).unfocus();
+                                          DateTime? selectedDate =
+                                              await showDatePicker(
+                                            context: context,
+                                            initialDate: handleParse(
+                                                date: formData[prop]),
+                                            firstDate: DateTime(2000),
+                                            lastDate: DateTime(2100),
+                                          );
+
+                                          if (selectedDate != null) {
+                                            String formattedDate = handleFormat(
+                                                date: selectedDate,
+                                                format: "dd-MM-yyyy");
+                                            formValues[prop] = formattedDate;
+                                            formDataChange(prop, formattedDate);
+                                            triggeredOnChange(selectedDate);
+
+                                            // Update the FormField state
+                                            state.didChange(selectedDate);
+                                          }
+                                        },
+                                  child: InkWell(
+                                    onTap: null,
+                                    child: InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: label,
+                                        hintText: component['placeholder'],
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          borderSide: BorderSide(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              width: 1),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          borderSide: BorderSide(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              width: 1),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          borderSide: BorderSide(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              width: 1),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          borderSide: BorderSide(
+                                              color: AppColors.primary
+                                                  .withOpacity(0.5),
+                                              width: 1.5),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        labelStyle: TextStyle(
+                                          color: Colors.grey,
+                                          fontFamily: 'Roboto-Medium',
+                                          fontSize: 16,
+                                        ),
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'Roboto-Medium',
+                                          fontSize: 16,
+                                          color: (formData[prop] == null ||
+                                                  (formData[prop] is String &&
+                                                      formData[prop].isEmpty))
+                                              ? Colors.red
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      child: MyParagraph(
+                                        text: formData[prop] ??
+                                            component['placeholder'],
+                                        color: (((formData[prop] == null ||
+                                                    (formData[prop] is String &&
+                                                        formData[prop]
+                                                            .isEmpty))) &&
+                                                component[
+                                                        'placeholderEmptyRed'] ==
+                                                    true)
+                                            ? Colors.red
+                                            : Colors.black87,
+                                      ),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          width:
-                                              1), // Added light grey border for enabled state
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          width:
-                                              1), // Added light grey border for enabled state
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: BorderSide(
-                                          color: AppColors.primary
-                                              .withOpacity(0.5),
-                                          width:
-                                              1.5), // Added slightly darker grey border for focused state
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontFamily: 'Roboto-Medium',
-                                      fontSize: 16,
-                                    ),
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Roboto-Medium',
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  child: MyParagraph(
-                                      text: formData[prop] ??
-                                          component['placeholder']),
-                                ),
-                              ),
+                                  )),
                             ),
-                            // IconButton(
-                            //   icon: Icon(Icons.calendar_today),
-                            //   onPressed: () async {
-                            //     await showDatePicker(
-                            //       context: context,
-                            //       initialDate: handleParse(date: formData[prop]),
-                            //       firstDate: DateTime(2000),
-                            //       lastDate: DateTime(2100),
-                            //     ).then((value) {
-                            //       if (value == null) return;
-                            //       formValues[prop] =
-                            //           handleFormat(date: value, format: "dd-MM-yyyy");
-                            //       formDataChange(prop, formValues[prop]);
-                            //       triggeredOnChange(value);
-                            //     }).catchError((e) {
-                            //       print(e);
-                            //     });
-                            //   },
-                            // ),
                           ],
                         ),
                         if (state.errorText != null)
@@ -589,6 +611,9 @@ class DynamicForm extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: label,
                     hintText: component['placeholder'],
+                    hintStyle: TextStyle(
+                      color: isEmptyAndRed ? Colors.red : Colors.grey,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: BorderSide(

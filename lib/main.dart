@@ -35,17 +35,46 @@ void main() {
   // });
   // Get.put(AuthMiddleware());
   runApp(ScreenUtilInit(
-      designSize: const Size(1080, 2400), //设计稿的宽度和高度 px
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return GetMaterialApp(
+    designSize: const Size(1080, 2400), //设计稿的宽度和高度 px
+    minTextAdapt: true,
+    splitScreenMode: true,
+    builder: (context, child) {
+      return GestureDetector(
+        onTap: () {
+          // 取消当前焦点，隐藏键盘
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild!.unfocus();
+          }
+        },
+        onPanUpdate: (details) {
+          // 处理滑动手势，取消焦点
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild!.unfocus();
+          }
+        },
+        onPanDown: (details) {
+          // 处理滑动手势开始，取消焦点
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild!.unfocus();
+          }
+        },
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
           title: 'Apexpoint',
           theme: ThemeData(
-              primarySwatch: AppColors.primarySwatch, fontFamily: "Bebas"),
+            primarySwatch: AppColors.primarySwatch,
+            fontFamily: "Bebas",
+          ),
           getPages: AppPages.routes,
-        );
-      }));
+        ),
+      );
+    },
+  ));
 }

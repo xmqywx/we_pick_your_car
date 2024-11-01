@@ -31,6 +31,7 @@ const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 class JobDetailsController extends GetxController
     with GetSingleTickerProviderStateMixin, WidgetsBindingObserver {
   RxBool isKeyboardOpen = false.obs;
+  RxDouble keyboardHeight = 0.0.obs;
   //TODO: Implement JobDetailsController
   RxMap arguments = {}.obs;
   RxBool isEdit = false.obs;
@@ -117,9 +118,10 @@ class JobDetailsController extends GetxController
           "options": [
             {"label": "Cheque", "value": "Cheque"},
             {"label": "Cash", "value": "Cash"},
-            {"label": "Direct Credit", "value": "Direct Credit"}
+            {"label": "EFT", "value": "EFT"}
           ],
-          "placeholder": "Please input the payment method."
+          "placeholder": "Please input the payment method.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Payment Method cannot be empty."}
@@ -140,7 +142,8 @@ class JobDetailsController extends GetxController
           "type": "input",
           "fieldType": "number",
           "trigger": "change",
-          "placeholder": "Please input the quote."
+          "placeholder": "Please input the quote.",
+          "placeholderEmptyRed": true
         },
         "fieldKey": fieldQuoteKey,
         "rules": [
@@ -173,7 +176,8 @@ class JobDetailsController extends GetxController
           "type": "input",
           "fieldType": "number",
           "trigger": "change",
-          "placeholder": "Please input the deposit."
+          "placeholder": "Please input the deposit.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Deposit cannot be empty."},
@@ -215,9 +219,10 @@ class JobDetailsController extends GetxController
           "options": [
             {"label": "Cheque", "value": "Cheque"},
             {"label": "Cash", "value": "Cash"},
-            {"label": "Direct Credit", "value": "Direct Credit"}
+            {"label": "EFT", "value": "EFT"}
           ],
-          "placeholder": "Please input the deposit payment method."
+          "placeholder": "Please input the deposit payment method.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {
@@ -236,7 +241,8 @@ class JobDetailsController extends GetxController
           "type": "input",
           "trigger": "change",
           "fieldType": "number",
-          "placeholder": "Please input the deduction."
+          "placeholder": "Please input the deduction.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Deduction cannot be empty."},
@@ -262,7 +268,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.totalAmount ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the amount."
+          "placeholder": "Please input the amount.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Amount cannot be empty."}
@@ -279,7 +286,8 @@ class JobDetailsController extends GetxController
             {"label": "Price includes GST", "value": "inc"},
             {"label": "Price excludes GST", "value": "ex"}
           ],
-          "placeholder": "Please input the GST status."
+          "placeholder": "Please input the GST status.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "GST status cannot be empty."}
@@ -375,7 +383,8 @@ class JobDetailsController extends GetxController
         "fieldKey": customerKey,
         "component": {
           "type": "input",
-          "placeholder": "Please input the customer name."
+          "placeholder": "Please input the customer name.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Customer Name cannot be empty."}
@@ -390,7 +399,8 @@ class JobDetailsController extends GetxController
         "fieldKey": bankKey,
         "component": {
           "type": "input",
-          "placeholder": "Please input the bank name."
+          "placeholder": "Please input the bank name.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Bank Name cannot be empty."}
@@ -406,7 +416,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "fieldType": "number",
-          "placeholder": "Please input the BSB No."
+          "placeholder": "Please input the BSB No.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "BSB No cannot be empty."}
@@ -422,7 +433,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "fieldType": "number",
-          "placeholder": "Please input the Accounts No."
+          "placeholder": "Please input the Accounts No.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "BSB No cannot be empty."}
@@ -526,7 +538,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotPapers ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if you have the Registration Papers."
+          "placeholder": "Please input if you have the Registration Papers.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Registration Papers cannot be empty."}
@@ -539,7 +552,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotLicense ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if you have your License."
+          "placeholder": "Please input if you have your License.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "License cannot be empty."}
@@ -552,7 +566,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotKey ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if you have the Key."
+          "placeholder": "Please input if you have the Key.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Key cannot be empty."}
@@ -565,7 +580,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotOwner ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if you are the Registered Owner."
+          "placeholder": "Please input if you are the Registered Owner.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Registered Owner cannot be empty."}
@@ -578,7 +594,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotRunning ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if the vehicle is Running."
+          "placeholder": "Please input if the vehicle is Running.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Running status cannot be empty."}
@@ -592,7 +609,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "switch",
           "placeholder":
-              "Please input if the vehicle is in an Easy Position to pick up."
+              "Please input if the vehicle is in an Easy Position to pick up.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Easy position status cannot be empty."}
@@ -605,7 +623,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotBusy ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if the Traffic Road is busy."
+          "placeholder": "Please input if the Traffic Road is busy.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {
@@ -621,7 +640,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.gotFlat ?? 0,
         "component": {
           "type": "switch",
-          "placeholder": "Please input if there are any Flat Tires."
+          "placeholder": "Please input if there are any Flat Tires.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Flat Tires status cannot be empty."}
@@ -642,7 +662,8 @@ class JobDetailsController extends GetxController
             {'label': 'Gumtree', 'value': 'Gumtree'},
             {'label': 'Other', 'value': 'Other'},
           ],
-          "placeholder": "Please input the deposit payment method."
+          "placeholder": "Please input the deposit payment method.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {
@@ -659,7 +680,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.commentText ?? '',
         "component": {
           "type": "textarea",
-          "placeholder": "Please input the comments."
+          "placeholder": "Please input the comments.",
+          "placeholderEmptyRed": true
         },
         "rules": []
       },
@@ -672,7 +694,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "fieldType": "number",
-          "placeholder": "Please input the price."
+          "placeholder": "Please input the price.",
+          "placeholderEmptyRed": true
         },
         "rules": []
       },
@@ -691,10 +714,7 @@ class JobDetailsController extends GetxController
         "prop": "imageFileDir",
         "disabled": currentStatus.value == 'Complete',
         "value": orderInfo.value.imageFileDir ?? '[]',
-        "component": {
-          "type": "uploadImage",
-          "isOnlyCamera": true,
-        },
+        "component": {"type": "uploadImage", "isOnlyCamera": true},
         "rules": [],
         "triggeredOnChange": (data) {
           toUpdateFile();
@@ -758,7 +778,8 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.pickupAddress ?? '',
         "component": {
           "type": "widget",
-          "placeholder": "Please input the pickup address."
+          "placeholder": "Please input the pickup address.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Pickup address cannot be empty."}
@@ -841,7 +862,8 @@ class JobDetailsController extends GetxController
         "value": handleTimeRange(),
         "component": {
           "type": "input",
-          "placeholder": "Please input the Preferred Pick Up Time."
+          "placeholder": "Please input the Preferred Pick Up Time.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {
@@ -914,7 +936,8 @@ class JobDetailsController extends GetxController
         "value": customerInfo.value.firstName ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the full name."
+          "placeholder": "Please input the full name.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Full name cannot be empty."}
@@ -930,6 +953,7 @@ class JobDetailsController extends GetxController
           "trigger": "change",
           "fieldType": "number",
           "placeholder": "Please input the phone number.",
+          "placeholderEmptyRed": true
         },
         "fieldRight": !isEdit.value &&
                 customerInfoForm.value['phoneNumber']?.isNotEmpty == true
@@ -962,7 +986,8 @@ class JobDetailsController extends GetxController
           "type": "input",
           "trigger": "change",
           "fieldType": "number",
-          "placeholder": "Please input the secondary phone number."
+          "placeholder": "Please input the secondary phone number.",
+          "placeholderEmptyRed": true
         },
         "fieldRight": !isEdit.value &&
                 customerInfoForm.value['secNumber']?.isNotEmpty == true
@@ -997,7 +1022,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "trigger": "change",
-          "placeholder": "Please input the email."
+          "placeholder": "Please input the email.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {
@@ -1013,34 +1039,95 @@ class JobDetailsController extends GetxController
         "value": customerInfo.value.address ?? "",
         "component": {
           "type": "textarea",
-          "placeholder": "Please input the residential address."
+          "placeholder": "Please input the residential address.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Residential address cannot be empty."}
         ]
       },
       {
-        "label": "Driver Licence / Photo ID",
+        "label": "License Number",
         "prop": "licence",
         "disabled": !isEdit.value,
         "value": customerInfo.value.licence ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the driver licence / photo ID."
+          "placeholder": "Please input the driver licence number.",
+          "placeholderEmptyRed": true
         },
-        "rules": [
-          {
-            "require": true,
-            // "message": "Driver licence / photo ID cannot be empty."
-          }
-        ]
+        "rules": []
+      },
+      {
+        "label": "License Class",
+        "prop": "licenseClass",
+        "disabled": !isEdit.value,
+        "value": customerInfo.value.licenseClass ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the driver license class.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Card number",
+        "prop": "cardNumber",
+        "disabled": !isEdit.value,
+        "value": customerInfo.value.cardNumber ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the card number.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Date of Birth",
+        "prop": "dateOfBirth",
+        "disabled": !isEdit.value,
+        "value": customerInfo.value.dateOfBirth ?? "",
+        "component": {
+          "type": "datepicker",
+          "placeholder": "Please input the date of birth.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Expiry Date",
+        "prop": "expiryDate",
+        "disabled": !isEdit.value,
+        "value": customerInfo.value.expiryDate ?? "",
+        "component": {
+          "type": "datepicker",
+          "placeholder": "Please input the expiry date.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Back Card Number",
+        "prop": "backCardNumber",
+        "disabled": !isEdit.value,
+        "value": customerInfo.value.backCardNumber ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the back card number.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
       },
       {
         "label": "ABN",
         "prop": "abn",
         "disabled": !isEdit.value,
         "value": customerInfo.value.abn ?? "",
-        "component": {"type": "input", "placeholder": "Please input the ABN."},
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the ABN.",
+          "placeholderEmptyRed": true
+        },
         "rules": [
           // {"require": true, "message": "ABN cannot be empty."}
         ]
@@ -1052,7 +1139,8 @@ class JobDetailsController extends GetxController
         "value": customerInfo.value.workLocation ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the workshop or house."
+          "placeholder": "Please input the workshop or house.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Workshop or house cannot be empty."}
@@ -1089,7 +1177,8 @@ class JobDetailsController extends GetxController
         "value": secondaryPersonInfo.value.personName ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the full name."
+          "placeholder": "Please input the full name.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Full name cannot be empty."}
@@ -1104,7 +1193,8 @@ class JobDetailsController extends GetxController
           "type": "input",
           "trigger": "change",
           "fieldType": "number",
-          "placeholder": "Please input the phone number."
+          "placeholder": "Please input the phone number.",
+          "placeholderEmptyRed": true
         },
         "fieldRight": !isEdit.value &&
                 secondaryPersonInfoForm.value['personPhone']?.isNotEmpty == true
@@ -1138,7 +1228,8 @@ class JobDetailsController extends GetxController
           "type": "input",
           "trigger": "change",
           "fieldType": "number",
-          "placeholder": "Please input the secondary phone number."
+          "placeholder": "Please input the secondary phone number.",
+          "placeholderEmptyRed": true
         },
         "fieldRight": !isEdit.value &&
                 secondaryPersonInfoForm.value['personSecNumber']?.isNotEmpty ==
@@ -1175,7 +1266,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "trigger": "change",
-          "placeholder": "Please input the email."
+          "placeholder": "Please input the email.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {
@@ -1191,34 +1283,112 @@ class JobDetailsController extends GetxController
         "value": secondaryPersonInfo.value.personAddress ?? "",
         "component": {
           "type": "textarea",
-          "placeholder": "Please input the residential address."
+          "placeholder": "Please input the residential address.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Residential address cannot be empty."}
         ]
       },
+      // {
+      //   "label": "Driver Licence / Photo ID",
+      //   "prop": "personLicense",
+      //   "disabled": !isEdit.value,
+      //   "value": secondaryPersonInfo.value.personLicense ?? "",
+      //   "component": {
+      //     "type": "input",
+      //     "placeholder": "Please input the driver licence / photo ID.",
+      //     "placeholderEmptyRed": true
+      //   },
+      //   "rules": [
+      //     {
+      //       "require": true,
+      //       // "message": "Driver licence / photo ID cannot be empty."
+      //     }
+      //   ]
+      // },
       {
-        "label": "Driver Licence / Photo ID",
-        "prop": "personLicense",
+        "label": "License Number",
+        "prop": "personSecNumber",
         "disabled": !isEdit.value,
-        "value": secondaryPersonInfo.value.personLicense ?? "",
+        "value": secondaryPersonInfo.value.personSecNumber ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the driver licence / photo ID."
+          "placeholder": "Please input the driver licence number.",
+          "placeholderEmptyRed": true
         },
-        "rules": [
-          {
-            "require": true,
-            // "message": "Driver licence / photo ID cannot be empty."
-          }
-        ]
+        "rules": []
+      },
+      {
+        "label": "License Class",
+        "prop": "licenseClass",
+        "disabled": !isEdit.value,
+        "value": secondaryPersonInfo.value.licenseClass ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the driver license class.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Card number",
+        "prop": "cardNumber",
+        "disabled": !isEdit.value,
+        "value": secondaryPersonInfo.value.cardNumber ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the card number.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Date of Birth",
+        "prop": "dateOfBirth",
+        "disabled": !isEdit.value,
+        "value": secondaryPersonInfo.value.dateOfBirth ?? "",
+        "component": {
+          "type": "datepicker",
+          "placeholder": "Please input the date of birth.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Expiry Date",
+        "prop": "expiryDate",
+        "disabled": !isEdit.value,
+        "value": secondaryPersonInfo.value.expiryDate ?? "",
+        "component": {
+          "type": "datepicker",
+          "placeholder": "Please input the expiry date.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
+      },
+      {
+        "label": "Back Card Number",
+        "prop": "backCardNumber",
+        "disabled": !isEdit.value,
+        "value": secondaryPersonInfo.value.backCardNumber ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the back card number.",
+          "placeholderEmptyRed": true
+        },
+        "rules": []
       },
       {
         "label": "ABN",
         "prop": "personABN",
         "disabled": !isEdit.value,
         "value": secondaryPersonInfo.value.personABN ?? "",
-        "component": {"type": "input", "placeholder": "Please input the ABN."},
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the ABN.",
+          "placeholderEmptyRed": true
+        },
         "rules": [
           // {"require": true, "message": "ABN cannot be empty."}
         ]
@@ -1230,7 +1400,8 @@ class JobDetailsController extends GetxController
         "value": secondaryPersonInfo.value.personLocation ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the workshop or house."
+          "placeholder": "Please input the workshop or house.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Workshop or house cannot be empty."}
@@ -1257,7 +1428,11 @@ class JobDetailsController extends GetxController
         "prop": "registrationNumber",
         "disabled": !isEdit.value,
         "value": carInfo.value.registrationNumber ?? "",
-        "component": {"type": "input", "placeholder": "Please input the REGO."},
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the REGO.",
+          "placeholderEmptyRed": true
+        },
         "rules": [
           // {"require": true, "message": "REGO cannot be empty."}
         ]
@@ -1279,7 +1454,8 @@ class JobDetailsController extends GetxController
             {'label': 'WA', 'value': 'WA'},
             {'label': 'TAS', 'value': 'TAS'},
           ],
-          "placeholder": "Please input the State."
+          "placeholder": "Please input the State.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "State cannot be empty."}
@@ -1293,7 +1469,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "fieldType": "number",
-          "placeholder": "Please input the Kilometers of the car."
+          "placeholder": "Please input the Kilometers of the car.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Kilometers cannot be empty."}
@@ -1306,7 +1483,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.brand ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the Brand."
+          "placeholder": "Please input the Brand.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Brand cannot be empty."}
@@ -1319,7 +1497,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.model ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the Model."
+          "placeholder": "Please input the Model.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Model cannot be empty."}
@@ -1333,7 +1512,8 @@ class JobDetailsController extends GetxController
         "component": {
           "type": "input",
           "fieldType": "number",
-          "placeholder": "Please input the Year."
+          "placeholder": "Please input the Year.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Year cannot be empty."}
@@ -1346,7 +1526,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.series ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the Series."
+          "placeholder": "Please input the Series.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Series cannot be empty."}
@@ -1372,7 +1553,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.colour ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the Colour."
+          "placeholder": "Please input the Colour.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Colour cannot be empty."}
@@ -1385,7 +1567,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.bodyStyle ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the Body Style."
+          "placeholder": "Please input the Body Style.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Body Style cannot be empty."}
@@ -1398,7 +1581,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.vinNumber ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the Vin Number."
+          "placeholder": "Please input the Vin Number.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Vin Number cannot be empty."}
@@ -1411,7 +1595,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.engineCode ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the engine code."
+          "placeholder": "Please input the engine code.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Engine cannot be empty."}
@@ -1424,7 +1609,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.engineNumber ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the engine number."
+          "placeholder": "Please input the engine number.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Engine cannot be empty."}
@@ -1437,7 +1623,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.power ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the power."
+          "placeholder": "Please input the power.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Engine cannot be empty."}
@@ -1450,7 +1637,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.cylinders ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the cylinders."
+          "placeholder": "Please input the cylinders.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Engine cannot be empty."}
@@ -1461,7 +1649,11 @@ class JobDetailsController extends GetxController
         "prop": "fuel",
         "disabled": !isEdit.value,
         "value": carInfo.value.fuel ?? "",
-        "component": {"type": "input", "placeholder": "Please input the fuel."},
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the fuel.",
+          "placeholderEmptyRed": true
+        },
         "rules": [
           // {"require": true, "message": "Engine cannot be empty."}
         ]
@@ -1473,7 +1665,8 @@ class JobDetailsController extends GetxController
         "value": carInfo.value.transmission ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the transmission."
+          "placeholder": "Please input the transmission.",
+          "placeholderEmptyRed": true
         },
         "rules": [
           // {"require": true, "message": "Engine cannot be empty."}
@@ -1501,6 +1694,10 @@ class JobDetailsController extends GetxController
     });
     isLoading.value = false;
     if (res != null) {
+      print("------------------ ${{
+        "jobID": arguments['id'],
+        "orderID": arguments['orderID']
+      }}");
       if (res['otherJobs'] != null) {
         otherJobs.value = res['otherJobs'];
       }
@@ -1516,6 +1713,11 @@ class JobDetailsController extends GetxController
           "licence": customerInfo.value.licence,
           "abn": customerInfo.value.abn,
           "workLocation": customerInfo.value.workLocation,
+          "licenseClass": customerInfo.value.licenseClass,
+          "cardNumber": customerInfo.value.cardNumber,
+          "dateOfBirth": customerInfo.value.dateOfBirth,
+          "expiryDate": customerInfo.value.expiryDate,
+          "backCardNumber": customerInfo.value.backCardNumber,
         };
         customerInfo.refresh();
       }
@@ -1530,6 +1732,11 @@ class JobDetailsController extends GetxController
           "personEmail": secondaryPersonInfo.value.personEmail,
           "personAddress": secondaryPersonInfo.value.personAddress,
           "personLicense": secondaryPersonInfo.value.personLicense,
+          "licenseClass": secondaryPersonInfo.value.licenseClass,
+          "cardNumber": secondaryPersonInfo.value.cardNumber,
+          "dateOfBirth": secondaryPersonInfo.value.dateOfBirth,
+          "expiryDate": secondaryPersonInfo.value.expiryDate,
+          "backCardNumber": secondaryPersonInfo.value.backCardNumber,
           "personABN": secondaryPersonInfo.value.personABN,
           "personLocation": secondaryPersonInfo.value.personLocation,
         };
@@ -1620,6 +1827,12 @@ class JobDetailsController extends GetxController
           "colour": carInfo.value.colour,
           "bodyStyle": carInfo.value.bodyStyle,
           "vinNumber": carInfo.value.vinNumber,
+          "engineCode": carInfo.value.engineCode,
+          "engineNumber": carInfo.value.engineNumber,
+          "fuel": carInfo.value.fuel,
+          "power": carInfo.value.power,
+          "cylinders": carInfo.value.cylinders,
+          "transmission": carInfo.value.transmission,
         };
       }
     }
@@ -2025,7 +2238,8 @@ class JobDetailsController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-    tabController = TabController(length: 6, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
+
     arguments.value = Get.arguments;
     await handleRefresh();
     WidgetsBinding.instance.addObserver(this);
@@ -2043,9 +2257,10 @@ class JobDetailsController extends GetxController
   }
 
   @override
-  void didChangeMetrics() {
+  void didChangeMetrics() async {
     final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
     isKeyboardOpen.value = bottomInset > 0.0;
+    keyboardHeight.value = bottomInset;
   }
 }
 
