@@ -34,7 +34,8 @@ class DynamicForm extends StatelessWidget {
         children: [
           ...formFields.map((field) {
             String label = field['label'] ?? ''; // string
-            dynamic value = formData[field['prop']];//field['value'] ?? ''; // any
+            dynamic value =
+                formData[field['prop']]; //field['value'] ?? ''; // any
             value ??= field['value'] ?? '';
             //dynamic value = field['value'] ?? ''; // any
             Map<String, dynamic> component =
@@ -100,7 +101,8 @@ class DynamicForm extends StatelessWidget {
                   }
                 }
                 if (rule.containsKey('pattern')) {
-                  if(formData[prop] == '' || formData[prop] == null) return null;
+                  if (formData[prop] == '' || formData[prop] == null)
+                    return null;
                   if (!RegExp(rule['pattern'])
                       .hasMatch(formData[prop].toString())) {
                     return rule['message'];
@@ -137,85 +139,99 @@ class DynamicForm extends StatelessWidget {
             if (component['type'] == 'widget') {
               formField = widget;
             } else if (component['type'] == 'input') {
-               value??="";
-               if(value=='null'){
-                 value='';
-               }
+              value ??= "";
+              if (value == 'null') {
+                value = '';
+              }
               formField = Column(
                 children: [
                   fieldTop,
                   Row(
                     children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: TextFormField(
-                        autovalidateMode: trigger,
-                        initialValue: '${component['fieldType'] == 'number'
-                          ? (value == null ? '' : value.toString())
-                          : value}',
-                        enabled: !disabled,
-                        key: fieldKey,
-                        keyboardType: component['fieldType'] == 'number'
-                            ? TextInputType.number
-                            : TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: label,
-                          hintText: component['placeholder'],
-                          border: OutlineInputBorder(
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), 
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), 
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), 
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), 
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), 
-                          labelStyle: TextStyle(
-                            color: Colors.grey, 
-                            fontSize: 16, 
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always, 
-                        ),
-                        style: TextStyle(fontFamily: 'Roboto-Medium', fontSize: 16),
-                        validator: inputValidator,
-                        onChanged: (value) {
-                          if (component['fieldType'] == 'number') {
-                            if (value == '') {
-                              formValues[prop] = null;
-                              formDataChange(prop, null);
-                            } else {
-                              if (double.tryParse(value) == null) {
-                                field['validatorMsg'] = 'Please enter the correct number.';
+                          child: TextFormField(
+                            autovalidateMode: trigger,
+                            initialValue:
+                                '${component['fieldType'] == 'number' ? (value == null ? '' : value.toString()) : value}',
+                            enabled: !disabled,
+                            key: fieldKey,
+                            keyboardType: component['fieldType'] == 'number'
+                                ? TextInputType.number
+                                : TextInputType.text,
+                            decoration: InputDecoration(
+                              labelText: label,
+                              hintText: component['placeholder'],
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    width: 1),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    width: 1),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: AppColors.primary.withOpacity(0.5),
+                                    width: 1.5),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                            ),
+                            style: TextStyle(
+                                fontFamily: 'Roboto-Medium', fontSize: 16),
+                            validator: inputValidator,
+                            onChanged: (value) {
+                              if (component['fieldType'] == 'number') {
+                                if (value == '') {
+                                  formValues[prop] = null;
+                                  formDataChange(prop, null);
+                                } else {
+                                  if (double.tryParse(value) == null) {
+                                    field['validatorMsg'] =
+                                        'Please enter the correct number.';
+                                  }
+                                  formValues[prop] = num.parse(value);
+                                  formDataChange(prop, num.parse(value));
+                                }
+                              } else {
+                                formValues[prop] = value;
+                                formDataChange(prop, value);
                               }
-                              formValues[prop] = num.parse(value);
-                              formDataChange(prop, num.parse(value));
-                            }
-                          } else {
-                            formValues[prop] = value;
-                            formDataChange(prop, value);
-                          }
-                          triggeredOnChange(value);
-                        },
+                              triggeredOnChange(value);
+                            },
+                            onFieldSubmitted: (value) {
+                              FocusScope.of(context).unfocus();
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                    ),
-                    fieldRight
+                      fieldRight
                     ],
                   ),
                   fieldBottom
@@ -258,7 +274,8 @@ class DynamicForm extends StatelessWidget {
                             option['label'],
                             style: TextStyle(
                               fontFamily: 'Roboto-Medium',
-                              fontSize: 16, // Adjusted font size to match input fields
+                              fontSize:
+                                  16, // Adjusted font size to match input fields
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -268,37 +285,55 @@ class DynamicForm extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: label,
                       hintText: component['placeholder'],
-                      
+
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
-                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.3),
+                            width: 1), // Added light grey border
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.3),
+                            width:
+                                1), // Added light grey border for enabled state
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.3),
+                            width:
+                                1), // Added light grey border for enabled state
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(
+                            color: AppColors.primary.withOpacity(0.5),
+                            width:
+                                1.5), // Added slightly darker grey border for focused state
+                      ),
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted padding to match input fields
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical:
+                              10), // Adjusted padding to match input fields
                       labelStyle: TextStyle(
-                        color: Colors.grey, // Adjusted label color to match input fields
+                        color: Colors
+                            .grey, // Adjusted label color to match input fields
                         fontFamily: 'Roboto-Medium',
-                        fontSize: 16, // Adjusted font size to match input fields
+                        fontSize:
+                            16, // Adjusted font size to match input fields
                       ),
                       hintStyle: TextStyle(
                         fontFamily: 'Roboto-Medium',
-                        fontSize: 16, // Adjusted font size to match input fields
+                        fontSize:
+                            16, // Adjusted font size to match input fields
                       ),
                     ),
-                    isExpanded: false, // Adjusted to reduce the width of the dropdown
+                    isExpanded:
+                        false, // Adjusted to reduce the width of the dropdown
                   ),
                 ),
               );
@@ -356,13 +391,14 @@ class DynamicForm extends StatelessWidget {
                                 onTap: () async {
                                   await showDatePicker(
                                     context: context,
-                                    initialDate: handleParse(date: formData[prop]),
+                                    initialDate:
+                                        handleParse(date: formData[prop]),
                                     firstDate: DateTime(2000),
                                     lastDate: DateTime(2100),
                                   ).then((value) {
                                     if (value == null) return;
-                                    formValues[prop] =
-                                        handleFormat(date: value, format: "dd-MM-yyyy");
+                                    formValues[prop] = handleFormat(
+                                        date: value, format: "dd-MM-yyyy");
                                     formDataChange(prop, formValues[prop]);
                                     triggeredOnChange(value);
                                   }).catchError((e) {
@@ -374,24 +410,37 @@ class DynamicForm extends StatelessWidget {
                                     labelText: label,
                                     hintText: component['placeholder'],
                                     border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
-                        ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          width: 1), // Added light grey border
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          width:
+                                              1), // Added light grey border for enabled state
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          width:
+                                              1), // Added light grey border for enabled state
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: AppColors.primary
+                                              .withOpacity(0.5),
+                                          width:
+                                              1.5), // Added slightly darker grey border for focused state
+                                    ),
                                     filled: true,
                                     fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
                                     labelStyle: TextStyle(
                                       color: Colors.grey,
                                       fontFamily: 'Roboto-Medium',
@@ -402,7 +451,9 @@ class DynamicForm extends StatelessWidget {
                                       fontSize: 16,
                                     ),
                                   ),
-                                  child: MyParagraph(text: formData[prop] ?? component['placeholder']),
+                                  child: MyParagraph(
+                                      text: formData[prop] ??
+                                          component['placeholder']),
                                 ),
                               ),
                             ),
@@ -446,7 +497,8 @@ class DynamicForm extends StatelessWidget {
                     return msg;
                   }
                   for (var rule in rules) {
-                    if (rule.containsKey('require') && rule['require'] == true) {
+                    if (rule.containsKey('require') &&
+                        rule['require'] == true) {
                       if (formData[prop] == null) {
                         return rule['message'];
                       }
@@ -475,7 +527,8 @@ class DynamicForm extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey.withOpacity(0.3), width: 1),
+                  border:
+                      Border.all(color: Colors.grey.withOpacity(0.3), width: 1),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -537,29 +590,42 @@ class DynamicForm extends StatelessWidget {
                     labelText: label,
                     hintText: component['placeholder'],
                     border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1), // Added light grey border for enabled state
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5), // Added slightly darker grey border for focused state
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
-                        labelStyle: TextStyle(
-                          color: Colors.grey, // Adjusted label color
-                          fontSize: 16, // Adjusted font size
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.always, 
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.3),
+                          width: 1), // Added light grey border
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.3),
+                          width:
+                              1), // Added light grey border for enabled state
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.3),
+                          width:
+                              1), // Added light grey border for enabled state
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: AppColors.primary.withOpacity(0.5),
+                          width:
+                              1.5), // Added slightly darker grey border for focused state
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10), // Adjusted vertical padding
+                    labelStyle: TextStyle(
+                      color: Colors.grey, // Adjusted label color
+                      fontSize: 16, // Adjusted font size
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                   style: TextStyle(
                     color: Colors.black,
@@ -596,12 +662,11 @@ class DynamicForm extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(left: 15),
                     child: MyParagraph(
-                      text: label,
-                      // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
-                      color: Colors.grey, // Adjusted label color
+                        text: label,
+                        // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
+                        color: Colors.grey, // Adjusted label color
                         // fontSize: 16,
-                        fontFamily: 'Roboto-Medium'
-                    ),
+                        fontFamily: 'Roboto-Medium'),
                   ),
                   ImagePickerWidget(
                       onImagesChanged: (list) {
@@ -612,7 +677,9 @@ class DynamicForm extends StatelessWidget {
                       images: imagesFile,
                       isEditable: !disabled,
                       isOnlyCamera: component['isOnlyCamera']),
-                      SizedBox(height: 10,)
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               );
             } else if (component['type'] == 'switch') {
