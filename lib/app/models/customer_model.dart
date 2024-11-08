@@ -15,6 +15,7 @@ class Customer {
   String? workLocation;
   String? licenseClass;
   String? cardNumber;
+  String? customerAt;
   String? dateOfBirth;
   String? expiryDate;
   dynamic backCardNumber;
@@ -36,6 +37,7 @@ class Customer {
       this.workLocation,
       this.licenseClass,
       this.cardNumber,
+      this.customerAt,
       this.dateOfBirth,
       this.expiryDate,
       this.backCardNumber});
@@ -57,6 +59,7 @@ class Customer {
     workLocation = json['workLocation'];
     licenseClass = json['licenseClass'];
     cardNumber = json['cardNumber'];
+    customerAt = json['customerAt'];
     dateOfBirth = json['dateOfBirth'];
     expiryDate = json['expiryDate'];
     backCardNumber = json['backCardNumber'];
@@ -80,6 +83,7 @@ class Customer {
     data['workLocation'] = workLocation;
     data['licenseClass'] = licenseClass;
     data['cardNumber'] = cardNumber;
+    data['customerAt'] = customerAt;
     data['dateOfBirth'] = dateOfBirth;
     data['expiryDate'] = expiryDate;
     data['backCardNumber'] = backCardNumber;

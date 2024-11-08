@@ -25,6 +25,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import '../templates/jobAgreenment.dart';
 import '../../../widget/passButton.dart';
+import '../../../widget/radio_btn.dart';
 
 const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 
@@ -148,15 +149,10 @@ class JobDetailsController extends GetxController
         "fieldKey": fieldQuoteKey,
         "rules": [
           {"require": true, "message": "Quote cannot be empty."},
-          // if (isEdit.value)
-          //   {
-          //     "validator": (quote) async {
-          //       String? valid = validateNegativeValue(quote, 'Quote');
-          //       print(valid);
-          //       if (valid != null) return valid;
-          //     },
-          //     "message": "The container number has already been used.",
-          //   },
+          {
+            "pattern": r'^\d+(\.\d+)?$', // Matches integers and decimals
+            "message": "Please enter a valid number format."
+          },
           {
             "pattern": r'^[0-9]*\.?[0-9]+$',
             "message": "Quote cannot be negative."
@@ -647,31 +643,31 @@ class JobDetailsController extends GetxController
           {"require": true, "message": "Flat Tires status cannot be empty."}
         ]
       },
-      {
-        "label": "Source",
-        "prop": "source",
-        "disabled": !isEdit.value,
-        "value": orderInfo.value.source ?? "",
-        "component": {
-          "type": "select",
-          "options": [
-            {'label': 'Phone Call', 'value': 'Phone Call'},
-            {'label': 'Message', 'value': 'Message'},
-            {'label': 'Email', 'value': 'Email'},
-            {'label': 'Facebook', 'value': 'Facebook'},
-            {'label': 'Gumtree', 'value': 'Gumtree'},
-            {'label': 'Other', 'value': 'Other'},
-          ],
-          "placeholder": "Please input the deposit payment method.",
-          "placeholderEmptyRed": true
-        },
-        "rules": [
-          {
-            "require": true,
-            "message": "Deposit Payment Method cannot be empty."
-          }
-        ]
-      },
+      // {
+      //   "label": "Source",
+      //   "prop": "source",
+      //   "disabled": !isEdit.value,
+      //   "value": orderInfo.value.source ?? "",
+      //   "component": {
+      //     "type": "select",
+      //     "options": [
+      //       {'label': 'Phone Call', 'value': 'Phone Call'},
+      //       {'label': 'Message', 'value': 'Message'},
+      //       {'label': 'Email', 'value': 'Email'},
+      //       {'label': 'Facebook', 'value': 'Facebook'},
+      //       {'label': 'Gumtree', 'value': 'Gumtree'},
+      //       {'label': 'Other', 'value': 'Other'},
+      //     ],
+      //     "placeholder": "Please input the deposit payment method.",
+      //     "placeholderEmptyRed": true
+      //   },
+      //   "rules": [
+      //     {
+      //       "require": true,
+      //       "message": "Deposit Payment Method cannot be empty."
+      //     }
+      //   ]
+      // },
       {
         "label": "Comments",
         "prop": "commentText",
@@ -685,20 +681,20 @@ class JobDetailsController extends GetxController
         },
         "rules": []
       },
-      {
-        "label": "How much are you expecting for the car?",
-        "prop": "askingPrice",
-        "disabled": !isEdit.value,
-        "fieldKey": askExpectingKey,
-        "value": orderInfo.value.askingPrice,
-        "component": {
-          "type": "input",
-          "fieldType": "number",
-          "placeholder": "Please input the price.",
-          "placeholderEmptyRed": true
-        },
-        "rules": []
-      },
+      // {
+      //   "label": "How much are you expecting for the car?",
+      //   "prop": "askingPrice",
+      //   "disabled": !isEdit.value,
+      //   "fieldKey": askExpectingKey,
+      //   "value": orderInfo.value.askingPrice,
+      //   "component": {
+      //     "type": "input",
+      //     "fieldType": "number",
+      //     "placeholder": "Please input the price.",
+      //     "placeholderEmptyRed": true
+      //   },
+      //   "rules": []
+      // },
     ];
     questionnaireFormList.refresh();
   }
@@ -930,17 +926,31 @@ class JobDetailsController extends GetxController
   setCustomerFormList() {
     customerFormList.value = [
       {
-        "label": "Full Name",
+        "label": "Surname",
+        "prop": "surname",
+        "disabled": !isEdit.value,
+        "value": customerInfo.value.surname ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the surname.",
+          "placeholderEmptyRed": true
+        },
+        "rules": [
+          {"require": true, "message": "Full name cannot be empty."}
+        ]
+      },
+      {
+        "label": "Given Name(s)",
         "prop": "firstName",
         "disabled": !isEdit.value,
         "value": customerInfo.value.firstName ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the full name.",
+          "placeholder": "Please input the given name.",
           "placeholderEmptyRed": true
         },
         "rules": [
-          {"require": true, "message": "Full name cannot be empty."}
+          {"require": true, "message": "Given name cannot be empty."}
         ]
       },
       {
@@ -1119,9 +1129,38 @@ class JobDetailsController extends GetxController
         "rules": []
       },
       {
+        "label": "Select ",
+        "component": {"type": "widget"},
+        "hidden": !isEdit.value,
+        "widget": Container(
+          margin: EdgeInsets.symmetric(vertical: ScreenAdapter.width(20)),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MyParagraph(
+                    color: Colors.grey,
+                    text: "If the vehicle is at a workshop or private owner?"),
+                CustomRadioGroup(
+                  labels: [
+                    'Private owner',
+                    'Workshop',
+                  ],
+                  initialValue: customerInfo.value.customerAt ?? '',
+                  onChanged: (value) {
+                    customerInfo.value.customerAt = value;
+                    customerInfoForm.value['customerAt'] = value;
+                    setForms();
+                  },
+                ),
+              ]),
+        )
+      },
+      {
         "label": "ABN",
         "prop": "abn",
         "disabled": !isEdit.value,
+        "hidden": customerInfo.value.customerAt != 'Private owner',
         "value": customerInfo.value.abn ?? "",
         "component": {
           "type": "input",
@@ -1135,6 +1174,7 @@ class JobDetailsController extends GetxController
       {
         "label": "Workshop or House?",
         "prop": "workLocation",
+        "hidden": customerInfo.value.customerAt != 'Workshop',
         "disabled": !isEdit.value,
         "value": customerInfo.value.workLocation ?? "",
         "component": {
@@ -1171,19 +1211,47 @@ class JobDetailsController extends GetxController
   setSecondaryPersonFormList() {
     secondaryPersonFormList.value = [
       {
-        "label": "Full Name",
-        "prop": "personName",
+        "label": "Surname",
+        "prop": "surname",
         "disabled": !isEdit.value,
-        "value": secondaryPersonInfo.value.personName ?? "",
+        "value": secondaryPersonInfo.value.surname ?? "",
         "component": {
           "type": "input",
-          "placeholder": "Please input the full name.",
+          "placeholder": "Please input the surname.",
           "placeholderEmptyRed": true
         },
         "rules": [
           {"require": true, "message": "Full name cannot be empty."}
         ]
       },
+      {
+        "label": "Given Name(s)",
+        "prop": "firstName",
+        "disabled": !isEdit.value,
+        "value": secondaryPersonInfo.value.personName ?? "",
+        "component": {
+          "type": "input",
+          "placeholder": "Please input the given name.",
+          "placeholderEmptyRed": true
+        },
+        "rules": [
+          {"require": true, "message": "Given name cannot be empty."}
+        ]
+      },
+      // {
+      //   "label": "Full Name",
+      //   "prop": "personName",
+      //   "disabled": !isEdit.value,
+      //   "value": secondaryPersonInfo.value.personName ?? "",
+      //   "component": {
+      //     "type": "input",
+      //     "placeholder": "Please input the full name.",
+      //     "placeholderEmptyRed": true
+      //   },
+      //   "rules": [
+      //     {"require": true, "message": "Full name cannot be empty."}
+      //   ]
+      // },
       {
         "label": "Phone Number",
         "prop": "personPhone",
@@ -1380,10 +1448,39 @@ class JobDetailsController extends GetxController
         "rules": []
       },
       {
+        "label": "Select ",
+        "component": {"type": "widget"},
+        "hidden": !isEdit.value,
+        "widget": Container(
+          margin: EdgeInsets.symmetric(vertical: ScreenAdapter.width(20)),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MyParagraph(
+                    color: Colors.grey,
+                    text: "If the vehicle is at a workshop or private owner?"),
+                CustomRadioGroup(
+                  labels: [
+                    'Private owner',
+                    'Workshop',
+                  ],
+                  initialValue: secondaryPersonInfo.value.customerAt ?? '',
+                  onChanged: (value) {
+                    secondaryPersonInfo.value.customerAt = value;
+                    secondaryPersonInfoForm.value['customerAt'] = value;
+                    setForms();
+                  },
+                ),
+              ]),
+        )
+      },
+      {
         "label": "ABN",
         "prop": "personABN",
         "disabled": !isEdit.value,
         "value": secondaryPersonInfo.value.personABN ?? "",
+        "hidden": secondaryPersonInfo.value.customerAt != 'Private owner',
         "component": {
           "type": "input",
           "placeholder": "Please input the ABN.",
@@ -1398,6 +1495,7 @@ class JobDetailsController extends GetxController
         "prop": "personLocation",
         "disabled": !isEdit.value,
         "value": secondaryPersonInfo.value.personLocation ?? "",
+        "hidden": secondaryPersonInfo.value.customerAt != 'Workshop',
         "component": {
           "type": "input",
           "placeholder": "Please input the workshop or house.",
@@ -1706,6 +1804,7 @@ class JobDetailsController extends GetxController
         customerInfoForm.value = {
           "id": customerInfo.value.id,
           "firstName": customerInfo.value.firstName,
+          "surname": customerInfo.value.surname,
           "phoneNumber": customerInfo.value.phoneNumber,
           "secNumber": customerInfo.value.secNumber,
           "emailAddress": customerInfo.value.emailAddress,
@@ -1718,6 +1817,7 @@ class JobDetailsController extends GetxController
           "dateOfBirth": customerInfo.value.dateOfBirth,
           "expiryDate": customerInfo.value.expiryDate,
           "backCardNumber": customerInfo.value.backCardNumber,
+          "customerAt": customerInfo.value.customerAt,
         };
         customerInfo.refresh();
       }
@@ -1727,6 +1827,7 @@ class JobDetailsController extends GetxController
         secondaryPersonInfoForm.value = {
           "id": secondaryPersonInfo.value.id,
           "personName": secondaryPersonInfo.value.personName,
+          "surname": secondaryPersonInfo.value.surname,
           "personPhone": secondaryPersonInfo.value.personPhone,
           "personSecNumber": secondaryPersonInfo.value.personSecNumber,
           "personEmail": secondaryPersonInfo.value.personEmail,
@@ -1738,6 +1839,7 @@ class JobDetailsController extends GetxController
           "expiryDate": secondaryPersonInfo.value.expiryDate,
           "backCardNumber": secondaryPersonInfo.value.backCardNumber,
           "personABN": secondaryPersonInfo.value.personABN,
+          "customerAt": secondaryPersonInfo.value.customerAt,
           "personLocation": secondaryPersonInfo.value.personLocation,
         };
         isAddSecondaryPerson.value = true;
@@ -1918,21 +2020,21 @@ class JobDetailsController extends GetxController
     }
     if (customerFormKey.currentState != null) {
       if (!customerFormKey.currentState!.validate()) {
-        tabController.animateTo(4);
+        tabController.animateTo(0);
         return false;
       }
     }
 
     if (secondaryPersonFormKey.currentState != null) {
       if (!secondaryPersonFormKey.currentState!.validate()) {
-        tabController.animateTo(4);
+        tabController.animateTo(0);
         return false;
       }
     }
 
     if (paymentFormKey.currentState != null) {
       if (!paymentFormKey.currentState!.validate()) {
-        tabController.animateTo(5);
+        tabController.animateTo(4);
         return false;
       }
     }

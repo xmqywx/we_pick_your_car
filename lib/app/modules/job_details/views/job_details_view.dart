@@ -306,6 +306,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                         children: [
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
+                              enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(
                                   children: [
@@ -406,6 +407,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               ]),
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
+                              enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
                                   CardTitle(title: 'Car'),
@@ -483,6 +485,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               ]),
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
+                              enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
                                   CardTitle(title: 'Info'),
@@ -505,6 +508,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               ]),
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
+                              enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
                                   CardTitle(title: 'Attachments'),
@@ -624,6 +628,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                           //     ]),
                           JobFormContainer(
                               handleRefresh: controller.handleRefresh,
+                              enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
                                   CardTitle(title: 'Payment'),

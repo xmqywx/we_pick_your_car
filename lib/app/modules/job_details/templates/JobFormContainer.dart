@@ -8,24 +8,38 @@ import '../../../color/colors.dart';
 class JobFormContainer extends StatelessWidget {
   final Future<void> Function() handleRefresh;
   final List<Widget> contents;
-  const JobFormContainer(
-      {super.key, required this.handleRefresh, required this.contents});
+  final bool enableRefresh; // New parameter
+
+  const JobFormContainer({
+    super.key,
+    required this.handleRefresh,
+    required this.contents,
+    this.enableRefresh = true, // Default value
+  });
 
   @override
   Widget build(BuildContext context) {
     return KeepAliveWrapper(
-        child: Column(
-      children: [
-        Expanded(
-          flex: 1,
-          child: RefreshIndicator(
-              onRefresh: handleRefresh,
-              child: ListView(
-                  padding: EdgeInsets.all(ScreenAdapter.width(15)),
-                  children: contents)),
-        )
-      ],
-    ));
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: enableRefresh
+                ? RefreshIndicator(
+                    onRefresh: handleRefresh,
+                    child: ListView(
+                      padding: EdgeInsets.all(ScreenAdapter.width(15)),
+                      children: contents,
+                    ),
+                  )
+                : ListView(
+                    padding: EdgeInsets.all(ScreenAdapter.width(15)),
+                    children: contents,
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -37,12 +51,15 @@ class CardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: ScreenAdapter.width(15),
-          vertical: ScreenAdapter.width(30)),
+        horizontal: ScreenAdapter.width(15),
+        vertical: ScreenAdapter.width(30),
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
-          border:
-              Border(bottom: BorderSide(color: AppColors.divider1, width: 1))),
+        border: Border(
+          bottom: BorderSide(color: AppColors.divider1, width: 1),
+        ),
+      ),
       child: MyParagraph(
         text: title,
         fontSize: 55,
