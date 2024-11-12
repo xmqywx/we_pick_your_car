@@ -1226,7 +1226,7 @@ class JobDetailsController extends GetxController
       },
       {
         "label": "Given Name(s)",
-        "prop": "firstName",
+        "prop": "personName",
         "disabled": !isEdit.value,
         "value": secondaryPersonInfo.value.personName ?? "",
         "component": {
