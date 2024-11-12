@@ -15,8 +15,8 @@ UserController userController = Get.Get.find<UserController>();
 //     Get.Get.find<IsLoadingController>();
 
 class HttpsClient {
-  // static String domain = "https://apexpoint.com.au/api/";
-  static String domain = "http://192.168.101.33:9000/dev/";
+  static String domain = "https://apexpoint.com.au/api/";
+  // static String domain = "http://192.168.101.33:9000/dev/";
 
   static Dio dio = Dio();
   static int _loadingCount = 0; // 记录当前显示的加载动画数量
