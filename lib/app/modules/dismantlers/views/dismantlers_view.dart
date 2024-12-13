@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import '../../../color/colors.dart';
 import '../../../text/paragraph.dart';
@@ -164,10 +165,16 @@ class DismantlersView extends GetView<DismantlersController> {
                     )
                   else
                     Expanded(
-                      flex: 1,
-                      child:
-                          WebViewWidget(controller: controller.webcontroller),
-                    ),
+                        flex: 1,
+                        child: WebViewWidget(
+                          controller: controller.webcontroller,
+                          gestureRecognizers: <
+                              Factory<OneSequenceGestureRecognizer>>{
+                            Factory<VerticalDragGestureRecognizer>(
+                              () => VerticalDragGestureRecognizer(),
+                            ),
+                          },
+                        )),
                 ],
               ),
             ),
