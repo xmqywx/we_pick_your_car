@@ -32,13 +32,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Our app needs access to your photo library to allow you to select pictures for uploading.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>We use the camaro to take the photos of the car</string>
-
-
+	<string>We need access to your camera to scan QR codes associated with vehicles. This allows the app to display basic vehicle information, the vehicle's dismantling status, and the status of its parts. Users can also control these statuses and upload images of the parts directly through the app. This functionality is essential for managing vehicle and parts information efficiently.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
