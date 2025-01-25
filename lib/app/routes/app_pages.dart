@@ -32,6 +32,8 @@ import '../modules/pretreatment/bindings/pretreatment_binding.dart';
 import '../modules/pretreatment/views/pretreatment_view.dart';
 import '../modules/pretreatment_detail/bindings/pretreatment_detail_binding.dart';
 import '../modules/pretreatment_detail/views/pretreatment_detail_view.dart';
+import '../modules/register/bindings/register_binding.dart';
+import '../modules/register/views/register_view.dart';
 import '../modules/scheduling/bindings/scheduling_binding.dart';
 import '../modules/scheduling/views/scheduling_view.dart';
 import '../modules/submit_taskinfo/bindings/submit_taskinfo_binding.dart';
@@ -160,6 +162,11 @@ class AppPages {
     //   page: () => const DismantlersStatsView(),
     //   binding: DismantlersStatsBinding(),
     // ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => const RegisterView(),
+      binding: RegisterBinding(),
+    ),
   ];
 }
 

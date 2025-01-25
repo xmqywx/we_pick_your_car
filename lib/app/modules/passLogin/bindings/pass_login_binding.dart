@@ -11,5 +11,6 @@ class PassLoginBinding extends Bindings {
       () => PassLoginController(),
     );
     Get.lazyPut<TabsController>(() => TabsController());
+    Get.lazyPut<UserController>(() => UserController());
   }
 }

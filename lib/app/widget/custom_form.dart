@@ -249,6 +249,113 @@ class DynamicForm extends StatelessWidget {
                   fieldBottom
                 ],
               );
+            } else if (component['type'] == 'password') {
+              value ??= "";
+              if (value == 'null') {
+                value = '';
+              }
+
+              formField = Column(
+                children: [
+                  fieldTop,
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: TextFormField(
+                            autovalidateMode: trigger,
+                            initialValue:
+                                '${component['fieldType'] == 'number' ? (value == null ? '' : value.toString()) : value}',
+                            enabled: !disabled,
+                            key: fieldKey,
+                            keyboardType: component['fieldType'] == 'number'
+                                ? TextInputType.number
+                                : TextInputType.text,
+                            decoration: InputDecoration(
+                              labelText: label,
+                              hintText: component['placeholder'],
+                              hintStyle: TextStyle(
+                                color: isEmptyAndRed ? Colors.red : Colors.grey,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    width: 1),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    width: 1),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                    color: AppColors.primary.withOpacity(0.5),
+                                    width: 1.5),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                            ),
+                            style: TextStyle(
+                                fontFamily: 'Roboto-Medium', fontSize: 16),
+                            validator: inputValidator,
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: () =>
+                                FocusScope.of(context).unfocus(),
+                            obscureText: true,
+                            onChanged: (value) {
+                              if (component['fieldType'] == 'number') {
+                                if (value == '') {
+                                  formValues[prop] = null;
+                                  formDataChange(prop, null);
+                                } else {
+                                  if (double.tryParse(value) == null) {
+                                    field['validatorMsg'] =
+                                        'Please enter the correct number.';
+                                  }
+                                  formValues[prop] = num.parse(value);
+                                  formDataChange(prop, num.parse(value));
+                                }
+                              } else {
+                                formValues[prop] = value;
+                                formDataChange(prop, value);
+                              }
+                              triggeredOnChange(value);
+                            },
+                            onFieldSubmitted: (value) {
+                              FocusScope.of(context).unfocus();
+                            },
+                          ),
+                        ),
+                      ),
+                      fieldRight
+                    ],
+                  ),
+                  fieldBottom
+                ],
+              );
             } else if (component['type'] == 'select') {
               List<Map<String, dynamic>> options = component['options'];
 

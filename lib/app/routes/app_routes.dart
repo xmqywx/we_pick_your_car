@@ -26,6 +26,7 @@ abstract class Routes {
   static const JOB_DETAILS = _Paths.JOB_DETAILS;
   // static const DISMANTLERS = _Paths.DISMANTLERS;
   // static const DISMANTLERS_STATS = _Paths.DISMANTLERS_STATS;
+  static const REGISTER = _Paths.REGISTER;
 }
 
 abstract class _Paths {
@@ -53,4 +54,5 @@ abstract class _Paths {
   static const JOB_DETAILS = '/job-details';
   // static const DISMANTLERS = '/dismantlers';
   // static const DISMANTLERS_STATS = '/dismantlers-stats';
+  static const REGISTER = '/register';
 }

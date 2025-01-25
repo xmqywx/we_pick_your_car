@@ -10,6 +10,7 @@ import './app/api/user.dart';
 import 'dart:async';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   //配置透明的状态栏
   SystemUiOverlayStyle systemUiOverlayStyle =
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
