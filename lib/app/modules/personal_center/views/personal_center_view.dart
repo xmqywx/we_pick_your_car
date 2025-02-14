@@ -1,146 +1,146 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/personal_center_controller.dart';
 import '../../../services/screen_adapter.dart';
-import '../../../widget/logo.dart';
 import '../../../color/colors.dart';
 
 class PersonalCenterView extends GetView<PersonalCenterController> {
   const PersonalCenterView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My profile'),
+        title: const Text('My Profile'),
         centerTitle: true,
       ),
       body: Padding(
-          padding: EdgeInsets.fromLTRB(
-              ScreenAdapter.width(63),
-              ScreenAdapter.height(20),
-              ScreenAdapter.width(63),
-              ScreenAdapter.height(20)),
-          child: ListView(
-            children: [
-              // Text(
-              //   "Personal info",
-              //   style: TextStyle(
-              //       fontSize: ScreenAdapter.fontSize(55),
-              //       fontWeight: FontWeight.w500),
-              // ),
-              // Logo(),
-              Column(
+        padding: EdgeInsets.fromLTRB(
+          ScreenAdapter.width(20),
+          ScreenAdapter.height(20),
+          ScreenAdapter.width(20),
+          ScreenAdapter.height(20),
+        ),
+        child: ListView(
+          children: [
+            // 个人信息标题
+            Text(
+              "Personal Info",
+              style: TextStyle(
+                fontSize: ScreenAdapter.fontSize(24),
+                fontWeight: FontWeight.bold,
+                color: Colors.black87, // 使用深色文本
+              ),
+            ),
+            SizedBox(height: ScreenAdapter.height(20)), // 间距
+
+            // 信息字段
+            Card(
+              elevation: 4, // 阴影效果
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), // 圆角
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0), // 内边距
+                child: Column(
+                  children: [
+                    InfoFields(
+                      filed: 'User Name',
+                      value:
+                          controller.userController.userInfo.value.username ??
+                              "--",
+                    ),
+                    InfoFields(
+                      filed: 'Phone',
+                      value: controller.userController.userInfo.value.phone ??
+                          "--",
+                    ),
+                    InfoFields(
+                      filed: 'Email',
+                      value: controller.userController.userInfo.value.email ??
+                          "--",
+                    ),
+                    InfoFields(
+                      filed: 'Password',
+                      value: "",
+                      isDivider: false,
+                      isUpdate: true,
+                      isPass: true,
+                      task: controller.passChange,
+                      onOk: controller.updateInfo,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: ScreenAdapter.height(20)), // 间距
+
+// 注销账户按钮
+            Container(
+              margin: EdgeInsets.only(top: ScreenAdapter.height(20)), // 上边距
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end, // 靠右对齐
                 children: [
-                  InfoFileds(
-                    filed: 'User name',
-                    value: controller.userController.userInfo.value.username ??
-                        "--",
-                  ),
-                  InfoFileds(
-                    filed: 'Phone',
-                    value:
-                        controller.userController.userInfo.value.phone ?? "--",
-                  ),
-                  InfoFileds(
-                    filed: 'Email',
-                    value:
-                        controller.userController.userInfo.value.email ?? "--",
-                  ),
-                  // InfoFileds(
-                  //   filed: 'Role',
-                  //   value: controller.userController.userInfo.value.roleName ??
-                  //       "--",
-                  // ),
-                  // InfoFileds(
-                  //   filed: 'User id',
-                  //   value: controller.userController.userInfo.value.username ??
-                  //       "--",
-                  // ),
-                  InfoFileds(
-                    filed: 'Password',
-                    value: "",
-                    isDivider: false,
-                    isUpdate: true,
-                    isPass: true,
-                    task: controller.passChange,
-                    onOk: controller.updateInfo,
+                  ElevatedButton(
+                    onPressed: () {
+                      _showLogoutDialog(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 20), // 按钮内边距
+                      elevation: 5, // 阴影效果
+                      primary: AppColors.darkRedColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8), // 圆角
+                      ),
+                    ),
+                    child: Text(
+                      "Delete account", // 更新按钮标签为英文
+                      style: TextStyle(
+                        fontSize: ScreenAdapter.fontSize(38), // 调整字体大小
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // 按钮文字颜色
+                      ),
+                    ),
                   ),
                 ],
-              )
-              // FilesMap(
-              //     attribute: 'Username',
-              //     value: controller.userController.userInfo.value.username ??
-              //         '--'),
-              // FilesMap(
-              //     attribute: 'Phone',
-              //     value:
-              //         controller.userController.userInfo.value.phone ?? '--'),
-              // FilesMap(
-              //     attribute: 'Email',
-              //     value:
-              //         controller.userController.userInfo.value.email ?? '--'),
-              // FilesMap(
-              //     attribute: 'Role',
-              //     value: controller.userController.userInfo.value.roleName ??
-              //         '--'),
-              // FilesMap(
-              //     attribute: 'User id',
-              //     value: controller.userController.userInfo.value.username ??
-              //         '--'),
-            ],
-          )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 弹出注销确认对话框
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Confirm Logout"),
+          content: Text("Are you sure you want to logout?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back(); // 关闭对话框
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                controller.deleteAccount();
+              },
+              child: Text("Logout"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
 
-class FilesMap extends StatefulWidget {
-  final String attribute;
-  final String value;
-  const FilesMap({Key? key, required this.attribute, required this.value})
-      : super(key: key);
-
-  @override
-  State<FilesMap> createState() => _FilesMapState();
-}
-
-class _FilesMapState extends State<FilesMap> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        constraints: const BoxConstraints(
-          minHeight: 25,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    widget.attribute,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(),
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    widget.value,
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(color: Colors.blueGrey),
-                  ),
-                ),
-              ],
-            ),
-            Divider()
-          ],
-        ));
-  }
-}
-
-class InfoFileds extends StatefulWidget {
-  bool flag = false;
+class InfoFields extends StatefulWidget {
   final String filed;
   final String value;
   final bool isDivider;
@@ -148,20 +148,25 @@ class InfoFileds extends StatefulWidget {
   final void Function(String)? task;
   final Function? onOk;
   final bool isPass;
-  InfoFileds(
-      {super.key,
-      required this.filed,
-      required this.value,
-      this.isUpdate = false,
-      this.task,
-      this.onOk,
-      this.isPass = false,
-      this.isDivider = true});
+
+  InfoFields({
+    Key? key,
+    required this.filed,
+    required this.value,
+    this.isUpdate = false,
+    this.task,
+    this.onOk,
+    this.isPass = false,
+    this.isDivider = true,
+  }) : super(key: key);
+
   @override
-  State<InfoFileds> createState() => _InfoFiledsState();
+  State<InfoFields> createState() => _InfoFieldsState();
 }
 
-class _InfoFiledsState extends State<InfoFileds> {
+class _InfoFieldsState extends State<InfoFields> {
+  bool flag = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -172,14 +177,14 @@ class _InfoFiledsState extends State<InfoFileds> {
           children: [
             Text(
               widget.filed,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: TextStyle(fontSize: 16, color: Colors.grey[800]),
             ),
             widget.isUpdate
-                ? (!widget.flag
+                ? (!flag
                     ? InkWell(
                         onTap: () {
                           setState(() {
-                            widget.flag = true;
+                            flag = true;
                           });
                         },
                         child: Text(
@@ -190,14 +195,13 @@ class _InfoFiledsState extends State<InfoFileds> {
                               height: 2),
                         ))
                     : InkWell(
-                        onTap: () {
-                          setState(() async {
-                            var res = await widget.onOk!();
-                            if (res == true) {
-                              widget.flag = false;
-                              // Get.offAllNamed("/pass_login");
-                            }
-                          });
+                        onTap: () async {
+                          var res = await widget.onOk!();
+                          if (res == true) {
+                            setState(() {
+                              flag = false;
+                            });
+                          }
                         },
                         child: Text(
                           "Ok",
@@ -209,7 +213,7 @@ class _InfoFiledsState extends State<InfoFileds> {
                 : Text("")
           ],
         ),
-        !widget.flag
+        !flag
             ? Text(
                 widget.value,
                 style: TextStyle(height: 2, fontFamily: "Roboto-Medium"),
@@ -218,24 +222,24 @@ class _InfoFiledsState extends State<InfoFileds> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                          height: 40,
-                          child: TextField(
-                            style: TextStyle(fontFamily: "Roboto-Medium"),
-                            // focusNode: controller.focusNode,
-                            decoration: InputDecoration(
-                              // label: Text("${widget.value}"),
-                              hintText: "${widget.value}",
-                              // border: OutlineInputBorder(),
-                            ),
-                            obscureText: widget.isPass,
-                            onChanged: widget.task,
-                          ))),
+                    child: TextField(
+                      style: TextStyle(fontFamily: "Roboto-Medium"),
+                      decoration: InputDecoration(
+                        hintText: "${widget.value}",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                      obscureText: widget.isPass,
+                      onChanged: widget.task,
+                    ),
+                  ),
+                  SizedBox(width: 10), // 间距
                   InkWell(
                     onTap: () {
                       setState(() {
-                        widget.flag = false;
+                        flag = false;
                       });
                     },
                     child: Text(
@@ -248,26 +252,8 @@ class _InfoFiledsState extends State<InfoFileds> {
                   ),
                 ],
               ),
-        widget.isDivider ? Divider(thickness: 1) : Text("")
+        widget.isDivider ? Divider(thickness: 1) : SizedBox.shrink(),
       ],
     );
   }
 }
-
-
-
-// TextFormField(
-//                           initialValue: widget.value,
-//                           decoration: const InputDecoration(
-//                             contentPadding: EdgeInsets.symmetric(vertical: 0),
-
-//                             // 设置输入框内边距
-//                             // 其他属性
-//                           ),
-//                           validator: (value) {
-//                             if (value?.isEmpty ?? true) {
-//                               return 'Please enter';
-//                             }
-//                             return null;
-//                           },
-//                         ),

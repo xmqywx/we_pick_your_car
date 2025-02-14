@@ -29,9 +29,6 @@ class ImagePickerWidget extends StatelessWidget {
     takePhoto() async {
       final pickedFile = await picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
-        // var response = await httpsClient.uploadFile(
-        //     "/admin/base/comm/upload",
-        //     file: pickedFiles);
         int fileSize = await pickedFile.length();
         var response;
         // 如果大于800K,进行压缩
@@ -52,17 +49,10 @@ class ImagePickerWidget extends StatelessWidget {
             file: File(pickedFile.path),
           );
         }
-        // response = await httpsClient.uploadFile(
-        //     "/admin/base/comm/upload",
-        //     file: File(pickedFile.path));
         if (response != null) {
           if (response.data["message"] == "success") {
             //保存
             print(response.data["message"]);
-            // showCustomSnackbar(message: 'Upload successful');
-            // setState(() {
-            //   // _images.add(response.data['data']);
-            // });
             images.add(response.data['data']);
           }
         } else {
@@ -96,53 +86,64 @@ class ImagePickerWidget extends StatelessWidget {
                   title: Text('Select photos'),
                   onTap: () async {
                     final pickedFiles = await picker.pickMultiImage(
-                        maxHeight: 1920, maxWidth: 1080);
+                      maxHeight: 1920,
+                      maxWidth: 1080,
+                    );
+
                     if (pickedFiles != null) {
-                      // var response = await httpsClient.uploadFile(
-                      //     "/admin/base/comm/upload",
-                      //     file: pickedFiles);
-                      pickedFiles.forEach((file) async {
-                        int fileSize = await file.length();
-                        var response;
-                        if (fileSize > 800 * 1024) {
-// 压缩文件
-                          File? compressedFile =
-                              await compressFile(File(file.path));
-// 上传压缩后的文件
-                          if (compressedFile != null) {
+                      for (var file in pickedFiles) {
+                        // 检查文件类型，支持更多图片格式
+                        if (file.path.endsWith('.jpg') ||
+                            file.path.endsWith('.jpeg') ||
+                            file.path.endsWith('.png') ||
+                            file.path.endsWith('.gif') ||
+                            file.path.endsWith('.bmp') ||
+                            file.path.endsWith('.tiff') ||
+                            file.path.endsWith('.webp')) {
+                          int fileSize = await file.length();
+                          var response;
+
+                          if (fileSize > 800 * 1024) {
+                            // 压缩文件
+                            File? compressedFile =
+                                await compressFile(File(file.path));
+                            // 上传压缩后的文件
+                            if (compressedFile != null) {
+                              response = await httpsClient.uploadFile(
+                                "/admin/base/comm/upload",
+                                file: compressedFile,
+                              );
+                            }
+                          } else {
+                            // 文件本身小于800K,直接上传
                             response = await httpsClient.uploadFile(
                               "/admin/base/comm/upload",
-                              file: compressedFile,
+                              file: File(file.path),
+                            );
+                          }
+
+                          if (response != null) {
+                            if (response.data["message"] == "success") {
+                              // 保存
+                              print(response.data["message"]);
+                              images.add(response.data['data']);
+                              onImagesChanged(images);
+                            }
+                          } else {
+                            print('upload failed');
+                            showCustomSnackbar(
+                              message: 'Upload failed',
+                              status: '3',
                             );
                           }
                         } else {
-// 文件本身小于800K,直接上传
-                          response = await httpsClient.uploadFile(
-                            "/admin/base/comm/upload",
-                            file: File(file.path),
+                          // 如果选择的文件不是图片，显示提示
+                          showCustomSnackbar(
+                            message: 'Please select only image files.',
+                            status: '3',
                           );
                         }
-                        // response = await httpsClient.uploadFile(
-                        //     "/admin/base/comm/upload",
-                        //     file: File(file.path));
-                        if (response != null) {
-                          if (response.data["message"] == "success") {
-                            //保存
-                            print(response.data["message"]);
-                            // setState(() {
-                            //   // _images.add(response.data['data']);
-                            // });
-                            images.add(response.data['data']);
-                            onImagesChanged(images);
-                            // print(_images);
-                            // showCustomSnackbar(message: 'Upload successful');
-                          }
-                        } else {
-                          print('upload faild');
-                          showCustomSnackbar(
-                              message: 'Upload failed', status: '3');
-                        }
-                      });
+                      }
 
                       Navigator.pop(context);
                     }
@@ -217,10 +218,9 @@ class ImagePickerWidget extends StatelessWidget {
               // margin: EdgeInsets.only(top: 10),
               height: images.isNotEmpty ? null : ScreenAdapter.height(331.2),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.themeBorderColor1),
-                borderRadius: BorderRadius.circular(5),
-                color: AppColors.white
-              ),
+                  border: Border.all(color: AppColors.themeBorderColor1),
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColors.white),
               alignment: Alignment.center,
               child: images.isEmpty
                   ? (isEditable

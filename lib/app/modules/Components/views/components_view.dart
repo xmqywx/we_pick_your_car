@@ -55,32 +55,6 @@ class ComponentsView extends GetView<ComponentsController> {
                       0, ScreenAdapter.height(12), 0, ScreenAdapter.height(24)),
                   children: controller.isExist.value
                       ? [
-                          // Padding(
-                          //   padding: EdgeInsets.symmetric(
-                          //       vertical: ScreenAdapter.height(15),
-                          //       horizontal: ScreenAdapter.width(15)),
-                          //   child: MyParagraph(
-                          //     text: "Container info",
-                          //     fontSize: 55,
-                          //   ),
-                          // ),
-                          // ContainerInfo(
-                          //     edit: controller.containerEdit,
-                          //     add: controller.containerAdd,
-                          //     delete: controller.alertDeleteContainerDialog,
-                          //     info: controller
-                          //             .arguments.value['containerValue'] ??
-                          //         {}),
-                          // if (controller.componentList.isNotEmpty)
-                          //   Padding(
-                          //     padding: EdgeInsets.symmetric(
-                          //         vertical: ScreenAdapter.height(15),
-                          //         horizontal: ScreenAdapter.width(15)),
-                          //     child: MyParagraph(
-                          //       text: "Components",
-                          //       fontSize: 55,
-                          //     ),
-                          //   ),
                           ...controller.initListView(),
                           if (controller.componentList.isNotEmpty &&
                               !controller.canLoadMore.value)
@@ -94,18 +68,6 @@ class ComponentsView extends GetView<ComponentsController> {
                             ),
                           if (controller.componentList.isEmpty)
                             EmptyStatus(title: "No Component"),
-                          // Container(
-                          //   width: 250, // 自定义包裹大小
-                          //   height: 250,
-                          //   child: ScanView(
-                          //     controller: controller.scanController,
-                          //     scanAreaScale: 0.7, // 自定义扫描区域的比例
-                          //     scanLineColor: Colors.green.shade400, // 自定义扫描线的颜色
-                          //     onCapture: (data) {
-                          //       // 扫描结果的回调函数
-                          //     },
-                          //   ),
-                          // ),
                         ]
                       : [
                           MyCardContainer(
@@ -135,8 +97,6 @@ class ComponentsView extends GetView<ComponentsController> {
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    // primary: AppColors.primary,
-                                    // onPrimary: AppColors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           ScreenAdapter.width(20)),

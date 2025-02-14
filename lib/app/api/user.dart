@@ -14,3 +14,11 @@ Future apiGetRoleDepartmentList() async {
 Future apiReg(data) async {
   return await httpsClient.post('/admin/base/open/create_user', data: data);
 }
+
+Future apiLogOff(id) async {
+  return await httpsClient.post("/admin/base/open/log_off", data: {"id": id});
+}
+
+Future apiUpdateUser(data) async {
+  return await httpsClient.post("/admin/base/sys/user/update", data: data);
+}

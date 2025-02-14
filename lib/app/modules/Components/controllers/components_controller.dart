@@ -60,39 +60,6 @@ class ComponentsController extends GetxController {
           }
         ]);
       }
-      // } else {
-      //   int existingIndex = handleData.indexWhere(
-      //       (item) => item['disassemblyCategory'] == 'Catalytic Converter');
-      //   if (existingIndex != -1) {
-      //     handleData[existingIndex]['components'].add({
-      //       "disassemblyNumber": e["disassemblyNumber"],
-      //       "disassemblyCategory": e["disassemblyCategory"],
-      //       "disassemblyDescription": e["disassemblyDescription"] ?? '----',
-      //       "ccDes":
-      //           """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-      //               "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-      //     });
-      //   } else {
-      //     handleData.addAll([
-      //       {
-      //         "disassmblingInformation": e["disassmblingInformation"],
-      //         "disassemblyCategory": e["disassemblyCategory"],
-      //         "components": [
-      //           {
-      //             "disassemblyNumber": e["disassemblyNumber"],
-      //             "disassemblyCategory": e["disassemblyCategory"],
-      //             "disassmblingInformation": e["disassmblingInformation"],
-      //             "disassemblyDescription":
-      //                 e["disassemblyDescription"] ?? '----',
-      //             "ccDes":
-      //                 """${e["disassemblyCategory"] == 'Catalytic Converter' ? ("${e['catalyticConverterName'] != null && e['catalyticConverterName'] != '' ? 'Name:' + e['catalyticConverterName'] + ' ' : ''}"
-      //                     "${e['catalyticConverterNumber'] != null && e['catalyticConverterNumber'] != '' ? 'Number:' + e['catalyticConverterNumber'] : ''}") : e["disassemblyDescription"] ?? '----'}"""
-      //           }
-      //         ]
-      //       }
-      //     ]);
-      //   }
-      // }
     });
 
     handleData.forEach((value) {
@@ -297,13 +264,29 @@ class ComponentsController extends GetxController {
   scanPickImage() async {
     final picker = ImagePicker();
 
+    // 选择图片
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    // 检查选择的文件是否为图片
     if (pickedFile != null) {
-      String? str = await Scan.parse(pickedFile.path);
-      print(
-          "===================================,$str, ====================================");
-      String? partID = parsepartID(str);
-      handleScanResult(partID);
+      // 检查文件扩展名
+      if (pickedFile.path.endsWith('.jpg') ||
+          pickedFile.path.endsWith('.jpeg') ||
+          pickedFile.path.endsWith('.png') ||
+          pickedFile.path.endsWith('.gif') ||
+          pickedFile.path.endsWith('.bmp') ||
+          pickedFile.path.endsWith('.tiff') ||
+          pickedFile.path.endsWith('.webp')) {
+        String? str = await Scan.parse(pickedFile.path);
+        String? partID = parsepartID(str);
+        handleScanResult(partID);
+      } else {
+        // 如果选择的文件不是图片，显示提示
+        showCustomSnackbar(
+          message: 'Please select only image files.',
+          status: '3',
+        );
+      }
     }
   }
 
