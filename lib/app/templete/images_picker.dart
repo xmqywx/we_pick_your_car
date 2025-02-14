@@ -121,20 +121,6 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
               "Upload site photos :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            // SizedBox(
-            //   width: 100,
-            //   child: TextButton(
-            //     onPressed: _takePhoto,
-            //     child: const Text("Take photo"),
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: 100,
-            //   child: TextButton(
-            //     onPressed: _openGallery,
-            //     child: const Text("Select photos"),
-            //   ),
-            // ),
             OutlinedButton(
               onPressed: _modelBottomSheet,
               child: Text("To upload"),
@@ -158,7 +144,7 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
                           mainAxisSpacing: 10.0, //垂直子 Widget 之间间距
                           padding: const EdgeInsets.all(10),
                           crossAxisCount: 2, //一行的 Widget 数量
-                          // childAspectRatio:0.7,  //宽度和高度的比例
+
                           children: _getListData(),
                         ),
                       ),

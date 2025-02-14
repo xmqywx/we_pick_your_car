@@ -78,13 +78,6 @@ class _DetailTempleteState extends State<DetailTemplete> {
                                 onTap: () async {
                                   final Uri url = Uri.parse(
                                       'https://maps.google.com/maps/search/?api=1&query=${widget.start_postion}');
-                                  // if (await canLaunchUrl(url)) {
-                                  //   print(123123);
-                                  //   await launchUrl(url);
-                                  // } else {
-                                  //   print(456456);
-                                  //   throw 'Could not launch $url';
-                                  // }
                                   if (!await launchUrl(
                                     url,
                                     mode: LaunchMode.externalApplication,
@@ -102,14 +95,7 @@ class _DetailTempleteState extends State<DetailTemplete> {
                       ),
                     ],
                   ),
-                )
-                // Center(
-                //   child: Text(
-                //     curStatus,
-                //     style: TextStyle(color: AppColors.textWhite),
-                //   ),
-                // ),
-                ),
+                )),
             Padding(
                 padding: EdgeInsets.fromLTRB(
                     ScreenAdapter.width(63),
@@ -118,27 +104,6 @@ class _DetailTempleteState extends State<DetailTemplete> {
                     ScreenAdapter.width(5)),
                 child: Column(
                   children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Flexible(
-                    //         child: Text(
-                    //       widget.start_postion,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       textAlign: TextAlign.left,
-                    //       maxLines: 3,
-                    //       style:
-                    //           TextStyle(fontSize: ScreenAdapter.fontSize(50)),
-                    //     )),
-                    //     Flexible(
-                    //       child: Icon(Icons.my_location_outlined),
-                    //     ),
-                    //   ],
-                    // ),
-                    // Divider(
-                    //     color: AppColors.black,
-                    //     height: ScreenAdapter.height(35),
-                    //     thickness: ScreenAdapter.height(5)),
                     InkWell(
                       child: Container(
                           width: ScreenAdapter.width(585),
@@ -237,23 +202,8 @@ class _DetailTempleteState extends State<DetailTemplete> {
                                   style: TextStyle(),
                                 ),
                               ),
-                              // Flexible(
-                              //   child: Text(
-                              //     "${widget.arguments['phoneNumber'] ?? '--'}",
-                              //     textAlign: TextAlign.right,
-                              //     style:
-                              //         const TextStyle(color: Colors.blueGrey),
-                              //   ),
-                              // ),
                               InkWell(
                                 onTap: () async {
-                                  // final phoneNumber = Uri.parse(
-                                  //     "tel:+${widget.arguments['phoneNumber'] ?? '--'}");
-                                  // if (await canLaunchUrl(phoneNumber)) {
-                                  //   await launchUrl(phoneNumber);
-                                  // } else {
-                                  //   throw 'Could not launch $phoneNumber';
-                                  // }
                                   await FlutterPhoneDirectCaller.callNumber(
                                       widget.arguments['phoneNumber']);
                                 },
@@ -268,20 +218,8 @@ class _DetailTempleteState extends State<DetailTemplete> {
                               ),
                             ],
                           ),
-                          // Divider(
-                          //     color: AppColors.black,
-                          //     height: ScreenAdapter.height(35),
-                          //     thickness: ScreenAdapter.height(3)),
                         ],
                       )),
-                  // FilesMap(
-                  //   attribute: 'Expected date',
-                  //   value: handleFormatDateDDMMYYYY(widget.time_of_appointment),
-                  //   flag: false,
-                  // ),
-                  // FilesMap(
-                  //     attribute: 'Engine',
-                  //     value: "${widget.arguments['engine'] ?? '--'}"),
                 ],
               ))
         ]),
@@ -321,9 +259,6 @@ class _DetailTempleteState extends State<DetailTemplete> {
                         "\$${widget.arguments['actualPaymentPrice'] ?? '--'}",
                     flag: false,
                   ),
-                  // FilesMap(
-                  //     attribute: 'Engine',
-                  //     value: "${widget.arguments['engine'] ?? '--'}"),
                 ],
               ))
         ]),
@@ -415,284 +350,3 @@ class MyCard extends StatelessWidget {
     ));
   }
 }
-
-// Widget MyCard({required List<Widget>  children}) {
-//   return Container(
-//       child: Card(
-//     clipBehavior: Clip.hardEdge,
-//     shape: const RoundedRectangleBorder(
-//       borderRadius: BorderRadius.all(Radius.circular(8)),
-//     ),
-//     elevation: 5,
-//     child: Column(
-//       children: [],
-//     ),
-//   ));
-// }
-
-//old first card
-        // Container(
-        //   child: Card(
-        //     shape: const RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.all(Radius.circular(8)),
-        //     ),
-        //     elevation: 5,
-        //     child: Container(
-        //         padding: EdgeInsets.all(10),
-        //         width: double.infinity,
-        //         // height: ScreenAdapter.height(600),
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.all(Radius.circular(4.0)),
-        //               border: Border.all(
-        //                   color: Colors.grey,
-        //                   width: 2,
-        //                   style: BorderStyle.solid)),
-        //           child: Image.network(
-        //             widget.arguments['image'] ?? "",
-        //             fit: BoxFit.fitWidth,
-        //           ),
-        //         )),
-        //   ),
-        // ),
-        // Container(
-        //   child: Card(
-        //     shape: const RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.all(Radius.circular(8)),
-        //     ),
-        //     elevation: 5,
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       crossAxisAlignment: CrossAxisAlignment.center,
-        //       children: [
-        //         Flexible(
-        //             flex: 1,
-        //             child: Container(
-        //               padding: EdgeInsets.fromLTRB(
-        //                 ScreenAdapter.width(20),
-        //                 ScreenAdapter.width(20),
-        //                 ScreenAdapter.width(20),
-        //                 ScreenAdapter.width(20),
-        //               ),
-        //               child: Column(
-        //                 crossAxisAlignment: CrossAxisAlignment.end,
-        //                 children: [
-        //                   InkWell(
-        //                     child: Container(
-        //                         padding: EdgeInsets.all(10),
-        //                         width: double.infinity,
-        //                         // height: ScreenAdapter.height(600),
-        //                         child: Container(
-        //                           decoration: BoxDecoration(
-        //                             borderRadius:
-        //                                 BorderRadius.all(Radius.circular(4.0)),
-        //                             // border: Border.all(
-        //                             //     color: Colors.grey,
-        //                             //     width: 2,
-        //                             //     style: BorderStyle.solid)
-        //                           ),
-        //                           child: Image.network(
-        //                             widget.arguments['image'] ?? "",
-        //                             fit: BoxFit.fitWidth,
-        //                           ),
-        //                         )),
-        //                     onTap: () {
-        //                       Get.to(ImagePreviewScreen(
-        //                         images: [widget.arguments['image'] ?? ""],
-        //                         index: 0,
-        //                       ));
-        //                     },
-        //                   ),
-        //                   FilesMap(
-        //                     attribute: 'Description',
-        //                     value: "${widget.arguments['name'] ?? '--'}",
-        //                   ),
-        //                   FilesMap(
-        //                     attribute: 'Registration number',
-        //                     value:
-        //                         "${widget.arguments['registrationNumber'] ?? '--'}",
-        //                   ),
-        //                   FilesMap(
-        //                     attribute: 'Body style',
-        //                     value: "${widget.arguments['bodyStyle'] ?? '--'}",
-        //                   ),
-        //                   FilesMap(
-        //                       attribute: 'Vin number',
-        //                       value:
-        //                           "${widget.arguments['vinNumber'] ?? '--'}"),
-        //                   FilesMap(
-        //                     attribute: 'Engine',
-        //                     value: "${widget.arguments['engine'] ?? '--'}",
-        //                     flag: false,
-        //                   ),
-        //                 ],
-        //               ),
-        //             )),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-
-//old title
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Expanded(
-        //         flex: 1,
-        //         child: Text(
-        //           widget.start_postion,
-        //           overflow: TextOverflow.ellipsis,
-        //           textAlign: TextAlign.left,
-        //           maxLines: 3,
-        //           style: TextStyle(fontSize: ScreenAdapter.fontSize(50)),
-        //         )),
-        //     Container(
-        //       color: handleStatusColor(curStatus),
-        //       padding: EdgeInsets.all(ScreenAdapter.width(5)),
-        //       child: Text(
-        //         curStatus,
-        //         style: TextStyle(color: Colors.white),
-        //       ),
-        //     )
-        //   ],
-        // ),
-        // SizedBox(
-        //   height: ScreenAdapter.height(20),
-        // ),
-//old second card
-// Container(
-//           child: Card(
-//               shape: const RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.all(Radius.circular(8)),
-//               ),
-//               elevation: 5,
-//               child: Container(
-//                 padding: EdgeInsets.fromLTRB(
-//                   ScreenAdapter.width(20),
-//                   ScreenAdapter.width(55),
-//                   ScreenAdapter.width(20),
-//                   ScreenAdapter.width(20),
-//                 ),
-//                 child: Column(
-//                   children: [
-//                     FilesMap(
-//                       attribute: 'Customer',
-//                       value: "${widget.arguments['firstName'] ?? '--'}",
-//                     ),
-//                     FilesMap(
-//                       attribute: 'Email',
-//                       value: "${widget.arguments['emailAddress'] ?? '--'}",
-//                     ),
-//                     // FilesMap(
-//                     //   attribute: 'Phone number',
-//                     //   value: "${widget.arguments['phoneNumber'] ?? '--'}",
-//                     // ),
-//                     Container(
-//                         constraints: const BoxConstraints(
-//                           minHeight: 25,
-//                         ),
-//                         child: Column(
-//                           children: [
-//                             Row(
-//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                               children: [
-//                                 const Flexible(
-//                                   child: Text(
-//                                     'Phone number',
-//                                     textAlign: TextAlign.left,
-//                                     style: TextStyle(),
-//                                   ),
-//                                 ),
-//                                 // Flexible(
-//                                 //   child: Text(
-//                                 //     "${widget.arguments['phoneNumber'] ?? '--'}",
-//                                 //     textAlign: TextAlign.right,
-//                                 //     style:
-//                                 //         const TextStyle(color: Colors.blueGrey),
-//                                 //   ),
-//                                 // ),
-//                                 InkWell(
-//                                   onTap: () async {
-//                                     // final phoneNumber = Uri.parse(
-//                                     //     "tel:+${widget.arguments['phoneNumber'] ?? '--'}");
-//                                     // if (await canLaunchUrl(phoneNumber)) {
-//                                     //   await launchUrl(phoneNumber);
-//                                     // } else {
-//                                     //   throw 'Could not launch $phoneNumber';
-//                                     // }
-//                                     await FlutterPhoneDirectCaller.callNumber(
-//                                         widget.arguments['phoneNumber']);
-//                                   },
-//                                   child: Text(
-//                                     "${widget.arguments['phoneNumber'] ?? '--'}",
-//                                     textAlign: TextAlign.right,
-//                                     style:
-//                                         const TextStyle(color: Colors.blueGrey),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                             Divider()
-//                           ],
-//                         )),
-//                     FilesMap(
-//                       attribute: 'Expected date',
-//                       value:
-//                           handleFormatDateDDMMYYYY(widget.time_of_appointment),
-//                       flag: false,
-//                     ),
-//                     // FilesMap(
-//                     //     attribute: 'Engine',
-//                     //     value: "${widget.arguments['engine'] ?? '--'}"),
-//                   ],
-//                 ),
-//               )),
-//     
-//old third card
-// Container(
-//           child: Card(
-//               shape: const RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.all(Radius.circular(8)),
-//               ),
-//               elevation: 5,
-//               child: Container(
-//                 padding: EdgeInsets.fromLTRB(
-//                   ScreenAdapter.width(20),
-//                   ScreenAdapter.width(55),
-//                   ScreenAdapter.width(20),
-//                   ScreenAdapter.width(20),
-//                 ),
-//                 child: Column(
-//                   children: [
-//                     FilesMap(
-//                       attribute: 'Start time',
-//                       value: widget.job_detail['schedulerStart'] != null
-//                           ? handleFormatDateDDMMYYYY(
-//                               widget.job_detail['schedulerStart'])
-//                           : '--',
-//                     ),
-//                     FilesMap(
-//                       attribute: 'End time',
-//                       value: widget.job_detail['schedulerEnd'] != null
-//                           ? handleFormatDateDDMMYYYY(
-//                               widget.job_detail['schedulerEnd'])
-//                           : '--',
-//                     ),
-//                     FilesMap(
-//                       attribute: 'Recommended price',
-//                       value:
-//                           "\$${widget.arguments['recommendedPrice'] ?? '--'}",
-//                     ),
-//                     FilesMap(
-//                       attribute: 'Actual paymentPrice',
-//                       value:
-//                           "\$${widget.arguments['actualPaymentPrice'] ?? '--'}",
-//                       flag: false,
-//                     ),
-//                     // FilesMap(
-//                     //     attribute: 'Engine',
-//                     //     value: "${widget.arguments['engine'] ?? '--'}"),
-//                   ],
-//                 ),
-//               )),
-//         ),

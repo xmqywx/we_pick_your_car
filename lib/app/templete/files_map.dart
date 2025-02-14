@@ -53,13 +53,6 @@ class FilesMap extends StatelessWidget {
           TextPosition(offset: controller.text.length));
       final FocusNode focusNode = FocusNode();
       if (inputType == 'select') {
-        // String selectValue = selectItems[0];
-        // print("select------------------------------");
-        // print(selectItems.contains(value));
-        // print("select------------------------------");
-        // if (selectItems.contains(value)) {
-        //   selectValue = "${value}";
-        // }
         valueText = DropdownButton<String>(
           value: selectItems.contains(value) ? value : selectItems[0],
           underline: Text(""),
@@ -149,21 +142,6 @@ class FilesMap extends StatelessWidget {
   }
 
   double _calculateTextFieldWidth() {
-    // final double fontSize = ScreenAdapter.fontSize(40.32);
-    // final double paddingWidth = ScreenAdapter.width(16.0);
-
-    // final TextPainter textPainter = TextPainter(
-    //   text: TextSpan(
-    //     text: value,
-    //     style: TextStyle(
-    //       fontSize: fontSize,
-    //       height: ScreenAdapter.height(60.0) / fontSize,
-    //     ),
-    //   ),
-    //   textDirection: TextDirection.ltr,
-    // )..layout();
-
-    // return textPainter.width + paddingWidth;
     return ScreenAdapter.width(400);
   }
 }

@@ -191,11 +191,6 @@ class _CustomCardState extends State<CustomCard> {
                       ],
                     ),
                   )),
-              // Icon(
-              //   Icons.location_on,
-              //   size: ScreenAdapter.fontSize(40),
-              //   color: color,
-              // ),
               Image.asset(
                 "assets/images/icon_location.png",
                 width: ScreenAdapter.width(48.96),

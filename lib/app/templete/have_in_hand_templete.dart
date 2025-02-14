@@ -30,18 +30,6 @@ class _HaveInHandTempleteState extends State<HaveInHandTemplete> {
             padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
             child: ListBody(
               children: <Widget>[
-                // DetailTemplete(
-                //   customer_name: "${widget.arguments['customer_name'] ?? ''}",
-                //   customer_phone_number:
-                //       "${widget.arguments['customer_phone_number'] ?? ''}",
-                //   time_of_appointment:
-                //       "${widget.arguments['time_of_appointment'] ?? ''}",
-                //   start_postion: "${widget.arguments['start_postion'] ?? ''}",
-                //   end_position: "${widget.arguments['end_position'] ?? ''}",
-                //   cost: "${widget.arguments['cost'] ?? ''}",
-                //   status: "${widget.arguments['status'] ?? ''}",
-                //   whether_to_pay: "${widget.arguments['whether_to_pay'] ?? ''}",
-                // ),
                 SizedBox(
                   height: 10,
                 ),
