@@ -82,7 +82,7 @@ class AppPages {
         middlewares: middlewares),
     GetPage(
         name: _Paths.COMPLETED,
-        page: () => CompletedView(),
+        page: () => const CompletedView(),
         binding: CompletedBinding(),
         middlewares: middlewares),
     GetPage(
@@ -179,7 +179,7 @@ class AuthMiddleware extends GetMiddleware {
     print("AuthMiddleware ");
     // 检查用户是否已登录，如果未登录，则重定向到登录页面。
     if (!userController.isLogin.value && route != '/pass_login') {
-      return RouteSettings(name: '/pass_login');
+      return const  RouteSettings(name: '/pass_login');
     }
     return null;
   }

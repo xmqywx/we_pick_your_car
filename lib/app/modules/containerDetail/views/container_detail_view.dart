@@ -8,14 +8,13 @@ import '../../../text/paragraph.dart';
 import '../../../services/screen_adapter.dart';
 import '../../../widget/card_container.dart';
 import '../../../widget/custom_form.dart';
-import '../../../templete/empty.dart';
 import '../../../color/colors.dart';
 
 class ContainerDetailView extends GetView<ContainerDetailController> {
   const ContainerDetailView({Key? key}) : super(key: key);
 
   Widget _WidgetContainerForm() {
-    return CardContainer(children: []);
+    return CardContainer(children: const []);
   }
 
   @override

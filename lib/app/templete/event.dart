@@ -59,4 +59,4 @@ final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 final kFirstDayOfWeek = kToday;
 
 // 从今天开始的第七天
-final kLastDayOfWeek = kToday.add(Duration(days: 6));
+final kLastDayOfWeek = kToday.add(const Duration(days: 6));

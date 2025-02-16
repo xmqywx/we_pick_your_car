@@ -6,8 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import '../services/https_client.dart';
 import './image_preview_screen.dart';
 import '../widget/toast.dart';
-import '../modules/pretreatment_detail/controllers/pretreatment_detail_controller.dart';
-import 'package:get/get.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ImagePickerWidget extends StatelessWidget {
@@ -74,84 +72,82 @@ class ImagePickerWidget extends StatelessWidget {
             child: Wrap(
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text('Take a photo'),
+                  leading: const Icon(Icons.photo_camera),
+                  title: const Text('Take a photo'),
                   onTap: () {
                     Navigator.pop(context);
                     takePhoto();
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('Select photos'),
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Select photos'),
                   onTap: () async {
                     final pickedFiles = await picker.pickMultiImage(
                       maxHeight: 1920,
                       maxWidth: 1080,
                     );
 
-                    if (pickedFiles != null) {
-                      for (var file in pickedFiles) {
-                        // 检查文件类型，支持更多图片格式
-                        if (file.path.endsWith('.jpg') ||
-                            file.path.endsWith('.jpeg') ||
-                            file.path.endsWith('.png') ||
-                            file.path.endsWith('.gif') ||
-                            file.path.endsWith('.bmp') ||
-                            file.path.endsWith('.tiff') ||
-                            file.path.endsWith('.webp')) {
-                          int fileSize = await file.length();
-                          var response;
+                    for (var file in pickedFiles) {
+                      // 检查文件类型，支持更多图片格式
+                      if (file.path.endsWith('.jpg') ||
+                          file.path.endsWith('.jpeg') ||
+                          file.path.endsWith('.png') ||
+                          file.path.endsWith('.gif') ||
+                          file.path.endsWith('.bmp') ||
+                          file.path.endsWith('.tiff') ||
+                          file.path.endsWith('.webp')) {
+                        int fileSize = await file.length();
+                        var response;
 
-                          if (fileSize > 800 * 1024) {
-                            // 压缩文件
-                            File? compressedFile =
-                                await compressFile(File(file.path));
-                            // 上传压缩后的文件
-                            if (compressedFile != null) {
-                              response = await httpsClient.uploadFile(
-                                "/admin/base/comm/upload",
-                                file: compressedFile,
-                              );
-                            }
-                          } else {
-                            // 文件本身小于800K,直接上传
+                        if (fileSize > 800 * 1024) {
+                          // 压缩文件
+                          File? compressedFile =
+                              await compressFile(File(file.path));
+                          // 上传压缩后的文件
+                          if (compressedFile != null) {
                             response = await httpsClient.uploadFile(
                               "/admin/base/comm/upload",
-                              file: File(file.path),
-                            );
-                          }
-
-                          if (response != null) {
-                            if (response.data["message"] == "success") {
-                              // 保存
-                              print(response.data["message"]);
-                              images.add(response.data['data']);
-                              onImagesChanged(images);
-                            }
-                          } else {
-                            print('upload failed');
-                            showCustomSnackbar(
-                              message: 'Upload failed',
-                              status: '3',
+                              file: compressedFile,
                             );
                           }
                         } else {
-                          // 如果选择的文件不是图片，显示提示
+                          // 文件本身小于800K,直接上传
+                          response = await httpsClient.uploadFile(
+                            "/admin/base/comm/upload",
+                            file: File(file.path),
+                          );
+                        }
+
+                        if (response != null) {
+                          if (response.data["message"] == "success") {
+                            // 保存
+                            print(response.data["message"]);
+                            images.add(response.data['data']);
+                            onImagesChanged(images);
+                          }
+                        } else {
+                          print('upload failed');
                           showCustomSnackbar(
-                            message: 'Please select only image files.',
+                            message: 'Upload failed',
                             status: '3',
                           );
                         }
+                      } else {
+                        // 如果选择的文件不是图片，显示提示
+                        showCustomSnackbar(
+                          message: 'Please select only image files.',
+                          status: '3',
+                        );
                       }
-
-                      Navigator.pop(context);
                     }
-                  },
+
+                    Navigator.pop(context);
+                                    },
                 ),
                 ListTile(
-                  leading: Icon(Icons.cancel),
-                  title: Text('Cancel'),
+                  leading: const Icon(Icons.cancel),
+                  title: const Text('Cancel'),
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -170,7 +166,7 @@ class ImagePickerWidget extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -185,7 +181,7 @@ class ImagePickerWidget extends StatelessWidget {
                       top: 0,
                       right: 0,
                       child: IconButton(
-                        icon: Icon(Icons.delete, color: Colors.white),
+                        icon: const Icon(Icons.delete, color: Colors.white),
                         onPressed: () {
                           // setState(() {
                           // });
@@ -208,7 +204,7 @@ class ImagePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -271,7 +267,7 @@ class ImagePickerWidget extends StatelessWidget {
                               _showSelectionMenu(context);
                             },
                             child: Container(
-                              margin: EdgeInsets.all(2),
+                              margin: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
@@ -297,7 +293,7 @@ class ImagePickerWidget extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.all(2),
+                                  margin: const EdgeInsets.all(2),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     image: DecorationImage(
@@ -310,7 +306,7 @@ class ImagePickerWidget extends StatelessWidget {
                                   Positioned(
                                     right: 0,
                                     child: IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.delete,
                                         color: AppColors.white,
                                       ),
@@ -338,7 +334,7 @@ HttpsClient httpsClient = HttpsClient();
 Future<File?> compressFile(File file) async {
   final filePath = file.absolute.path;
 // Create output file path
-  final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+  final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
   final splitted = filePath.substring(0, (lastIndex));
   final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
 

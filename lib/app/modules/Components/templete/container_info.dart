@@ -24,8 +24,8 @@ class ContainerInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     Map? containerStatusMap =
         containerStatus[info['status']] ?? {"fields": [], "op": []};
-    List<Widget> _containerFields() {
-      return containerStatusMap?['fields'].map<Widget>((data) {
+    List<Widget> containerFields() {
+      return containerStatusMap['fields'].map<Widget>((data) {
         if (data['type'] != null && data['type'] == 'img') {
           List cloneData = [];
           List<String> imagesFile = <String>[];
@@ -70,12 +70,12 @@ class ContainerInfo extends StatelessWidget {
           ScreenAdapter.width(20),
           ScreenAdapter.width(10)),
       children: [
-        ..._containerFields(),
+        ...containerFields(),
         // Divider(),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            containerStatusMap?['op'].contains('edit')
+            containerStatusMap['op'].contains('edit')
                 ? Container(
                     // width: ScreenAdapter.width(200),
                     margin: EdgeInsets.only(left: ScreenAdapter.width(10)),

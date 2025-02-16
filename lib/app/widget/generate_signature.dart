@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import '../services/https_client.dart';
 import '../widget/toast.dart';
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import '../color/colors.dart';
@@ -28,7 +27,7 @@ HttpsClient httpsClient = HttpsClient();
 
 class GenerateSignature extends StatefulWidget {
   final Function changeSignature;
-  GenerateSignature({Key? key, required this.changeSignature})
+  const GenerateSignature({Key? key, required this.changeSignature})
       : super(key: key);
 
   @override
@@ -80,7 +79,7 @@ class _GenerateSignatureState extends State<GenerateSignature> {
               color: AppColors.white,
               child: Container(
                 margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   // border: Border.all(
                   //   color: AppColors.themeTextColor3,
                   //   width: 1,
@@ -109,7 +108,7 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                   child: Image.memory(_img.buffer.asUint8List())),
           Container(
             color: AppColors.white,
-            padding: EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8),
             child: Column(
               children: <Widget>[
                 Row(
@@ -150,8 +149,8 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                             }
                           }
                         },
-                        child: Text("Save")),
-                    SizedBox(
+                        child: const Text("Save")),
+                    const SizedBox(
                       width: 10,
                     ),
                     MaterialButton(
@@ -164,8 +163,8 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                           });
                           debugPrint("cleared");
                         },
-                        child: Text("Clear")),
-                         SizedBox(
+                        child: const Text("Clear")),
+                         const SizedBox(
                       width: 10,
                     ),
                     MaterialButton(
@@ -173,7 +172,7 @@ class _GenerateSignatureState extends State<GenerateSignature> {
                         onPressed: () {
                         Get.back();
                         },
-                        child: Text("Cancel")),
+                        child: const Text("Cancel")),
                   ],
                 ),
                 // Row(

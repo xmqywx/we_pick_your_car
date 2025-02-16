@@ -11,10 +11,10 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
-            title: Text(
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+            title: const Text(
               "Register",
               style: TextStyle(
                 fontSize: 24, // 字体大小
@@ -39,7 +39,7 @@ class RegisterView extends GetView<RegisterController> {
                       controller.formData[key] = value;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   PassButton(
                     text: "Register",
                     btnColor: AppColors.logoBgc,
@@ -49,12 +49,12 @@ class RegisterView extends GetView<RegisterController> {
                       await controller.register();
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
                       Get.offAllNamed("/pass_login"); // 跳转到登录页面
                     },
-                    child: Text("Already have an account? Login here."),
+                    child: const Text("Already have an account? Login here."),
                   ),
                 ],
               ),

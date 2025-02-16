@@ -114,21 +114,21 @@ return myController.kEvents.value[day] ?? [];
 
   void onLeftArrowTap() {
     rxpageController.value.previousPage(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
   }
 
   void onRightArrowTap() {
     rxpageController.value.nextPage(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
   }
 
   void reflashButton() {
     homeController.handleRefresh();
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       initSelectedDays();
     });
   }
@@ -150,18 +150,10 @@ return myController.kEvents.value[day] ?? [];
     rxselectedDays.value.add(rxfocusedDay.value);
     rxselectedEvents = getEventsForDay(rxfocusedDay.value).obs;
     rxselectedEvents.value = _getEventsForDays(rxselectedDays.value);
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       initSelectedDays();
     });
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

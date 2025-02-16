@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' as Get;
 import '../modules/user/controllers/user_controller.dart';
 import './storage.dart';
-import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:async';
-import '../controllers/is_loading_controller.dart';
 import '../widget/toast.dart';
 import './auth_interceptor.dart';
 
@@ -25,8 +22,8 @@ class HttpsClient {
   HttpsClient() {
     dio.options.baseUrl = domain;
     dio.interceptors.add(AuthInterceptor());
-    dio.options.connectTimeout = 20000;
-    dio.options.receiveTimeout = 20000;
+    dio.options.connectTimeout = const Duration(milliseconds: 20000);
+    dio.options.receiveTimeout = const Duration(milliseconds: 20000);
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         String? token = await Storage.getData('token');
@@ -59,7 +56,7 @@ class HttpsClient {
         }
         return handler.next(response);
       },
-      onError: (DioError error, ErrorInterceptorHandler handler) async {
+      onError: (DioException error, ErrorInterceptorHandler handler) async {
         print(error);
         _loadingCount--;
         if (_loadingCount <= 0) {

@@ -6,10 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../services/https_client.dart';
 import './image_preview_screen.dart';
 import '../widget/toast.dart';
-import '../modules/pretreatment_detail/controllers/pretreatment_detail_controller.dart';
-import 'package:get/get.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:flutter_image/flutter_image.dart';
 // class ImagePickerWidget extends StatefulWidget {
 //   final Function(List<String>) onImagesChanged;
 //   const ImagePickerWidget({Key? key, required this.onImagesChanged})
@@ -358,70 +355,68 @@ class ImagePickerWidget extends StatelessWidget {
             child: Wrap(
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text('Take a photo'),
+                  leading: const Icon(Icons.photo_camera),
+                  title: const Text('Take a photo'),
                   onTap: takePhoto,
                 ),
                 ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('Select photos'),
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Select photos'),
                   onTap: () async {
                     final pickedFiles = await picker.pickMultiImage(
                         maxHeight: 1920, maxWidth: 1080);
-                    if (pickedFiles != null) {
-                      // var response = await httpsClient.uploadFile(
-                      //     "/admin/base/comm/upload",
-                      //     file: pickedFiles);
-                      pickedFiles.forEach((file) async {
-                        int fileSize = await file.length();
-                        var response;
-                        if (fileSize > 800 * 1024) {
+                    // var response = await httpsClient.uploadFile(
+                    //     "/admin/base/comm/upload",
+                    //     file: pickedFiles);
+                    pickedFiles.forEach((file) async {
+                      int fileSize = await file.length();
+                      var response;
+                      if (fileSize > 800 * 1024) {
 // 压缩文件
-                          File? compressedFile =
-                              await compressFile(File(file.path));
+                        File? compressedFile =
+                            await compressFile(File(file.path));
 // 上传压缩后的文件
-                          if (compressedFile != null) {
-                            response = await httpsClient.uploadFile(
-                              "/admin/base/comm/upload",
-                              file: compressedFile,
-                            );
-                          }
-                        } else {
-// 文件本身小于800K,直接上传
+                        if (compressedFile != null) {
                           response = await httpsClient.uploadFile(
                             "/admin/base/comm/upload",
-                            file: File(file.path),
+                            file: compressedFile,
                           );
                         }
-                        // response = await httpsClient.uploadFile(
-                        //     "/admin/base/comm/upload",
-                        //     file: File(file.path));
-                        if (response != null) {
-                          if (response.data["message"] == "success") {
-                            //保存
-                            print(response.data["message"]);
-                            // setState(() {
-                            //   // _images.add(response.data['data']);
-                            // });
-                            images.add(response.data['data']);
-                            onImagesChanged(images);
-                            // print(_images);
-                            // showCustomSnackbar(message: 'Upload successful');
-                          }
-                        } else {
-                          print('upload faild');
-                          showCustomSnackbar(
-                              message: 'Upload failed', status: '3');
+                      } else {
+// 文件本身小于800K,直接上传
+                        response = await httpsClient.uploadFile(
+                          "/admin/base/comm/upload",
+                          file: File(file.path),
+                        );
+                      }
+                      // response = await httpsClient.uploadFile(
+                      //     "/admin/base/comm/upload",
+                      //     file: File(file.path));
+                      if (response != null) {
+                        if (response.data["message"] == "success") {
+                          //保存
+                          print(response.data["message"]);
+                          // setState(() {
+                          //   // _images.add(response.data['data']);
+                          // });
+                          images.add(response.data['data']);
+                          onImagesChanged(images);
+                          // print(_images);
+                          // showCustomSnackbar(message: 'Upload successful');
                         }
-                      });
+                      } else {
+                        print('upload faild');
+                        showCustomSnackbar(
+                            message: 'Upload failed', status: '3');
+                      }
+                    });
 
-                      Navigator.pop(context);
-                    }
-                  },
+                    Navigator.pop(context);
+                                    },
                 ),
                 ListTile(
-                  leading: Icon(Icons.cancel),
-                  title: Text('Cancel'),
+                  leading: const Icon(Icons.cancel),
+                  title: const Text('Cancel'),
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -440,7 +435,7 @@ class ImagePickerWidget extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -476,7 +471,7 @@ class ImagePickerWidget extends StatelessWidget {
                       top: 0,
                       right: 0,
                       child: IconButton(
-                        icon: Icon(Icons.delete, color: Colors.white),
+                        icon: const Icon(Icons.delete, color: Colors.white),
                         onPressed: () {
                           // setState(() {
                           // });
@@ -499,7 +494,7 @@ class ImagePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -562,7 +557,7 @@ class ImagePickerWidget extends StatelessWidget {
                               _showSelectionMenu(context);
                             },
                             child: Container(
-                              margin: EdgeInsets.all(2),
+                              margin: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
@@ -588,7 +583,7 @@ class ImagePickerWidget extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.all(2),
+                                  margin: const EdgeInsets.all(2),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     image: DecorationImage(
@@ -601,7 +596,7 @@ class ImagePickerWidget extends StatelessWidget {
                                   Positioned(
                                     right: 0,
                                     child: IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.delete,
                                         color: AppColors.white,
                                       ),
@@ -629,7 +624,7 @@ HttpsClient httpsClient = HttpsClient();
 Future<File?> compressFile(File file) async {
   final filePath = file.absolute.path;
 // Create output file path
-  final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+  final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
   final splitted = filePath.substring(0, (lastIndex));
   final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
 

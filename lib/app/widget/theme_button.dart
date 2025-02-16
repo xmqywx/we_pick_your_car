@@ -16,9 +16,9 @@ class PassButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all(Color.fromRGBO(240, 115, 49, 1)),
-            foregroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                WidgetStateProperty.all(const Color.fromRGBO(240, 115, 49, 1)),
+            foregroundColor: WidgetStateProperty.all(Colors.white),
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(
                 borderRadius:
                     BorderRadius.circular(ScreenAdapter.height(70))))),
         onPressed: onPressed,

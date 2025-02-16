@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +24,13 @@ class HomeController extends GetxController {
   final count = 0.obs;
   void _scrollToOffset(double offset) {
     scrollController.animateTo(offset,
-        duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 
   void _scrollToBottom() {
     scrollController.animateTo(
       scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
   }
@@ -108,15 +107,7 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

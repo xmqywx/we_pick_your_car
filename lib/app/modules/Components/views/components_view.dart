@@ -2,12 +2,10 @@ import 'package:car_wrecker/app/templete/no_data_templete.dart';
 import 'package:flutter/material.dart';
 import '../../../const/wrecker.dart';
 import 'package:get/get.dart';
-import 'package:scan/scan.dart';
 import '../controllers/components_controller.dart';
 import '../../../color/colors.dart';
 import '../../../services/screen_adapter.dart';
 import '../../../text/paragraph.dart';
-import '../templete/container_info.dart';
 import 'package:car_wrecker/app/widget/card_container.dart';
 
 class ComponentsView extends GetView<ComponentsController> {
@@ -25,7 +23,7 @@ class ComponentsView extends GetView<ComponentsController> {
           actions: [
             if (controller.isExist.value)
               IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: controller.containerEdit,
               ),
           ],
@@ -41,7 +39,7 @@ class ComponentsView extends GetView<ComponentsController> {
           child: FloatingActionButton(
             onPressed: controller.containerAdd,
             // onPressed: controller.scanQRCode,
-            child: Icon(Icons.qr_code_scanner),
+            child: const Icon(Icons.qr_code_scanner),
           ),
         ),
         body: Column(children: [
@@ -59,7 +57,7 @@ class ComponentsView extends GetView<ComponentsController> {
                           if (controller.componentList.isNotEmpty &&
                               !controller.canLoadMore.value)
                             Padding(
-                              padding: EdgeInsets.only(top: 5, bottom: 5),
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
                               child: MyParagraph(
                                 text: "Can't load more.",
                                 align: TextAlign.center,

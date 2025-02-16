@@ -6,7 +6,6 @@ import 'dart:ui' as ui;
 import '../controllers/generate_signature_controller.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../../services/https_client.dart';
-import '../../submit_taskinfo/controllers/submit_taskinfo_controller.dart';
 import '../../../widget/toast.dart';
 import '../../pretreatment_detail/controllers/pretreatment_detail_controller.dart';
 import 'dart:convert';
@@ -24,7 +23,7 @@ class GenerateSignatureView extends GetView<GenerateSignatureController> {
           title: const Text('Generate signature'),
           centerTitle: true,
         ),
-        body: DemoPage());
+        body: const DemoPage());
   }
 }
 
@@ -335,7 +334,7 @@ Future<File?> saveImageToFile(Uint8List? imageBytes) async {
 HttpsClient httpsClient = HttpsClient();
 
 class DemoPage extends StatefulWidget {
-  DemoPage({Key? key}) : super(key: key);
+  const DemoPage({Key? key}) : super(key: key);
 
   @override
   _DemoPageState createState() => _DemoPageState();
@@ -452,8 +451,8 @@ class _DemoPageState extends State<DemoPage> {
                             }
                           }
                         },
-                        child: Text("Save")),
-                    SizedBox(
+                        child: const Text("Save")),
+                    const SizedBox(
                       width: 10,
                     ),
                     MaterialButton(
@@ -466,7 +465,7 @@ class _DemoPageState extends State<DemoPage> {
                           });
                           debugPrint("cleared");
                         },
-                        child: Text("Clear")),
+                        child: const Text("Clear")),
                   ],
                 ),
                 Row(
@@ -481,7 +480,7 @@ class _DemoPageState extends State<DemoPage> {
                           });
                           debugPrint("change color");
                         },
-                        child: Text("Change color")),
+                        child: const Text("Change color")),
                     MaterialButton(
                         onPressed: () {
                           setState(() {
@@ -492,7 +491,7 @@ class _DemoPageState extends State<DemoPage> {
                             debugPrint("change stroke width to $selection");
                           });
                         },
-                        child: Text("Change stroke width")),
+                        child: const Text("Change stroke width")),
                   ],
                 ),
               ],

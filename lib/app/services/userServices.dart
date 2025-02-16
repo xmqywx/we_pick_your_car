@@ -1,4 +1,3 @@
-import 'package:car_wrecker/app/modules/user/controllers/user_controller.dart';
 
 import "./storage.dart";
 import 'package:get/get.dart';

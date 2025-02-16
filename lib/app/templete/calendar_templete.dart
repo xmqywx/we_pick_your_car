@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CalendarComponent extends StatefulWidget {
+  const CalendarComponent({super.key});
+
   @override
   _CalendarComponentState createState() => _CalendarComponentState();
 }
@@ -8,7 +10,7 @@ class CalendarComponent extends StatefulWidget {
 class _CalendarComponentState extends State<CalendarComponent> {
   DateTime _selectedDate = DateTime.now();
 
-  List<String> _schedule = [
+  final List<String> _schedule = [
     "周一到周五",
     "",
     "",
@@ -18,10 +20,10 @@ class _CalendarComponentState extends State<CalendarComponent> {
     "",
   ];
 
-  Map<DateTime, List<String>> _events = {
+  final Map<DateTime, List<String>> _events = {
     DateTime.now(): ["工作内容1", "工作内容2"],
-    DateTime.now().add(Duration(days: 1)): ["工作内容3"],
-    DateTime.now().add(Duration(days: 2)): ["工作内容4"],
+    DateTime.now().add(const Duration(days: 1)): ["工作内容3"],
+    DateTime.now().add(const Duration(days: 2)): ["工作内容4"],
   };
 
   @override
@@ -40,22 +42,22 @@ class _CalendarComponentState extends State<CalendarComponent> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             setState(() {
-              _selectedDate = _selectedDate.subtract(Duration(days: 7));
+              _selectedDate = _selectedDate.subtract(const Duration(days: 7));
             });
           },
         ),
         Text(
           "${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}",
-          style: TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 24),
         ),
         IconButton(
-          icon: Icon(Icons.arrow_forward),
+          icon: const Icon(Icons.arrow_forward),
           onPressed: () {
             setState(() {
-              _selectedDate = _selectedDate.add(Duration(days: 7));
+              _selectedDate = _selectedDate.add(const Duration(days: 7));
             });
           },
         ),
@@ -100,6 +102,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     },
                     child: Container(
                       alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: _selectedDate.day == date.day ? Colors.blue : null,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      width: 40,
+                      height: 40,
                       child: Text(
                         "${date.day}",
                         style: TextStyle(
@@ -108,12 +116,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
                           color: _selectedDate.day == date.day ? Colors.white : null,
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        color: _selectedDate.day == date.day ? Colors.blue : null,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      width: 40,
-                      height: 40,
                     ),
                   ),
                 ],

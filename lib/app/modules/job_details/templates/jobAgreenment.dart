@@ -6,7 +6,7 @@ import '../../../text/paragraph.dart';
 class JobAgreenment extends StatefulWidget {
   final Function agreen;
   final Function cancel;
-  JobAgreenment({super.key, required this.agreen, required this.cancel});
+  const JobAgreenment({super.key, required this.agreen, required this.cancel});
 
   @override
   State<JobAgreenment> createState() => _JobAgreenmentState();
@@ -15,7 +15,7 @@ class JobAgreenment extends StatefulWidget {
 class _JobAgreenmentState extends State<JobAgreenment> {
   @override
   Widget build(BuildContext context) {
-    bool _isChecked = false;
+    bool isChecked = false;
     return Container(
       height: ScreenAdapter.height(2000),
       decoration: BoxDecoration(
@@ -38,7 +38,7 @@ class _JobAgreenmentState extends State<JobAgreenment> {
             ],
           ),
           Container(
-            padding: EdgeInsets.only(top: 15),
+            padding: const EdgeInsets.only(top: 15),
             child: MyParagraph(
               text: "Apexpoint",
               fontSize: 70,

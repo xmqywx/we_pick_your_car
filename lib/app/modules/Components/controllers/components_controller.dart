@@ -35,7 +35,7 @@ class ComponentsController extends GetxController {
     RxList<Widget> list = RxList<Widget>();
     List<String> titles = [];
     List<Map<String, dynamic>> handleData = [];
-    componentList.value.forEach((e) {
+    for (var e in componentList.value) {
       // if (e["disassemblyCategory"] != 'Catalytic Converter') {
       int existingIndex = handleData.indexWhere((item) =>
           item['disassmblingInformation'] == e['disassmblingInformation']);
@@ -60,9 +60,9 @@ class ComponentsController extends GetxController {
           }
         ]);
       }
-    });
+    }
 
-    handleData.forEach((value) {
+    for (var value in handleData) {
       List<Widget> components = List<Widget>.from(value['components'].map((c) {
         return InkWell(
           child: ComponentCard(
@@ -103,7 +103,7 @@ class ComponentsController extends GetxController {
           ],
         )
       ]);
-    });
+    }
     return list;
   }
 
@@ -320,22 +320,22 @@ class ComponentsController extends GetxController {
             color: Colors.white,
             child: Wrap(children: [
               ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text('Camera'),
+                  leading: const Icon(Icons.photo_camera),
+                  title: const Text('Camera'),
                   onTap: () async {
                     Get.back();
                     scanQRCode();
                   }),
               ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('Select photos'),
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Select photos'),
                   onTap: () async {
                     Get.back();
                     scanPickImage();
                   }),
               ListTile(
-                leading: Icon(Icons.cancel),
-                title: Text('Cancel'),
+                leading: const Icon(Icons.cancel),
+                title: const Text('Cancel'),
                 onTap: () {
                   Get.back();
                 },

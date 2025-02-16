@@ -55,23 +55,23 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['nickName'] = nickName;
-    _data['headImg'] = headImg;
-    _data['email'] = email;
-    _data['remark'] = remark;
-    _data['status'] = status;
-    _data['createTime'] = createTime;
-    _data['updateTime'] = updateTime;
-    _data['username'] = username;
-    _data['phone'] = phone;
-    _data['roleName'] = roleName;
-    _data['roleId'] = roleId;
-    _data['roleLabel'] = roleLabel;
-    _data['departmentName'] = departmentName;
-    _data['departmentId'] = departmentId;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['nickName'] = nickName;
+    data['headImg'] = headImg;
+    data['email'] = email;
+    data['remark'] = remark;
+    data['status'] = status;
+    data['createTime'] = createTime;
+    data['updateTime'] = updateTime;
+    data['username'] = username;
+    data['phone'] = phone;
+    data['roleName'] = roleName;
+    data['roleId'] = roleId;
+    data['roleLabel'] = roleLabel;
+    data['departmentName'] = departmentName;
+    data['departmentId'] = departmentId;
+    return data;
   }
 }

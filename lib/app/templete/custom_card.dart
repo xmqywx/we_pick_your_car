@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../services/screen_adapter.dart';
 import '../services/format_date.dart';
 import '../services/handle_status.dart';
-import 'package:get/get.dart';
 import '../widget/imgErrorBuild.dart';
 
 class CustomCard extends StatefulWidget {
@@ -74,7 +73,7 @@ class _CustomCardState extends State<CustomCard> {
                               right: ScreenAdapter.width(31.68)),
                           child: widget.image != null
                               ? Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5.0)),
                                     // color: Color.fromRGBO(233, 222, 222, 1),
@@ -83,11 +82,11 @@ class _CustomCardState extends State<CustomCard> {
                                     widget.image,
                                     fit: BoxFit.fitWidth,
                                     errorBuilder: (context, error, stackTrace) {
-                                      return ImgErrorBuild();
+                                      return const ImgErrorBuild();
                                     },
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                         ),
                         Flexible(
                             flex: 1,
@@ -200,7 +199,7 @@ class _CustomCardState extends State<CustomCard> {
                 margin: EdgeInsets.only(
                     right: ScreenAdapter.width(34.272),
                     left: ScreenAdapter.width(60)),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     // border: Border(
                     //     left: BorderSide(
                     //         color: Color.fromRGBO(222, 222, 222, 1),

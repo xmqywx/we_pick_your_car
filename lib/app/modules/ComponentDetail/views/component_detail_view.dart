@@ -7,9 +7,7 @@ import '../../../text/paragraph.dart';
 
 import '../../../services/screen_adapter.dart';
 import '../../../color/colors.dart';
-import '../../../widget/photo_upload.dart';
 import '../../../widget/card_container.dart';
-import '../../../templete/no_data_templete.dart';
 import '../../../widget/custom_form.dart';
 import '../../../widget/passButton.dart';
 
@@ -17,7 +15,7 @@ class ComponentDetailView extends GetView<ComponentDetailController> {
   const ComponentDetailView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final FocusNode _focusNode = FocusNode();
+    final FocusNode focusNode = FocusNode();
     return Obx(() => Scaffold(
           appBar: AppBar(
             title: MyParagraph(

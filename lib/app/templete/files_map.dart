@@ -15,7 +15,7 @@ class FilesMap extends StatelessWidget {
   final String inputType;
   final void Function(String?)? onSelectChanged;
   final List<String> selectItems;
-  FilesMap(
+  const FilesMap(
       {Key? key,
       required this.attribute,
       this.value,
@@ -55,9 +55,9 @@ class FilesMap extends StatelessWidget {
       if (inputType == 'select') {
         valueText = DropdownButton<String>(
           value: selectItems.contains(value) ? value : selectItems[0],
-          underline: Text(""),
+          underline: const Text(""),
           isDense: true,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: "Roboto-Medium", color: AppColors.themeTextColor1),
           items: selectItems.map((String value) {
             return DropdownMenuItem<String>(
@@ -68,7 +68,7 @@ class FilesMap extends StatelessWidget {
           onChanged: onSelectChanged,
         );
       } else {
-        valueText = Container(
+        valueText = SizedBox(
           width: _calculateTextFieldWidth(),
           // height: ScreenAdapter.height(60),
           child: TextField(
@@ -77,16 +77,16 @@ class FilesMap extends StatelessWidget {
             decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: AppColors.themeTextColor1, width: 1),
+                      const BorderSide(color: AppColors.themeTextColor1, width: 1),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: AppColors.themeTextColor1, width: 1),
+                      const BorderSide(color: AppColors.themeTextColor1, width: 1),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 isDense: true,
                 // filled: true,
                 // 设置背景色
@@ -123,7 +123,7 @@ class FilesMap extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.only(top: 2),
+      margin: const EdgeInsets.only(top: 2),
       constraints: const BoxConstraints(
         minHeight: 25,
       ),

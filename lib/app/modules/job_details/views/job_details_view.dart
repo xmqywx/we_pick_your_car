@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:car_wrecker/app/color/colors.dart';
 import 'package:car_wrecker/app/text/paragraph.dart';
@@ -10,12 +9,10 @@ import '../../../widget/image_preview_screen.dart';
 import '../../../widget/imgErrorBuild.dart';
 import '../controllers/job_details_controller.dart';
 import '../../../widget/custom_form.dart';
-import '../../../services/keep_alive_wrapper.dart';
 import '../../../services/screen_adapter.dart';
 import '../../../widget/card_container.dart';
 import '../templates/JobFormContainer.dart';
 import '../../../widget/image_preview_screen.dart' as ImagePreviewScreenWidget;
-import '../../../services/format_date.dart';
 import '../../../widget/passButton.dart';
 import '../templates/jobAgreenmentView.dart';
 
@@ -67,7 +64,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                 )
               ],
             )
-          : Row(
+          : const Row(
               children: [
                 // Expanded(
                 //   flex: 1,
@@ -106,13 +103,13 @@ class JobDetailsView extends GetView<JobDetailsController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Obx(() => (controller.orderInfoForm.value['signature'] == null ||
                 controller.orderInfoForm.value['signature'].isEmpty)
             ? InkWell(
                 onTap: controller.openBottomSheet,
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   width: ScreenAdapter.width(300),
                   height: ScreenAdapter.width(300),
                   decoration: BoxDecoration(
@@ -168,11 +165,11 @@ class JobDetailsView extends GetView<JobDetailsController> {
                   alignment: Alignment.bottomRight,
                   child: controller.isEdit.value
                       ? Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: controller.openBottomSheet,
                             child: Container(
-                              padding: EdgeInsets.all(
+                              padding: const EdgeInsets.all(
                                   15), // Increased padding for a larger touch area
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(
@@ -184,7 +181,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 2,
                                     blurRadius: 4,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
@@ -199,7 +196,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                             ),
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ),
               )),
       ],
@@ -226,7 +223,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                     padding: EdgeInsets.all(ScreenAdapter.width(10)),
                     margin: EdgeInsets.only(left: ScreenAdapter.height(19)),
                     decoration: BoxDecoration(
-                        color: Color(0xffC5D4FF),
+                        color: const Color(0xffC5D4FF),
                         borderRadius: BorderRadius.all(
                             Radius.circular(ScreenAdapter.height(12)))),
                     child: MyParagraph(
@@ -251,7 +248,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
               controller.currentStatus.value == 'Waiting',
           child: FloatingActionButton(
             onPressed: controller.toChangeEdit,
-            child: Icon(
+            child: const Icon(
               Icons.edit,
             ),
           ),
@@ -264,7 +261,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                     flex: 1,
                     child: Scaffold(
                       appBar: PreferredSize(
-                          preferredSize: Size.fromHeight(50),
+                          preferredSize: const Size.fromHeight(50),
                           child: AppBar(
                             automaticallyImplyLeading: false, // 隐藏返回按钮
                             backgroundColor: Colors.transparent,
@@ -275,7 +272,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               child: TabBar(
                                 // indicatorSize: TabBarIndicatorSize.label,
                                 controller: controller.tabController,
-                                labelPadding: EdgeInsets.symmetric(vertical: 0),
+                                labelPadding: const EdgeInsets.symmetric(vertical: 0),
                                 indicatorPadding: EdgeInsets.zero,
                                 indicatorColor: AppColors.black,
                                 tabs: const [
@@ -310,7 +307,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               contents: [
                                 CardContainer(
                                   children: [
-                                    CardTitle(title: 'Schedule'),
+                                    const CardTitle(title: 'Schedule'),
                                     Padding(
                                         padding: EdgeInsets.fromLTRB(
                                             ScreenAdapter.width(35),
@@ -334,7 +331,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                   ],
                                 ),
                                 CardContainer(children: [
-                                  CardTitle(title: 'Customer'),
+                                  const CardTitle(title: 'Customer'),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         ScreenAdapter.width(35),
@@ -358,6 +355,8 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                 ]),
                                 if (controller.isEdit.value)
                                   InkWell(
+                                    onTap:
+                                        controller.toChangeIsAddSecondaryPerson,
                                     child: Container(
                                         width: double.infinity,
                                         margin: EdgeInsets.only(
@@ -372,12 +371,10 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                           color: AppColors.themeTextColor4,
                                           align: TextAlign.right,
                                         )),
-                                    onTap:
-                                        controller.toChangeIsAddSecondaryPerson,
                                   ),
                                 if (controller.isAddSecondaryPerson.value)
                                   CardContainer(children: [
-                                    CardTitle(
+                                    const CardTitle(
                                         title:
                                             'Sec. Phone & Person for Car Meet'),
                                     Padding(
@@ -410,12 +407,31 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
-                                  CardTitle(title: 'Car'),
+                                  const CardTitle(title: 'Car'),
                                   controller.carInfo.value.image != null &&
                                           controller.carInfo.value.image != ''
-                                      ? Container(
+                                      ? SizedBox(
                                           width: ScreenAdapter.width(500),
                                           child: InkWell(
+                                            onTap: controller
+                                                        .carInfo.value.image !=
+                                                    null
+                                                ? () {
+                                                    if (!controller
+                                                        .hasError.value) {
+                                                      Get.to(ImagePreviewScreen(
+                                                        images: [
+                                                          controller
+                                                                  .carInfo
+                                                                  .value
+                                                                  .image ??
+                                                              ""
+                                                        ],
+                                                        index: 0,
+                                                      ));
+                                                    }
+                                                  }
+                                                : null,
                                             child: Container(
                                                 child: Container(
                                               decoration: const BoxDecoration(
@@ -442,25 +458,6 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                                     )
                                                   : const SizedBox.shrink(),
                                             )),
-                                            onTap: controller
-                                                        .carInfo.value.image !=
-                                                    null
-                                                ? () {
-                                                    if (!controller
-                                                        .hasError.value) {
-                                                      Get.to(ImagePreviewScreen(
-                                                        images: [
-                                                          controller
-                                                                  .carInfo
-                                                                  .value
-                                                                  .image ??
-                                                              ""
-                                                        ],
-                                                        index: 0,
-                                                      ));
-                                                    }
-                                                  }
-                                                : null,
                                           ),
                                         )
                                       : const SizedBox.shrink(),
@@ -488,7 +485,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
-                                  CardTitle(title: 'Info'),
+                                  const CardTitle(title: 'Info'),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         ScreenAdapter.width(35),
@@ -511,7 +508,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
-                                  CardTitle(title: 'Attachments'),
+                                  const CardTitle(title: 'Attachments'),
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(
                                           ScreenAdapter.width(35),
@@ -535,9 +532,9 @@ class JobDetailsView extends GetView<JobDetailsController> {
                                           SizedBox(
                                             height: ScreenAdapter.width(15),
                                           ),
-                                          JobAgreenmentView(),
+                                          const JobAgreenmentView(),
                                           Container(
-                                            margin: EdgeInsets.only(left: 15),
+                                            margin: const EdgeInsets.only(left: 15),
                                             child: MyParagraph(
                                                 text: "Signature",
                                                 // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
@@ -631,7 +628,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                               enableRefresh: !controller.isEdit.value,
                               contents: [
                                 CardContainer(children: [
-                                  CardTitle(title: 'Payment'),
+                                  const CardTitle(title: 'Payment'),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         ScreenAdapter.width(35),
@@ -668,7 +665,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                       ),
                     ))),
             AnimatedContainer(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               height: controller.isKeyboardOpen.value
                   ? ScreenAdapter.height(620)
                   : 0,
@@ -684,7 +681,7 @@ class JobDetailsView extends GetView<JobDetailsController> {
                       ScreenAdapter.height(15),
                       ScreenAdapter.width(34.56),
                       ScreenAdapter.height(51.84)),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                           top: BorderSide(
                               color: AppColors.themeTextColor4, width: 2))),

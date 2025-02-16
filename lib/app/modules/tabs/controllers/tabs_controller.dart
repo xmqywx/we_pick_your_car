@@ -1,16 +1,11 @@
-import 'package:car_wrecker/app/modules/Wrecking/views/wrecking_view.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../home/views/home_view.dart';
-import '../../task_list/views/task_list_view.dart';
 import '../../user/views/user_view.dart';
 // import '../../Wrecking/views/wrecking_view.dart';
-import '../../Container/views/container_view.dart';
 import '../../Components/views/components_view.dart';
 import '../../../services/https_client.dart';
 import '../../../services/storage.dart';
-import '../../../services/keep_alive_wrapper.dart';
 import 'dart:collection';
 import 'package:table_calendar/table_calendar.dart';
 import '../../user/controllers/user_controller.dart';
@@ -35,12 +30,12 @@ class TabsController extends GetxController {
     // HomeView(),
     // TaskListView(),
     // WreckingView(),
-    NoRoleView(),
-    UserView(),
+    const NoRoleView(),
+    const UserView(),
   ].obs;
   RxList<BottomNavigationBarItem> bottomNavigationBarItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
+    const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    const BottomNavigationBarItem(icon: Icon(Icons.person), label: "My"),
   ].obs;
   // RxList<BottomNavigationBarItem> bottomNavigationBarItems =
   //     <BottomNavigationBarItem>[].obs;
@@ -198,7 +193,7 @@ class TabsController extends GetxController {
         pages.refresh();
       }
 
-      pages.value = [...pagesCopy, UserView()].cast<StatelessWidget>();
+      pages.value = [...pagesCopy, const UserView()].cast<StatelessWidget>();
       print(pages);
     } else {}
   }
@@ -289,10 +284,6 @@ class TabsController extends GetxController {
     )..addAll(kEventSource);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void setCurrentIndex(index) {
     currentIndex.value = index;

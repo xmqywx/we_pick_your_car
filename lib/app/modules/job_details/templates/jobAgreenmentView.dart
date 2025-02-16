@@ -13,7 +13,7 @@ class JobAgreenmentView extends StatefulWidget {
 class _JobAgreenmentViewState extends State<JobAgreenmentView> {
   @override
   Widget build(BuildContext context) {
-    bool _isChecked = false;
+    bool isChecked = false;
     return Container(
       margin: EdgeInsets.only(bottom: ScreenAdapter.width(15)),
       decoration: BoxDecoration(

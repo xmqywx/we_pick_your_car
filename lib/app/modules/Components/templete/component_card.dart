@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:car_wrecker/app/color/colors.dart';
 import 'package:car_wrecker/app/services/screen_adapter.dart';
-import 'package:get/get.dart';
 import '../../../widget/card_container.dart';
-import '../../../const/wrecker.dart';
 import '../../../text/paragraph.dart';
 import '../../../widget/photo_upload.dart';
-import 'dart:convert';
 
 class ComponentCard extends StatelessWidget {
   final String containerNumber;
@@ -40,14 +36,14 @@ class ComponentCard extends StatelessWidget {
     //   }
     //   imagesFile = cloneData.cast<String>().toList();
     // }
-    return Container(
+    return SizedBox(
       width: double.infinity,
       // height: 300,
       child: MyCardContainer(children: [
         Padding(
           padding: disassemblyDescription != ''
-              ? EdgeInsets.fromLTRB(10, 10, 10, 10)
-              : EdgeInsets.fromLTRB(0, 10, 0, 0),
+              ? const EdgeInsets.fromLTRB(10, 10, 10, 10)
+              : const EdgeInsets.fromLTRB(0, 10, 0, 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -70,7 +66,7 @@ class ComponentCard extends StatelessWidget {
         ),
         ccDes != null && ccDes != ''
             ? Padding(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -90,9 +86,9 @@ class ComponentCard extends StatelessWidget {
                   ],
                 ),
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
           child: category == 'Catalytic Converter'
               ? Column(
                   children: [

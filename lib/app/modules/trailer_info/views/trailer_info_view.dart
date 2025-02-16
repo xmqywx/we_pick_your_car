@@ -24,8 +24,6 @@
 // }
 
 import 'package:flutter/material.dart';
-import '../../../templete/images_picker.dart';
-import '../../../templete/details_templete.dart';
 
 class TrailerInfoView extends StatefulWidget {
   final Map arguments;
@@ -38,7 +36,7 @@ class TrailerInfoView extends StatefulWidget {
 class _TrailerInfoViewState extends State<TrailerInfoView> {
   String model_number = "";
   String car_color = "";
-  List _imageFileDir = [];
+  final List _imageFileDir = [];
   @override
   void initState() {
     super.initState();
@@ -53,7 +51,7 @@ class _TrailerInfoViewState extends State<TrailerInfoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(""),
+        title: const Text(""),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -84,7 +82,7 @@ class _TrailerInfoViewState extends State<TrailerInfoView> {
                       Container(
                           height: 40,
                           alignment: Alignment.centerLeft,
-                          child: Text(
+                          child: const Text(
                             "Enter vehicle information",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w500),
@@ -134,8 +132,8 @@ class _TrailerInfoViewState extends State<TrailerInfoView> {
             //   },
             // ),
             const SizedBox(height: 10),
-            _imageFileDir.length <= 0
-                ? Text("")
+            _imageFileDir.isEmpty
+                ? const Text("")
                 : Padding(
                     padding: const EdgeInsets.all(10),
                     child: Column(
@@ -148,15 +146,15 @@ class _TrailerInfoViewState extends State<TrailerInfoView> {
                                   Navigator.of(context)
                                       .pushNamed("/generate-signature");
                                 },
-                                child: Text("Next")),
-                            SizedBox(
+                                child: const Text("Next")),
+                            const SizedBox(
                               width: 10,
                             ),
                             ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("Back"))
+                                child: const Text("Back"))
                           ],
                         )
                       ],

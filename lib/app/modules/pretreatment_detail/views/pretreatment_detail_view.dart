@@ -1,5 +1,3 @@
-import 'dart:ffi';
-import 'dart:ui';
 
 import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,6 @@ import '../controllers/pretreatment_detail_controller.dart';
 // import '../../../templete/details_templete.dart';
 import '../../../widget/passButton.dart';
 import '../../../widget/photo_upload.dart';
-import '../../../widget/loading.dart';
 import '../../../services/handle_status.dart';
 import '../../../color/colors.dart';
 import '../../../widget/license_plate.dart';
@@ -33,12 +30,11 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
           height: 5,
           alignment: Alignment.centerLeft,
         ),
-        Obx(() => (controller.signature.value == null ||
-                controller.signature.value == "")
+        Obx(() => (controller.signature.value == "")
             ? InkWell(
                 onTap: controller.openBottomSheet,
                 child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    margin: const EdgeInsets.symmetric(vertical: 5),
                     width: ScreenAdapter.width(250),
                     height: ScreenAdapter.width(250),
                     decoration: BoxDecoration(
@@ -90,10 +86,10 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                         ? Container(
                             child: TextButton(
                               onPressed: controller.openBottomSheet,
-                              child: Text('Change'),
+                              child: const Text('Change'),
                             ),
                           )
-                        : Text(""),
+                        : const Text(""),
                   ],
                 ),
               )),
@@ -283,7 +279,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                                           }
                                         },
                                       )
-                                    : Text("--"),
+                                    : const Text("--"),
                               ),
                             ],
                           ),
@@ -330,14 +326,29 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                                   ),
                                 ),
                                 Center(
-                                  child: Container(
+                                  child: SizedBox(
                                     width: ScreenAdapter.width(500),
                                     child: InkWell(
+                                      onTap: controller.orderDetail['image'] !=
+                                              null
+                                          ? () {
+                                              if (!controller.hasError.value) {
+                                                Get.to(ImagePreviewScreen(
+                                                  images: [
+                                                    controller.orderDetail[
+                                                            'image'] ??
+                                                        ""
+                                                  ],
+                                                  index: 0,
+                                                ));
+                                              }
+                                            }
+                                          : null,
                                       child: Container(
                                           // width: ScreenAdapter.width(585),
                                           // height: ScreenAdapter.height(600),
                                           child: Container(
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4.0)),
                                           // border: Border.all(
@@ -356,26 +367,11 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                                                     stackTrace) {
                                                   controller.hasError.value =
                                                       true;
-                                                  return ImgErrorBuild();
+                                                  return const ImgErrorBuild();
                                                 },
                                               )
-                                            : Text(""),
+                                            : const Text(""),
                                       )),
-                                      onTap: controller.orderDetail['image'] !=
-                                              null
-                                          ? () {
-                                              if (!controller.hasError.value) {
-                                                Get.to(ImagePreviewScreen(
-                                                  images: [
-                                                    controller.orderDetail[
-                                                            'image'] ??
-                                                        ""
-                                                  ],
-                                                  index: 0,
-                                                ));
-                                              }
-                                            }
-                                          : null,
                                     ),
                                   ),
                                 )
@@ -533,7 +529,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                               ],
                             )),
                         Container(
-                          margin: EdgeInsets.all(0),
+                          margin: const EdgeInsets.all(0),
                           padding: EdgeInsets.fromLTRB(
                               ScreenAdapter.width(34.56),
                               ScreenAdapter.height(23.04),
@@ -600,7 +596,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                                   onSelectChanged:
                                       controller.paymentMethodChange,
                                   inputType: 'select',
-                                  selectItems: [
+                                  selectItems: const [
                                     'Cheque',
                                     'Cash',
                                     'Direct Credit'
@@ -616,7 +612,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                               //   // prefix: '\$',
                               // ),
 
-                              FilesMap(
+                              const FilesMap(
                                 attribute: 'Site photos',
                                 hasValue: false,
                               ),
@@ -627,7 +623,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                                 isEditable: controller.isEdit.value,
                               ),
                               // Text(controller.signature.value),
-                              FilesMap(
+                              const FilesMap(
                                 attribute: 'Customer signature',
                                 hasValue: false,
                               ),
@@ -636,7 +632,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.all(0),
+                          margin: const EdgeInsets.all(0),
                           width: double.infinity,
                           padding: EdgeInsets.fromLTRB(
                               ScreenAdapter.width(34.56),
@@ -677,6 +673,7 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
     ));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
@@ -686,8 +683,8 @@ class PretreatmentDetailView extends GetView<PretreatmentDetailController> {
           elevation: 0,
           actions: <Widget>[
             if (controller.isLoadingController.isLoading.value)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
@@ -774,7 +771,7 @@ class FilesMap extends StatelessWidget {
   final String inputType;
   final void Function(String?)? onSelectChanged;
   final List<String> selectItems;
-  FilesMap(
+  const FilesMap(
       {Key? key,
       required this.attribute,
       this.value,
@@ -821,9 +818,9 @@ class FilesMap extends StatelessWidget {
         // }
         valueText = DropdownButton<String>(
           value: selectItems.contains(value) ? value : selectItems[0],
-          underline: Text(""),
+          underline: const Text(""),
           isDense: true,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: "Roboto-Medium", color: AppColors.themeTextColor1),
           items: selectItems.map((String value) {
             return DropdownMenuItem<String>(
@@ -834,7 +831,7 @@ class FilesMap extends StatelessWidget {
           onChanged: onSelectChanged,
         );
       } else {
-        valueText = Container(
+        valueText = SizedBox(
           width: _calculateTextFieldWidth(),
           // height: ScreenAdapter.height(60),
           child: TextField(
@@ -843,16 +840,16 @@ class FilesMap extends StatelessWidget {
             decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: AppColors.themeTextColor1, width: 1),
+                      const BorderSide(color: AppColors.themeTextColor1, width: 1),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: AppColors.themeTextColor1, width: 1),
+                      const BorderSide(color: AppColors.themeTextColor1, width: 1),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 isDense: true,
                 // filled: true,
                 // 设置背景色
@@ -889,7 +886,7 @@ class FilesMap extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.only(top: 2),
+      margin: const EdgeInsets.only(top: 2),
       constraints: const BoxConstraints(
         minHeight: 25,
       ),

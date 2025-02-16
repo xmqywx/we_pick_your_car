@@ -14,18 +14,11 @@ import '../../../services/format_date.dart';
 import '../../../services/handle_status.dart';
 import '../../../widget/toast.dart';
 import '../../../text/paragraph.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:google_maps_webservice/src/core.dart';
-import 'dart:async';
-import 'dart:math';
-import 'package:google_api_headers/google_api_headers.dart';
-import 'package:google_maps_webservice/places.dart';
-import '../templates/JobFormContainer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import '../templates/jobAgreenment.dart';
 import '../../../widget/passButton.dart';
 import '../../../widget/radio_btn.dart';
+import 'dart:async'; // 添加这个导入
 
 const apiKey = 'AIzaSyD_Mb2rL5VtaxB0ah1atdqgrwqyaUNU3u4';
 
@@ -335,7 +328,7 @@ class JobDetailsController extends GetxController
                     ),
                   ],
                 ),
-                Divider(color: Colors.grey),
+                const Divider(color: Colors.grey),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -357,6 +350,7 @@ class JobDetailsController extends GetxController
         "component": {"type": "widget"},
         "hidden": !isEdit.value,
         "widget": InkWell(
+          onTap: toChangeBankShow,
           child: Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: ScreenAdapter.width(35)),
@@ -367,7 +361,6 @@ class JobDetailsController extends GetxController
                 color: AppColors.themeTextColor4,
                 align: TextAlign.right,
               )),
-          onTap: toChangeBankShow,
         )
       },
       {
@@ -710,7 +703,7 @@ class JobDetailsController extends GetxController
         "prop": "imageFileDir",
         "disabled": currentStatus.value == 'Complete',
         "value": orderInfo.value.imageFileDir ?? '[]',
-        "component": {"type": "uploadImage", "isOnlyCamera": true},
+        "component": {"type": "uploadImage"},
         "rules": [],
         "triggeredOnChange": (data) {
           toUpdateFile();
@@ -736,7 +729,6 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.driverLicense ?? '[]',
         "component": {
           "type": "uploadImage",
-          "isOnlyCamera": true,
         },
         "rules": [],
         "triggeredOnChange": (data) {
@@ -750,7 +742,6 @@ class JobDetailsController extends GetxController
         "value": orderInfo.value.registrationDoc ?? '[]',
         "component": {
           "type": "uploadImage",
-          "isOnlyCamera": true,
         },
         "rules": [],
         "triggeredOnChange": (data) {
@@ -784,11 +775,12 @@ class JobDetailsController extends GetxController
             onTap: isEdit.value
                 ? googleAutoCompleteOnTap
                 : () {
-                    if (orderInfoForm.value['pickupAddress'] != null)
+                    if (orderInfoForm.value['pickupAddress'] != null) {
                       tapToViewMap(orderInfoForm.value['pickupAddress']);
+                    }
                   },
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10),
               child: InputDecorator(
                 decoration: InputDecoration(
                   labelText: "Pickup Address",
@@ -820,10 +812,10 @@ class JobDetailsController extends GetxController
                   ),
                   filled: true,
                   fillColor: Colors.white,
-                  contentPadding: EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                       horizontal: 15,
                       vertical: 10), // Adjusted vertical padding
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       color: Colors.grey, // Adjusted label color
                       fontSize: 16,
                       fontFamily: 'Roboto-Medium'),
@@ -873,44 +865,21 @@ class JobDetailsController extends GetxController
   }
 
   googleAutoCompleteOnTap() async {
-    // 设置自动完成选项
+    // 使用 Place Picker 替代
     if (Get.context != null) {
-      var prediction = await PlacesAutocomplete.show(
-        offset: 0,
-        radius: 1000,
-        types: [],
-        strictbounds: false,
-        region: "ar",
-        context: Get.context!,
-        apiKey: apiKey, // 替换为您的Google Maps API密钥
-        mode: Mode.overlay, // 显示在覆盖层上方
-        language: 'en', // 设置所需的语言
-        components: [Component(Component.country, 'au')], // 限制AU
-      );
+      // LocationResult? result = await Navigator.of(Get.context!).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => PlacePicker(apiKey),
+      //   ),
+      // );
 
-      if (prediction != null) {
-        // 提取所需的位置信息，如地址、经纬度等
-        GoogleMapsPlaces _places = GoogleMapsPlaces(
-          apiKey: apiKey,
-          apiHeaders: await GoogleApiHeaders().getHeaders(),
-        );
-        orderInfoForm.value['pickupAddress'] = prediction.description;
-        if (prediction.placeId != null) {
-          PlacesDetailsResponse detail =
-              await _places.getDetailsByPlaceId(prediction.placeId ?? '');
-          // detail.result.
-          orderInfoForm.value['pickupAddressLat'] =
-              detail.result.geometry?.location.lat.toString();
-          orderInfoForm.value['pickupAddressLng'] =
-              detail.result.geometry?.location.lng.toString();
-          setScheduleFormList();
-        }
-
-        // 在此处处理选中的位置信息
-      }
+      // if (result != null) {
+      //   orderInfoForm.value['pickupAddress'] = result.formattedAddress;
+      //   orderInfoForm.value['pickupAddressLat'] = result.latLng?.latitude.toString();
+      //   orderInfoForm.value['pickupAddressLng'] = result.latLng?.longitude.toString();
+      //   setScheduleFormList();
+      // }
     }
-
-    // 处理选中的位置
   }
 
   String handleTimeRange() {
@@ -975,14 +944,14 @@ class JobDetailsController extends GetxController
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  icon: const Icon(Icons.phone, color: AppColors.accent),
                   onPressed: () async {
                     await FlutterPhoneDirectCaller.callNumber(
                         customerInfoForm.value['phoneNumber'].toString());
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         "rules": [
           {"require": true, "message": "Phone number cannot be empty."}
         ]
@@ -1009,14 +978,14 @@ class JobDetailsController extends GetxController
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  icon: const Icon(Icons.phone, color: AppColors.accent),
                   onPressed: () async {
                     await FlutterPhoneDirectCaller.callNumber(
                         customerInfoForm.value['secNumber'].toString());
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         "rules": [
           // {
           //   "require": true,
@@ -1142,7 +1111,7 @@ class JobDetailsController extends GetxController
                     color: Colors.grey,
                     text: "If the vehicle is at a workshop or private owner?"),
                 CustomRadioGroup(
-                  labels: [
+                  labels: const [
                     'Private owner',
                     'Workshop',
                   ],
@@ -1274,7 +1243,7 @@ class JobDetailsController extends GetxController
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  icon: const Icon(Icons.phone, color: AppColors.accent),
                   onPressed: () async {
                     await FlutterPhoneDirectCaller.callNumber(
                         secondaryPersonInfoForm.value['personPhone']
@@ -1282,7 +1251,7 @@ class JobDetailsController extends GetxController
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         "rules": [
           {"require": true, "message": "Phone number cannot be empty."}
         ]
@@ -1310,7 +1279,7 @@ class JobDetailsController extends GetxController
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.phone, color: AppColors.accent),
+                  icon: const Icon(Icons.phone, color: AppColors.accent),
                   onPressed: () async {
                     await FlutterPhoneDirectCaller.callNumber(
                         secondaryPersonInfoForm.value['personSecNumber']
@@ -1318,7 +1287,7 @@ class JobDetailsController extends GetxController
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         "rules": [
           // {
           //   "require": true,
@@ -1461,7 +1430,7 @@ class JobDetailsController extends GetxController
                     color: Colors.grey,
                     text: "If the vehicle is at a workshop or private owner?"),
                 CustomRadioGroup(
-                  labels: [
+                  labels: const [
                     'Private owner',
                     'Workshop',
                   ],
@@ -2155,18 +2124,18 @@ class JobDetailsController extends GetxController
                           if (Get.isSnackbarOpen) {
                             Get.closeAllSnackbars();
                           }
-                          Timer(Duration(milliseconds: 300), () {
+                          Timer(const Duration(milliseconds: 300), () {
                             Get.until((route) => Get.currentRoute == '/tabs');
                           });
                         },
                         child: Row(
                           children: [
-                            Icon(Icons.arrow_back_sharp),
+                            const Icon(Icons.arrow_back_sharp),
                             MyParagraph(text: "Back")
                           ],
                         )),
                     TextButton(
-                        onPressed: otherJobs.value.length > 0
+                        onPressed: otherJobs.value.isNotEmpty
                             ? () {
                                 if (Get.isSnackbarOpen) {
                                   Get.closeAllSnackbars();
@@ -2183,7 +2152,7 @@ class JobDetailsController extends GetxController
                         child: Row(
                           children: [
                             MyParagraph(text: "Next"),
-                            Icon(Icons.arrow_forward)
+                            const Icon(Icons.arrow_forward)
                           ],
                         )),
                   ],
@@ -2325,7 +2294,7 @@ class JobDetailsController extends GetxController
 
   openBottomSheet() {
     Get.bottomSheet(
-      Container(
+      SizedBox(
         height: ScreenAdapter.height(2000),
         // color: Colors.red,
         child: GenerateSignature(
@@ -2345,11 +2314,6 @@ class JobDetailsController extends GetxController
     arguments.value = Get.arguments;
     await handleRefresh();
     WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override
@@ -2399,7 +2363,7 @@ class JobDetailsController extends GetxController
 tapToViewMap(address) async {
   final Uri url = Uri.parse(
       // 'https://maps.google.com/maps/search/?api=1&query=${controller.arguments['pickupAddress']}'
-      'https://www.google.com/maps/dir/?api=1&destination=${address}');
+      'https://www.google.com/maps/dir/?api=1&destination=$address');
 
   if (!await launchUrl(
     url,

@@ -7,10 +7,6 @@ class TaskInfoFinishController extends GetxController {
   final PretreatmentDetailController pretreatmentDetailController =
       Get.find<PretreatmentDetailController>();
   final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   @override
   void onReady() {
@@ -21,10 +17,6 @@ class TaskInfoFinishController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

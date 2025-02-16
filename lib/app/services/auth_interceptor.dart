@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import './storage.dart';
-import './https_client.dart';
 import '../api/user.dart';
 import 'dart:async';
 import '../widget/toast.dart';
@@ -14,7 +13,7 @@ class AuthInterceptor extends Interceptor {
   static bool _isRefreshingToken = false; // 添加标志位
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     if ((err.response?.statusCode == 401 || err.response?.statusCode == 403) && !_isRefreshingToken) {
       _isRefreshingToken = true; // 开始刷新token，设置标志位
       String? refreshToken = await Storage.getData('refreshToken');

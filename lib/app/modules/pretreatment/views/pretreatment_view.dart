@@ -39,11 +39,11 @@ class PretreatmentView extends GetView<PretreatmentController> {
                             !controller.myController.jobListIsLoading.value
                                 ? (Column(
                                     children:
-                                        controller.initListView().length > 0
+                                        controller.initListView().isNotEmpty
                                             ? controller.initListView()
-                                            : [NoLogin()],
+                                            : [const NoLogin()],
                                   ))
-                                : Loading()
+                                : const Loading()
                           ]))),
             )
           ],
@@ -62,7 +62,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String selectValue;
   final String selectStatusValue;
   final TextEditingController searchController;
-  CustomAppBar(
+  const CustomAppBar(
       {Key? key,
       required this.onSelectChanged,
       required this.onSelectStatusChanged,
@@ -74,7 +74,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       required this.keyWordFilter,
       required this.clearFilter,
       required this.searchController})
-      : preferredSize = Size.fromHeight(kToolbarHeight),
+      : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
   @override
@@ -123,7 +123,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   Expanded(
                     // flex: 1,
                     child: Container(
-                      constraints: BoxConstraints(maxHeight: 30),
+                      constraints: const BoxConstraints(maxHeight: 30),
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
                         color: AppColors.white,
@@ -133,7 +133,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -148,22 +148,22 @@ class _CustomAppBarState extends State<CustomAppBar> {
                           ),
                           filled: true,
                           fillColor: AppColors.white,
-                          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                           suffixIcon: Container(
-                            padding: EdgeInsets.only(top: 0),
-                            margin: EdgeInsets.only(right: 0),
-                            constraints: BoxConstraints(maxHeight: 30, maxWidth: 30), 
+                            padding: const EdgeInsets.only(top: 0),
+                            margin: const EdgeInsets.only(right: 0),
+                            constraints: const BoxConstraints(maxHeight: 30, maxWidth: 30), 
                             child: IconButton(
                               onPressed: () {
                                 widget.keyWordFilter!();
                                 _focusNode.unfocus();
                               },
-                              icon: Icon(Icons.search, color: AppColors.darkBlueColor, size: 24), 
+                              icon: const Icon(Icons.search, color: AppColors.darkBlueColor, size: 24), 
                               padding: EdgeInsets.zero,
                             ),
                           ),
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: "Roboto-Medium",
                         ),
                         onChanged: widget.onSearchChange,
@@ -182,7 +182,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   //   ),
                   //   iconSize: ScreenAdapter.height(86.4),
                   // ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Container(
                     width: 30,
                     height: 30,
@@ -194,7 +194,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -217,7 +217,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         Container(
           height: ScreenAdapter.height(120),
           color: AppColors.white,
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -225,7 +225,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 flex: 1,
                 child: Container(
                   height: ScreenAdapter.height(90),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     color: AppColors.greyColor,
                     borderRadius: BorderRadius.circular(10),
@@ -234,8 +234,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     child: DropdownButton<String>(
                       value: widget.selectStatusValue,
                       isExpanded: true,
-                      icon: Icon(Icons.keyboard_arrow_down, color: AppColors.darkBlueColor),
-                      style: TextStyle(
+                      icon: const Icon(Icons.keyboard_arrow_down, color: AppColors.darkBlueColor),
+                      style: const TextStyle(
                         fontFamily: "Roboto-Medium",
                         color: AppColors.themeTextColor1,
                       ),
@@ -256,18 +256,18 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   ),
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Container(
                 width: 1,
                 height: ScreenAdapter.height(54.72),
                 color: AppColors.greyColor,
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 flex: 1,
                 child: Container(
                   height: ScreenAdapter.height(90),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     color: AppColors.greyColor,
                     borderRadius: BorderRadius.circular(10),
@@ -276,8 +276,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     child: DropdownButton<String>(
                       value: widget.selectValue,
                       isExpanded: true,
-                      icon: Icon(Icons.keyboard_arrow_down, color: AppColors.darkBlueColor),
-                      style: TextStyle(
+                      icon: const Icon(Icons.keyboard_arrow_down, color: AppColors.darkBlueColor),
+                      style: const TextStyle(
                         fontFamily: "Roboto-Medium",
                         color: AppColors.themeTextColor1,
                       ),

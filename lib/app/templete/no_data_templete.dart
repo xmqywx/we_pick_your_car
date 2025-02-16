@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,7 @@ class _EmptyStatusState extends State<EmptyStatus> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         height: 400,
         child: Column(children: [
@@ -25,7 +24,7 @@ class _EmptyStatusState extends State<EmptyStatus> {
           ),
           Text(
             widget.title,
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           )
         ]),
       ),

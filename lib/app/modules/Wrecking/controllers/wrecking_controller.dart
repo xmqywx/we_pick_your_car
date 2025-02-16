@@ -20,7 +20,7 @@ class WreckingController extends GetxController {
     // );
 
     // barcodeTxt.value = barcode;
-    var res = await Get.to(SimpleBarcodeScannerPage());
+    var res = await Get.to(const SimpleBarcodeScannerPage());
     if (res is String) {
       barcodeTxt.value = res;
       onSearch();
@@ -91,18 +91,6 @@ class WreckingController extends GetxController {
     wreckedData.refresh();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

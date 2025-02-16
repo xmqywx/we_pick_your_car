@@ -1,9 +1,7 @@
-import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../tabs/controllers/tabs_controller.dart';
-import '../../pretreatment/controllers/pretreatment_controller.dart';
 import '../../../services/https_client.dart';
 import '../../../services/handle_status.dart';
 import '../../../controllers/is_loading_controller.dart';
@@ -491,10 +489,10 @@ class PretreatmentDetailController extends GetxController {
   openBottomSheet() {
     if (isEdit.value) {
       Get.bottomSheet(
-        Container(
+        SizedBox(
           height: ScreenAdapter.height(2000),
           // color: Colors.red,
-          child: DemoPage(),
+          child: const DemoPage(),
         ),
         enableDrag: false,
         isScrollControlled: true,
@@ -502,13 +500,5 @@ class PretreatmentDetailController extends GetxController {
     }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

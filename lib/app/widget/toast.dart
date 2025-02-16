@@ -24,13 +24,13 @@ class CustomSnackbar extends StatelessWidget {
       Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
             // border: Border(
@@ -42,7 +42,7 @@ class CustomSnackbar extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(4.0),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               decoration: BoxDecoration(
                 border: Border(
                     left: BorderSide(
@@ -56,14 +56,14 @@ class CustomSnackbar extends StatelessWidget {
                   if (title != null)
                     Text(
                       title!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Roboto-Medium",
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  if (title != null) SizedBox(height: 8.0),
-                  Container(
+                  if (title != null) const SizedBox(height: 8.0),
+                  SizedBox(
                     width: ScreenAdapter.width(800),
                     child: MyParagraph(
                       text: message,
@@ -99,7 +99,7 @@ void showCustomSnackbar({
         message: message,
         status: status,
       ),
-      animationDuration: Duration(milliseconds: 200),
+      animationDuration: const Duration(milliseconds: 200),
       barBlur: 0);
 }
 
@@ -117,6 +117,6 @@ SnackbarController showCustomPrompt(
       backgroundColor: Colors.transparent,
       messageText: tipWidget,
       dismissDirection: DismissDirection.horizontal,
-      animationDuration: Duration(milliseconds: 200),
+      animationDuration: const Duration(milliseconds: 200),
       barBlur: 0);
 }

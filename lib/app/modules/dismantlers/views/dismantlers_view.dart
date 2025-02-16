@@ -220,11 +220,8 @@ import '../../../text/paragraph.dart';
 import '../../../services/screen_adapter.dart';
 
 import '../controllers/dismantlers_controller.dart';
-import 'package:car_wrecker/app/widget/card_container.dart';
 // Import for Android features.
-import 'package:webview_flutter_android/webview_flutter_android.dart';
 // Import for iOS/macOS features.
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DismantlersView extends GetView<DismantlersController> {
@@ -239,7 +236,7 @@ class DismantlersView extends GetView<DismantlersController> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(ScreenAdapter.width(15)),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 10,
@@ -288,7 +285,7 @@ class DismantlersView extends GetView<DismantlersController> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(ScreenAdapter.width(15)),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 10,
@@ -342,12 +339,12 @@ class DismantlersView extends GetView<DismantlersController> {
           actions: [
             if (controller.vehicleUrl.value != '')
               IconButton(
-                icon: Icon(Icons.refresh),
+                icon: const Icon(Icons.refresh),
                 onPressed: controller.handleReloadWebView,
               ),
             if (controller.vehicleUrl.value != '')
               IconButton(
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
                 onPressed: controller.handleClearUri,
               ),
           ],
@@ -355,7 +352,7 @@ class DismantlersView extends GetView<DismantlersController> {
         floatingActionButton: Visibility(
           child: FloatingActionButton(
             onPressed: controller.containerAdd,
-            child: Icon(Icons.qr_code_scanner),
+            child: const Icon(Icons.qr_code_scanner),
           ),
         ),
         body: Column(children: [

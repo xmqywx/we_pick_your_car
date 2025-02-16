@@ -20,7 +20,7 @@ class ContainerView extends GetView<ContainerController> {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.add_circle_outline),
+              icon: const Icon(Icons.add_circle_outline),
               onPressed: () {
                 Get.toNamed("/container-detail", arguments: {
                   "isEdit": false,
@@ -46,14 +46,14 @@ class ContainerView extends GetView<ContainerController> {
                               !controller.canLoadMore.value
                                   ? Padding(
                                       padding:
-                                          EdgeInsets.only(top: 5, bottom: 5),
+                                          const EdgeInsets.only(top: 5, bottom: 5),
                                       child: MyParagraph(
                                         text: "Can't load more.",
                                         align: TextAlign.center,
                                         fontSize: 40,
                                       ),
                                     )
-                                  : SizedBox()
+                                  : const SizedBox()
                             ]
                           : [EmptyStatus(title: "No data")]))),
             )

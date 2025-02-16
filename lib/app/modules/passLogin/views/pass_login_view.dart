@@ -1,4 +1,3 @@
-import 'package:car_wrecker/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -7,9 +6,7 @@ import '../../../services/screen_adapter.dart';
 import '../../../widget/logo.dart';
 import '../../../widget/passButton.dart';
 import '../../../widget/passTextField.dart';
-import '../../../widget/userAgreement.dart';
 import '../controllers/pass_login_controller.dart';
-import '../../tabs/controllers/tabs_controller.dart';
 import '../../../widget/toast.dart';
 import '../../../color/colors.dart';
 
@@ -18,9 +15,9 @@ class PassLoginView extends GetView<PassLoginController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-        backgroundColor: Color(0xFF002132),
+        backgroundColor: const Color(0xFF002132),
         appBar: AppBar(
-          backgroundColor: Color(0xFF002132),
+          backgroundColor: const Color(0xFF002132),
           elevation: 0,
           // actions: [TextButton(onPressed: () {}, child: Text("Help"))],
         ),
@@ -61,7 +58,7 @@ class PassLoginView extends GetView<PassLoginController> {
                   // const UserAgreement(),
 
                   //登录按钮
-                  SizedBox(
+                  const SizedBox(
                       // height: ScreenAdapter.height(10),
                       ),
                   PassButton(
@@ -99,7 +96,7 @@ class PassLoginView extends GetView<PassLoginController> {
                     onPressed: () {
                       Get.offAllNamed("/register"); // 跳转到登录页面
                     },
-                    child: Text("No account, go register?"),
+                    child: const Text("No account, go register?"),
                   ),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +108,7 @@ class PassLoginView extends GetView<PassLoginController> {
               ),
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               height: controller.isKeyboardOpen.value
                   ? ScreenAdapter.height(1000)
                   : 0,

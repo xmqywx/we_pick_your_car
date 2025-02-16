@@ -20,9 +20,9 @@ class TabsView extends GetView<TabsController> {
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: AppColors.primary,
             unselectedItemColor: Colors.grey,
-            unselectedLabelStyle: TextStyle(color: Colors.grey),
-            selectedIconTheme: IconThemeData(color: AppColors.primary),
-            unselectedIconTheme: IconThemeData(color: Colors.grey),
+            unselectedLabelStyle: const TextStyle(color: Colors.grey),
+            selectedIconTheme: const IconThemeData(color: AppColors.primary),
+            unselectedIconTheme: const IconThemeData(color: Colors.grey),
             currentIndex: controller.currentIndex.value,
             onTap: (index) {
               controller.setCurrentIndex(index);

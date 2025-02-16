@@ -43,7 +43,7 @@ class UserView extends GetView<UserController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${controller.userInfo.value.email ?? '- -'}",
+                            controller.userInfo.value.email ?? '- -',
                             style: const TextStyle(color: Colors.white),
                           ),
                           SizedBox(
@@ -51,7 +51,7 @@ class UserView extends GetView<UserController> {
                           ),
                           Text(
                             "${controller.userInfo.value.username}",
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ],
                       ))
@@ -65,11 +65,11 @@ class UserView extends GetView<UserController> {
               onTap: () {
                 Get.toNamed('/personal-center');
               },
-              title: Text(
+              title: const Text(
                 "My profile",
                 style: TextStyle(),
               ),
-              leading: CircleAvatar(child: Icon(Icons.people)),
+              leading: const CircleAvatar(child: Icon(Icons.people)),
             ),
             const Divider(),
             // const ListTile(
@@ -83,7 +83,7 @@ class UserView extends GetView<UserController> {
             right: 0,
             bottom: 20,
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: PassButton(
                 onPressed: () {
                   controller.loginOut();
@@ -114,9 +114,9 @@ class UserView extends GetView<UserController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "You haven't signed in yet",
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white),
                       ),
                       SizedBox(
                         height: ScreenAdapter.height(20),
@@ -129,7 +129,7 @@ class UserView extends GetView<UserController> {
                             // .logoBgc, // 将文字颜色改为Color.fromRGBO(240, 115, 49, 1)
                             elevation: 0, // 将阴影去掉
                           ),
-                          child: Text("Click to login"),
+                          child: const Text("Click to login"),
                           onPressed: () {
                             Get.toNamed("/pass_login");
                           },

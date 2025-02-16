@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
   final List<String> images;
   final int index;
 
-  ImagePreviewScreen({required this.images, required this.index});
+  const ImagePreviewScreen({super.key, required this.images, required this.index});
 
   @override
   _ImagePreviewScreenState createState() => _ImagePreviewScreenState();
@@ -28,7 +25,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 125, 123, 123),
+      backgroundColor: const Color.fromARGB(255, 125, 123, 123),
       body: SafeArea(
         child: Stack(
           children: [
@@ -53,7 +50,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
               top: 0,
               left: 0,
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_ios,
                   color: Colors.white,
                 ),
@@ -71,7 +68,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                 children: List.generate(
                   widget.images.length,
                   (index) => Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: CircleAvatar(
                       backgroundColor: index == _currentPage
                           ? Colors.white

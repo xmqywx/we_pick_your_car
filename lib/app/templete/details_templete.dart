@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../services/format_date.dart';
@@ -86,11 +85,11 @@ class _DetailTempleteState extends State<DetailTemplete> {
                                   }
                                 },
                               )
-                            : Text("--"),
+                            : const Text("--"),
                       ),
                       SizedBox(
                         width: ScreenAdapter.width(80),
-                        child: Icon(Icons.my_location_outlined,
+                        child: const Icon(Icons.my_location_outlined,
                             color: AppColors.textWhite),
                       ),
                     ],
@@ -105,11 +104,11 @@ class _DetailTempleteState extends State<DetailTemplete> {
                 child: Column(
                   children: [
                     InkWell(
-                      child: Container(
+                      child: SizedBox(
                           width: ScreenAdapter.width(585),
                           // height: ScreenAdapter.height(600),
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4.0)),
                               // border: Border.all(
@@ -122,10 +121,10 @@ class _DetailTempleteState extends State<DetailTemplete> {
                                     widget.arguments['image'],
                                     fit: BoxFit.fitWidth,
                                     errorBuilder: (context, error, stackTrace) {
-                                      return ImgErrorBuild();
+                                      return const ImgErrorBuild();
                                     },
                                   )
-                                : Text(""),
+                                : const Text(""),
                           )),
                       onTap: () {
                         Get.to(ImagePreviewScreen(
@@ -275,7 +274,7 @@ class FilesMap extends StatelessWidget {
   final Widget? keyWidget;
   final Widget? valueWidget;
 
-  FilesMap({
+  const FilesMap({
     Key? key,
     required this.attribute,
     required this.value,
@@ -289,7 +288,7 @@ class FilesMap extends StatelessWidget {
     Widget keyText = Text(
       attribute,
       textAlign: TextAlign.left,
-      style: TextStyle(),
+      style: const TextStyle(),
     );
     Widget valueText = Text(
       value,
@@ -323,7 +322,7 @@ class FilesMap extends StatelessWidget {
                   color: AppColors.black,
                   height: ScreenAdapter.height(35),
                   thickness: ScreenAdapter.height(3))
-              : SizedBox(),
+              : const SizedBox(),
         ],
       ),
     );

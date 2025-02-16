@@ -54,7 +54,7 @@ class _InCompleteState extends State<InComplete> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      child: Text(
+                      child: const Text(
                         "Time",
                         style: TextStyle(fontSize: 16),
                       ),
@@ -75,8 +75,8 @@ class _InCompleteState extends State<InComplete> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Text(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: const Text(
                         "Start position",
                         style: TextStyle(fontSize: 16),
                       ),
@@ -163,7 +163,7 @@ class _InCompleteState extends State<InComplete> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
+                    SizedBox(
                         height: 40,
                         child: ElevatedButton(
                             onPressed: () {

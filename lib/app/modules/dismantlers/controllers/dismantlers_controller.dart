@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:car_wrecker/app/widget/toast.dart';
-import '../../../api/wrecker.dart';
 import 'package:scan/scan.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:core';
@@ -21,15 +20,7 @@ class DismantlersController extends GetxController {
       ..setJavaScriptMode(JavaScriptMode.unrestricted);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   // 扫码
 
@@ -127,7 +118,7 @@ class DismantlersController extends GetxController {
       ...baseUri.queryParameters,
       'token': token,
     });
-    webcontroller..loadRequest(uriWithToken);
+    webcontroller.loadRequest(uriWithToken);
   }
 
   containerAdd() async {
@@ -137,22 +128,22 @@ class DismantlersController extends GetxController {
             color: Colors.white,
             child: Wrap(children: [
               ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text('Camera'),
+                  leading: const Icon(Icons.photo_camera),
+                  title: const Text('Camera'),
                   onTap: () async {
                     Get.back();
                     scanQRCode();
                   }),
               ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('Select photos'),
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Select photos'),
                   onTap: () async {
                     Get.back();
                     scanPickImage();
                   }),
               ListTile(
-                leading: Icon(Icons.cancel),
-                title: Text('Cancel'),
+                leading: const Icon(Icons.cancel),
+                title: const Text('Cancel'),
                 onTap: () {
                   Get.back();
                 },

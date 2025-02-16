@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import '../../user/controllers/user_controller.dart';
 import '../../../services/https_client.dart';
-import '../../../widget/custom_snackbar.dart';
 import '../../../widget/toast.dart';
 import '../../../api/user.dart';
 
@@ -44,7 +43,7 @@ class PersonalCenterController extends GetxController {
 
     if (response != null && response.data['message'] == 'success') {
       userController.loginOut();
-      showCustomSnackbar(message: "Account deleted successfully.");
+      showCustomSnackbar(message: "Account deletion request is received. Your request will be processed within 2 weeks.");
 
       return true;
     } else {
@@ -54,20 +53,8 @@ class PersonalCenterController extends GetxController {
   }
 
   final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/scheduling_controller.dart';
-import 'dart:collection';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../services/screen_adapter.dart';
 import '../../../color/colors.dart';
 import 'dart:convert';
-import 'dart:async';
 import '../../../services/handle_status.dart';
 import '../../../widget/imgErrorBuild.dart';
 import '../../../templete/event.dart';
@@ -50,7 +48,7 @@ class SchedulingView extends GetView<SchedulingController> {
             width: 120.0,
             child: Text(
               headerText,
-              style: TextStyle(fontSize: 26.0),
+              style: const TextStyle(fontSize: 26.0),
             ),
           ),
           Material(
@@ -58,8 +56,8 @@ class SchedulingView extends GetView<SchedulingController> {
             child: InkWell(
               onTap: onTodayButtonTap,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
-                margin: EdgeInsets.only(right: 10, left: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
+                margin: const EdgeInsets.only(right: 10, left: 10),
                 child: Image.asset(
                   "assets/images/icon_date.png",
                   width: ScreenAdapter.fontSize(50),
@@ -73,8 +71,8 @@ class SchedulingView extends GetView<SchedulingController> {
               child: InkWell(
                 onTap: onClearButtonTap,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
-                  margin: EdgeInsets.only(right: 10, left: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
+                  margin: const EdgeInsets.only(right: 10, left: 10),
                   child: Image.asset(
                     "assets/images/icon_clear.png",
                     width: ScreenAdapter.fontSize(50),
@@ -87,8 +85,8 @@ class SchedulingView extends GetView<SchedulingController> {
             child: InkWell(
               onTap: reflashButton,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
-                margin: EdgeInsets.only(right: 10, left: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5),
+                margin: const EdgeInsets.only(right: 10, left: 10),
                 child: Image.asset(
                   "assets/images/icon_refresh.png",
                   width: ScreenAdapter.fontSize(62),
@@ -98,11 +96,11 @@ class SchedulingView extends GetView<SchedulingController> {
           ),
           const Spacer(),
           IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: onLeftArrowTap,
           ),
           IconButton(
-            icon: Icon(Icons.chevron_right),
+            icon: const Icon(Icons.chevron_right),
             onPressed: onRightArrowTap,
           ),
         ],
@@ -151,8 +149,8 @@ class SchedulingView extends GetView<SchedulingController> {
                       focusedDay: controller.rxfocusedDay.value,
                       headerVisible: false,
                       calendarStyle: CalendarStyle(
-                          holidayTextStyle: TextStyle(color: Colors.deepOrange),
-                          holidayDecoration: BoxDecoration(
+                          holidayTextStyle: const TextStyle(color: Colors.deepOrange),
+                          holidayDecoration: const BoxDecoration(
                               color: Colors.transparent,
                               shape: BoxShape.circle),
                           // Use `CalendarStyle` to customize the UI
@@ -161,7 +159,7 @@ class SchedulingView extends GetView<SchedulingController> {
                           //   color: Colors.cyan,
                           // ),
                           markersMaxCount: 1,
-                          selectedDecoration: BoxDecoration(
+                          selectedDecoration: const BoxDecoration(
                             color: AppColors.themeColor1,
                             shape: BoxShape.circle,
                           ),
@@ -171,12 +169,12 @@ class SchedulingView extends GetView<SchedulingController> {
                           // markersAlignment: Alignment.bottomCenter,
                           // markerMargin: EdgeInsets.only(top: 8),
                           // cellMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                          todayDecoration: BoxDecoration(
+                          todayDecoration: const BoxDecoration(
                             color: AppColors.primaryColor,
                             shape: BoxShape.circle,
                           ),
                           outsideTextStyle:
-                              TextStyle(color: AppColors.outSideText),
+                              const TextStyle(color: AppColors.outSideText),
                           // markerSizeScale: 5,
                           markerDecoration: BoxDecoration(
                               color: Colors.orange.shade700,
@@ -255,7 +253,7 @@ class SchedulingView extends GetView<SchedulingController> {
                                 imgAddr,
                                 fit: BoxFit.contain,
                                 errorBuilder: (context, error, stackTrace) {
-                                  return ImgErrorBuild();
+                                  return const ImgErrorBuild();
                                 },
                               ),
                             ),

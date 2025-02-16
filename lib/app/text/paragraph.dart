@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:flutter/material.dart';

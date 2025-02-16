@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:car_wrecker/app/color/colors.dart';
-import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:car_wrecker/app/text/paragraph.dart';
 import 'package:flutter/material.dart';
 import '../services/format_date.dart';
@@ -18,7 +16,7 @@ class DynamicForm extends StatelessWidget {
   // final void Function(Map<String, dynamic> values) onSubmit;
 
   DynamicForm(
-      {required this.formFields,
+      {super.key, required this.formFields,
       // required this.onSubmit,
       this.formRules = const {},
       required this.formKey,
@@ -101,8 +99,9 @@ class DynamicForm extends StatelessWidget {
                   }
                 }
                 if (rule.containsKey('pattern')) {
-                  if (formData[prop] == '' || formData[prop] == null)
+                  if (formData[prop] == '' || formData[prop] == null) {
                     return null;
+                  }
                   if (!RegExp(rule['pattern'])
                       .hasMatch(formData[prop].toString())) {
                     return rule['message'];
@@ -132,7 +131,7 @@ class DynamicForm extends StatelessWidget {
                   print(value);
                 };
             if (hidden) {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
             bool isEmptyAndRed = ((value == null) ||
                     (value is String && value.isEmpty) ||
@@ -157,7 +156,7 @@ class DynamicForm extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8.0),
@@ -203,16 +202,16 @@ class DynamicForm extends StatelessWidget {
                               ),
                               filled: true,
                               fillColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16,
                               ),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: 'Roboto-Medium', fontSize: 16),
                             validator: inputValidator,
                             textInputAction: TextInputAction.done,
@@ -263,7 +262,7 @@ class DynamicForm extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8.0),
@@ -309,16 +308,16 @@ class DynamicForm extends StatelessWidget {
                               ),
                               filled: true,
                               fillColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16,
                               ),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: 'Roboto-Medium', fontSize: 16),
                             validator: inputValidator,
                             textInputAction: TextInputAction.done,
@@ -360,7 +359,7 @@ class DynamicForm extends StatelessWidget {
               List<Map<String, dynamic>> options = component['options'];
 
               formField = Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   // boxShadow: [
@@ -387,11 +386,11 @@ class DynamicForm extends StatelessWidget {
                     items: options.map((option) {
                       return DropdownMenuItem<String>(
                         value: option['value'],
-                        child: Container(
+                        child: SizedBox(
                           width: 200, // Adjusted width to make dropdown smaller
                           child: Text(
                             option['label'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Roboto-Medium',
                               fontSize:
                                   16, // Adjusted font size to match input fields
@@ -434,11 +433,11 @@ class DynamicForm extends StatelessWidget {
                       ),
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical:
                               10), // Adjusted padding to match input fields
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Colors
                             .grey, // Adjusted label color to match input fields
                         fontFamily: 'Roboto-Medium',
@@ -478,7 +477,7 @@ class DynamicForm extends StatelessWidget {
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: label,
-                    labelStyle: TextStyle(fontFamily: 'Roboto-Medium'),
+                    labelStyle: const TextStyle(fontFamily: 'Roboto-Medium'),
                     hintText: component['placeholder'],
                     hintStyle: TextStyle(
                       color: (formData[prop] == null ||
@@ -495,7 +494,7 @@ class DynamicForm extends StatelessWidget {
               formField = FormField<DateTime?>(
                 builder: (FormFieldState<DateTime?> state) {
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),
@@ -572,9 +571,9 @@ class DynamicForm extends StatelessWidget {
                                         ),
                                         filled: true,
                                         fillColor: Colors.white,
-                                        contentPadding: EdgeInsets.symmetric(
+                                        contentPadding: const EdgeInsets.symmetric(
                                             horizontal: 15, vertical: 10),
-                                        labelStyle: TextStyle(
+                                        labelStyle: const TextStyle(
                                           color: Colors.grey,
                                           fontFamily: 'Roboto-Medium',
                                           fontSize: 16,
@@ -612,7 +611,7 @@ class DynamicForm extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 5),
                             child: Text(
                               state.errorText!,
-                              style: TextStyle(color: Colors.red, fontSize: 14),
+                              style: const TextStyle(color: Colors.red, fontSize: 14),
                             ),
                           ),
                       ],
@@ -651,8 +650,8 @@ class DynamicForm extends StatelessWidget {
               );
             } else if (component['type'] == 'checkbox') {
               formField = Container(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -665,7 +664,7 @@ class DynamicForm extends StatelessWidget {
                     Expanded(
                       child: Text(
                         label,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black87,
                           fontSize: 16,
                           fontFamily: 'Roboto-Bold',
@@ -696,7 +695,7 @@ class DynamicForm extends StatelessWidget {
             } else if (component['type'] == 'textarea') {
               formField = Container(
                 // padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
@@ -750,16 +749,16 @@ class DynamicForm extends StatelessWidget {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                         horizontal: 15,
                         vertical: 10), // Adjusted vertical padding
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: Colors.grey, // Adjusted label color
                       fontSize: 16, // Adjusted font size
                     ),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontFamily: 'Roboto-Medium',
@@ -792,7 +791,7 @@ class DynamicForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 15),
+                    margin: const EdgeInsets.only(left: 15),
                     child: MyParagraph(
                         text: label,
                         // contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Adjusted vertical padding
@@ -809,7 +808,7 @@ class DynamicForm extends StatelessWidget {
                       images: imagesFile,
                       isEditable: !disabled,
                       isOnlyCamera: component['isOnlyCamera']),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   )
                 ],
@@ -831,7 +830,7 @@ class DynamicForm extends StatelessWidget {
                 ),
               );
             } else {
-              formField = SizedBox.shrink();
+              formField = const SizedBox.shrink();
             }
 
             return formField;
@@ -843,7 +842,7 @@ class DynamicForm extends StatelessWidget {
 
   Map<String, dynamic> _getInitialFormValues() {
     Map<String, dynamic> initialValues = {};
-    formFields.forEach((field) {
+    for (var field in formFields) {
       bool hidden = field['hidden'] ?? false;
       if (!hidden) {
         String label = field['label'];
@@ -851,7 +850,7 @@ class DynamicForm extends StatelessWidget {
         String prop = field['prop'] ?? label;
         initialValues[prop] = value;
       }
-    });
+    }
     return initialValues;
   }
 }

@@ -10,7 +10,6 @@ import '../../../widget/no_login.dart';
 import '../../../color/colors.dart';
 import '../../../widget/license_plate.dart';
 import '../../../widget/loading.dart';
-import '../../scheduling/views/scheduling_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -20,10 +19,10 @@ class HomeView extends GetView<HomeController> {
         SizedBox(
           height: ScreenAdapter.height(230),
         ),
-        NoLogin(),
-        Text("You haven't signed yet"),
+        const NoLogin(),
+        const Text("You haven't signed yet"),
         TextButton(
-          child: Text("To login"),
+          child: const Text("To login"),
           onPressed: () {
             Get.toNamed("/pass_login");
           },
@@ -39,7 +38,7 @@ class HomeView extends GetView<HomeController> {
       right: 0,
       child: Container(
           height: ScreenAdapter.height(383),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.logoBgc,
             image: DecorationImage(
               image: AssetImage('assets/images/top_bar_bgk.png'),
@@ -100,7 +99,7 @@ class HomeView extends GetView<HomeController> {
                 width: ScreenAdapter.width(1080),
                 child: TableComplexExample(refresh: controller.handleRefresh),
               ),
-              controller.changFlag.value ? Text("") : Text("")
+              controller.changFlag.value ? const Text("") : const Text("")
             ],
           ),
         ),
@@ -195,13 +194,13 @@ class HomeView extends GetView<HomeController> {
                                   width: ScreenAdapter.width(140),
                                   alignment: Alignment.center,
                                   child: TextButton(
-                                    child: Icon(Icons.arrow_right),
+                                    child: const Icon(Icons.arrow_right),
                                     onPressed: () {
                                       Get.toNamed("/pretreatment-detail",
                                           arguments: jobList[0]);
                                     },
                                   ))
-                              : Text("")
+                              : const Text("")
                         ],
                       ),
                       jobList.isNotEmpty
@@ -226,7 +225,7 @@ class HomeView extends GetView<HomeController> {
                               pickupAddressState:
                                   "${jobList.isNotEmpty ? jobList[0]['pickupAddressState'] : ""}",
                             )
-                          : NoJob()
+                          : const NoJob()
                       // const SizedBox(height: 10,),
                     ],
                   ),
@@ -247,7 +246,7 @@ class HomeView extends GetView<HomeController> {
                         ? (controller.userController.isLogin.value
                             ? _HomeContent()
                             : _NoLogin())
-                        : Loading(),
+                        : const Loading(),
 
                     // Obx(() => Visibility(
                     //       visible: controller.visiFlag.value,

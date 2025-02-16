@@ -14,7 +14,7 @@ class WreckingView extends GetView<WreckingController> {
   const WreckingView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final FocusNode _focusNode = FocusNode();
+    final FocusNode focusNode = FocusNode();
     return Scaffold(
         appBar: AppBar(
           title: MyParagraph(
@@ -24,7 +24,7 @@ class WreckingView extends GetView<WreckingController> {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.barcode_reader),
+              icon: const Icon(Icons.barcode_reader),
               onPressed: () {
                 controller.scanBarcode();
               },
@@ -58,17 +58,17 @@ class WreckingView extends GetView<WreckingController> {
                                   color: AppColors.white,
                                   borderRadius: BorderRadius.circular(43.2)),
                               child: TextField(
-                                focusNode: _focusNode,
+                                focusNode: focusNode,
                                 controller:
                                     controller.textEditingController.value,
                                 onChanged: controller.onSearchChange,
-                                style: TextStyle(fontFamily: "Roboto-Medium"),
+                                style: const TextStyle(fontFamily: "Roboto-Medium"),
                                 decoration: InputDecoration(
                                   hintText: 'Search',
                                   border: InputBorder.none,
                                   isDense: true,
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10)
+                                      const EdgeInsets.symmetric(vertical: 10)
                                           .copyWith(bottom: 6),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
@@ -118,7 +118,7 @@ class WreckingView extends GetView<WreckingController> {
                                             'disassmblingInformation'],
                                         isEditable: controller.isEdit.value,
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 FilesMap(
                                   attribute: 'Description',
                                   value: controller.wreckedData[
@@ -129,7 +129,7 @@ class WreckingView extends GetView<WreckingController> {
                                 //   attribute: 'Disassembly images',
                                 //   value: controller.wreckedData['disassemblyImages'] ?? '----',
                                 // ),
-                                FilesMap(
+                                const FilesMap(
                                   attribute: 'Images',
                                   hasValue: false,
                                 ),
@@ -149,7 +149,7 @@ class WreckingView extends GetView<WreckingController> {
                                               onPressed: () {
                                                 controller.isMore.value = true;
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "View car details  >>",
                                                 style: TextStyle(
                                                     color: AppColors
@@ -233,7 +233,7 @@ class WreckingView extends GetView<WreckingController> {
                                                     controller.isMore.value =
                                                         false;
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "<<  Hide",
                                                     style: TextStyle(
                                                         color: AppColors
@@ -267,7 +267,7 @@ class FilesMap extends StatelessWidget {
   final String inputType;
   final void Function(String?)? onSelectChanged;
   final List<String> selectItems;
-  FilesMap(
+  const FilesMap(
       {Key? key,
       required this.attribute,
       this.value,
@@ -314,9 +314,9 @@ class FilesMap extends StatelessWidget {
         // }
         valueText = DropdownButton<String>(
           value: selectItems.contains(value) ? value : selectItems[0],
-          underline: Text(""),
+          underline: const Text(""),
           isDense: true,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: "Roboto-Medium", color: AppColors.themeTextColor1),
           items: selectItems.map((String value) {
             return DropdownMenuItem<String>(
@@ -327,7 +327,7 @@ class FilesMap extends StatelessWidget {
           onChanged: onSelectChanged,
         );
       } else {
-        valueText = Container(
+        valueText = SizedBox(
           width: _calculateTextFieldWidth(),
           // height: ScreenAdapter.height(60),
           child: TextField(
@@ -336,16 +336,16 @@ class FilesMap extends StatelessWidget {
             decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: AppColors.themeTextColor1, width: 1),
+                      const BorderSide(color: AppColors.themeTextColor1, width: 1),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: AppColors.themeTextColor1, width: 1),
+                      const BorderSide(color: AppColors.themeTextColor1, width: 1),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 isDense: true,
                 // filled: true,
                 // 设置背景色
@@ -382,7 +382,7 @@ class FilesMap extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.only(top: 2),
+      margin: const EdgeInsets.only(top: 2),
       constraints: const BoxConstraints(
         minHeight: 25,
       ),

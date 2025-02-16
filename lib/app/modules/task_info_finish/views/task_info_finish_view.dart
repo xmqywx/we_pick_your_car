@@ -29,7 +29,7 @@ class TaskInfoFinishView extends GetView<TaskInfoFinishController> {
         SizedBox(
           height: ScreenAdapter.height(100),
         ),
-        Text(
+        const Text(
           "Successfully submitted, thanks for your work!",
           textAlign: TextAlign.center,
         ),
@@ -37,7 +37,7 @@ class TaskInfoFinishView extends GetView<TaskInfoFinishController> {
             onPressed: () {
               Get.offAllNamed("/tabs");
             },
-            child: Text(
+            child: const Text(
               "Back to home",
               textAlign: TextAlign.center,
             )),
@@ -47,7 +47,7 @@ class TaskInfoFinishView extends GetView<TaskInfoFinishController> {
                   .alertSendInvoiceDialog();
               Get.offAllNamed("/tabs");
             },
-            child: Text(
+            child: const Text(
               "Send invoice",
               textAlign: TextAlign.center,
             )),
@@ -78,7 +78,7 @@ class TaskInfoFinishView extends GetView<TaskInfoFinishController> {
         SizedBox(
           height: ScreenAdapter.height(100),
         ),
-        Text(
+        const Text(
           "Submission failed, please try again!",
           textAlign: TextAlign.center,
         ),
@@ -86,7 +86,7 @@ class TaskInfoFinishView extends GetView<TaskInfoFinishController> {
             onPressed: () {
               Get.back();
             },
-            child: Text(
+            child: const Text(
               "Try again",
               textAlign: TextAlign.center,
             )),
@@ -94,7 +94,7 @@ class TaskInfoFinishView extends GetView<TaskInfoFinishController> {
             onPressed: () {
               Get.offAllNamed("/tabs");
             },
-            child: Text(
+            child: const Text(
               "Back to home",
               textAlign: TextAlign.center,
             )),

@@ -21,21 +21,21 @@ class CustomSnackbar {
     // 创建一个 Text Widget 作为弹窗内容
     var text = Text(
       message,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
     );
 
     // 创建一个 Material Widget 作为弹窗背景
     var material = Material(
       color: Colors.black87,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Center(child: text),
       ),
     );
 
     // 创建一个 OverlayEntry 并将其插入到 Overlay 中
     _overlayEntry = OverlayEntry(builder: (context) => material);
-    Overlay.of(context)?.insert(_overlayEntry!);
+    Overlay.of(context).insert(_overlayEntry!);
 
     // 标记当前弹窗已经显示
     _isVisible = true;

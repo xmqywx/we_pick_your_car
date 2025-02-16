@@ -32,7 +32,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
   );
 
   late PageController _pageController;
-  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
+  final CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
@@ -48,7 +48,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
     _selectedDays.add(_focusedDay.value);
     _selectedEvents = ValueNotifier(_getEventsForDay(_focusedDay.value));
     _selectedEvents.value = _getEventsForDays(_selectedDays);
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       // 在这里写你想要执行的代码
       initSelectedDays();
       print('Timer triggered!');
@@ -155,13 +155,13 @@ class TableComplexExampleState extends State<TableComplexExample> {
                       },
                       onLeftArrowTap: () {
                         _pageController.previousPage(
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.easeOut,
                         );
                       },
                       onRightArrowTap: () {
                         _pageController.nextPage(
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.easeOut,
                         );
                       },
@@ -170,7 +170,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
                           homeController.handleRefresh();
                           // _selectedEvents.value =
                           //     _getEventsForDays(_selectedDays);
-                          Timer(Duration(milliseconds: 500), () {
+                          Timer(const Duration(milliseconds: 500), () {
                             // 在这里写你想要执行的代码
                             initSelectedDays();
                           });
@@ -185,8 +185,8 @@ class TableComplexExampleState extends State<TableComplexExample> {
                   focusedDay: _focusedDay.value,
                   headerVisible: false,
                   calendarStyle: CalendarStyle(
-                      holidayTextStyle: TextStyle(color: Colors.deepOrange),
-                      holidayDecoration: BoxDecoration(
+                      holidayTextStyle: const TextStyle(color: Colors.deepOrange),
+                      holidayDecoration: const BoxDecoration(
                           color: Colors.transparent, shape: BoxShape.circle),
                       // Use `CalendarStyle` to customize the UI
                       outsideDaysVisible: true,
@@ -195,7 +195,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
                       // ),
 
                       markersMaxCount: 1,
-                      selectedDecoration: BoxDecoration(
+                      selectedDecoration: const BoxDecoration(
                         color: AppColors.themeColor1,
                         shape: BoxShape.circle,
                       ),
@@ -205,11 +205,11 @@ class TableComplexExampleState extends State<TableComplexExample> {
                       // markersAlignment: Alignment.bottomCenter,
                       // markerMargin: EdgeInsets.only(top: 8),
                       // cellMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      todayDecoration: BoxDecoration(
+                      todayDecoration: const BoxDecoration(
                         color: AppColors.subTextColor,
                         shape: BoxShape.circle,
                       ),
-                      outsideTextStyle: TextStyle(color: AppColors.textColor),
+                      outsideTextStyle: const TextStyle(color: AppColors.textColor),
                       // markerSizeScale: 5,
                       markerDecoration: BoxDecoration(
                           color: Colors.orange.shade700,
@@ -288,7 +288,7 @@ class TableComplexExampleState extends State<TableComplexExample> {
                                     imgAddr,
                                     fit: BoxFit.contain,
                                     errorBuilder: (context, error, stackTrace) {
-                                      return ImgErrorBuild();
+                                      return const ImgErrorBuild();
                                     },
                                   ),
                                 ),
@@ -415,7 +415,7 @@ class _CalendarHeader extends StatelessWidget {
             width: 120.0,
             child: Text(
               headerText,
-              style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -425,13 +425,13 @@ class _CalendarHeader extends StatelessWidget {
           //   tooltip: 'Go to today',
           // ),
           IconButton(
-            icon: Icon(Icons.refresh, color: AppColors.darkGreenColor),
+            icon: const Icon(Icons.refresh, color: AppColors.darkGreenColor),
             onPressed: reflashButton,
             tooltip: 'Refresh',
           ),
           if (clearButtonVisible)
             IconButton(
-              icon: Icon(Icons.close, color: AppColors.darkRedColor),
+              icon: const Icon(Icons.close, color: AppColors.darkRedColor),
               onPressed: onClearButtonTap,
               tooltip: 'Clear selection',
             ),

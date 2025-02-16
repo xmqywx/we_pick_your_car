@@ -32,7 +32,7 @@ class KeyBoardObserver extends WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     times++;
-    final bottom = MediaQueryData.fromWindow(window).viewInsets.bottom;
+    final bottom = MediaQueryData.fromView(window).viewInsets.bottom;
     if (times == 1) {
       Future.delayed(const Duration(milliseconds: 50), () {
         if (bottom != 0 && times < 3 && bottom == preBottom) {
@@ -61,7 +61,7 @@ class KeyBoardObserver extends WidgetsBindingObserver {
         if (bottom > 250) {
           lastBottom = bottom;
           Future.delayed(const Duration(milliseconds: 100), () {
-            final bottom = MediaQueryData.fromWindow(window).viewInsets.bottom;
+            final bottom = MediaQueryData.fromView(window).viewInsets.bottom;
             if (lastBottom == bottom && isKeyboardShow == null) {
               keyboardHeight = bottom;
               isKeyboardShow = true;

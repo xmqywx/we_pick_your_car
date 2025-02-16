@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/submit_taskinfo_controller.dart';
-import '../../../widget/photo_upload.dart';
 import '../../../services/screen_adapter.dart';
 import '../../../widget/passButton.dart';
 import '../../../widget/image_preview_screen.dart' as ImagePreviewScreenWidget;
@@ -20,7 +19,7 @@ class SubmitTaskinfoView extends GetView<SubmitTaskinfoController> {
         Container(
           height: 40,
           alignment: Alignment.centerLeft,
-          child: Text(
+          child: const Text(
             "Customer signature",
             style: TextStyle(
                 fontSize: 18,
@@ -28,9 +27,9 @@ class SubmitTaskinfoView extends GetView<SubmitTaskinfoController> {
                 fontFamily: "Roboto-Medium"),
           ),
         ),
-        Obx(() => (controller.signature.value == null ||
-                controller.signature.value == "")
+        Obx(() => (controller.signature.value == "")
             ? InkWell(
+                onTap: controller.openBottomSheet,
                 child: Container(
                     width: ScreenAdapter.width(250),
                     height: ScreenAdapter.width(250),
@@ -45,7 +44,6 @@ class SubmitTaskinfoView extends GetView<SubmitTaskinfoController> {
                       "assets/images/icon_sign.png",
                       width: ScreenAdapter.width(70),
                     ))),
-                onTap: controller.openBottomSheet,
               )
             : GestureDetector(
                 child: Row(
@@ -83,7 +81,7 @@ class SubmitTaskinfoView extends GetView<SubmitTaskinfoController> {
                     Container(
                       child: TextButton(
                         onPressed: controller.openBottomSheet,
-                        child: Text('Change'),
+                        child: const Text('Change'),
                       ),
                     ),
                   ],
@@ -145,7 +143,7 @@ class SubmitTaskinfoView extends GetView<SubmitTaskinfoController> {
                       Obx(
                         () => Row(
                           children: [
-                            Text(
+                            const Text(
                               "Payment method",
                               style: TextStyle(
                                 fontFamily: 'Roboto-Medium',
@@ -229,7 +227,7 @@ class TextInput extends StatelessWidget {
           contentPadding:
               EdgeInsets.symmetric(horizontal: ScreenAdapter.width(40.32)),
           label: Text(fields),
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             color: Color(0xff9BA4BD),
             // fontStyle: FontStyle.italic,
           ),
@@ -238,13 +236,13 @@ class TextInput extends StatelessWidget {
           //   color: Color(0xffF1ECEF),
           //   fontStyle: FontStyle.italic,
           // ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.themeBorderColor1),
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.themeBorderColor1),
           ),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.themeBorderColor1),
           ),
         ),

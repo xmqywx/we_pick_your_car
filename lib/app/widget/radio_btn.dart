@@ -91,7 +91,7 @@ class CustomRadioButton extends StatelessWidget {
       child: Container(
         // width: width,
         height: height,
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isSelected ? AppColors.logoBgc : Colors.white,
@@ -99,8 +99,8 @@ class CustomRadioButton extends StatelessWidget {
             color: isSelected ? AppColors.logoBgc : Colors.grey,
           ),
           borderRadius: BorderRadius.horizontal(
-            left: isFirst ? Radius.circular(4.0) : Radius.zero,
-            right: isLast ? Radius.circular(4.0) : Radius.zero,
+            left: isFirst ? const Radius.circular(4.0) : Radius.zero,
+            right: isLast ? const Radius.circular(4.0) : Radius.zero,
           ),
         ),
         child: Text(

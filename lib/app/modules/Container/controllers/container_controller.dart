@@ -30,7 +30,7 @@ class ContainerController extends GetxController {
 
   RxList<Widget> initListView() {
     RxList<Widget> list = RxList<Widget>();
-    containerList.forEach((value) {
+    for (var value in containerList) {
       list.addAll([
         InkWell(
             child: ContainerCard(
@@ -42,19 +42,11 @@ class ContainerController extends GetxController {
             onTap: () => Get.toNamed("/components",
                 arguments: {"containerValue": value, "refresh": handleRefresh}))
       ]);
-    });
+    }
     return list;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   getContainerPage() async {
     var response =

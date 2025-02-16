@@ -86,16 +86,16 @@ class PersonalCenterView extends GetView<PersonalCenterController> {
                       _showLogoutDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 20), // 按钮内边距
                       elevation: 5, // 阴影效果
-                      primary: AppColors.darkRedColor,
+                      backgroundColor: AppColors.darkRedColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8), // 圆角
                       ),
                     ),
                     child: Text(
-                      "Delete account", // 更新按钮标签为英文
+                      "Delete account request", // 更新按钮标签为英文
                       style: TextStyle(
                         fontSize: ScreenAdapter.fontSize(38), // 调整字体大小
                         fontWeight: FontWeight.bold,
@@ -118,20 +118,20 @@ class PersonalCenterView extends GetView<PersonalCenterController> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirm Logout"),
-          content: Text("Are you sure you want to logout?"),
+          title: const Text("Confirm"),
+          content: const Text("Are you sure to send the request?"),
           actions: [
             TextButton(
               onPressed: () {
                 Get.back(); // 关闭对话框
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 controller.deleteAccount();
               },
-              child: Text("Logout"),
+              child: const Text("Send"),
             ),
           ],
         );
@@ -149,7 +149,7 @@ class InfoFields extends StatefulWidget {
   final Function? onOk;
   final bool isPass;
 
-  InfoFields({
+  const InfoFields({
     Key? key,
     required this.filed,
     required this.value,
@@ -187,7 +187,7 @@ class _InfoFieldsState extends State<InfoFields> {
                             flag = true;
                           });
                         },
-                        child: Text(
+                        child: const Text(
                           "Edit",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -203,46 +203,46 @@ class _InfoFieldsState extends State<InfoFields> {
                             });
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           "Ok",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: AppColors.darkBlueColor,
                               height: 2),
                         )))
-                : Text("")
+                : const Text("")
           ],
         ),
         !flag
             ? Text(
                 widget.value,
-                style: TextStyle(height: 2, fontFamily: "Roboto-Medium"),
+                style: const TextStyle(height: 2, fontFamily: "Roboto-Medium"),
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: TextField(
-                      style: TextStyle(fontFamily: "Roboto-Medium"),
+                      style: const TextStyle(fontFamily: "Roboto-Medium"),
                       decoration: InputDecoration(
-                        hintText: "${widget.value}",
+                        hintText: widget.value,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: const BorderSide(color: Colors.grey),
                         ),
                       ),
                       obscureText: widget.isPass,
                       onChanged: widget.task,
                     ),
                   ),
-                  SizedBox(width: 10), // 间距
+                  const SizedBox(width: 10), // 间距
                   InkWell(
                     onTap: () {
                       setState(() {
                         flag = false;
                       });
                     },
-                    child: Text(
+                    child: const Text(
                       "Cancel",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -252,7 +252,7 @@ class _InfoFieldsState extends State<InfoFields> {
                   ),
                 ],
               ),
-        widget.isDivider ? Divider(thickness: 1) : SizedBox.shrink(),
+        widget.isDivider ? const Divider(thickness: 1) : const SizedBox.shrink(),
       ],
     );
   }

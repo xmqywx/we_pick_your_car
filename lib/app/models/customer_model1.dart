@@ -14,7 +14,7 @@ class Customer {
   bool? isDel;
   String? abn;
   String? workLocation;
-  List<Null>? car;
+  List<void>? car;
 
   Customer(
       {this.id,

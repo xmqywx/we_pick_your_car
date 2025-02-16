@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../services/keep_alive_wrapper.dart';
 import '../../../services/screen_adapter.dart';
-import '../../../widget/card_container.dart';
 import '../../../text/paragraph.dart';
 import '../../../color/colors.dart';
 
@@ -55,7 +54,7 @@ class CardTitle extends StatelessWidget {
         vertical: ScreenAdapter.width(30),
       ),
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: AppColors.divider1, width: 1),
         ),

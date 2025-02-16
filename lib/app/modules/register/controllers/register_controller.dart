@@ -69,7 +69,7 @@ class RegisterController extends GetxController {
     }
   }.obs;
   final fieldPasswordKey = GlobalKey<FormFieldState>();
-  final debouncer = Debouncer(delay: Duration(milliseconds: 500));
+  final debouncer = Debouncer(delay: const Duration(milliseconds: 500));
   void setFormList() {
     print('begin');
     formList.value = [

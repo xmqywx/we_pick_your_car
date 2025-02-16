@@ -143,7 +143,7 @@ class _HandwrittenSignatureWidgetState
     // 如果签名区域太小，则使用一个默认的最小尺寸
     const double minSignatureSize = 50.0;
     if (bound == null) {
-      bound = Rect.fromLTWH(0, 0, minSignatureSize, minSignatureSize);
+      bound = const Rect.fromLTWH(0, 0, minSignatureSize, minSignatureSize);
     } else {
       if (bound.width < minSignatureSize) {
         bound = Rect.fromLTWH(

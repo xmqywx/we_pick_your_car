@@ -20,8 +20,6 @@
 // }
 // ignore: file_names
 import 'package:flutter/material.dart';
-import '../../../templete/in_complete.dart';
-import '../../../templete/empty.dart';
 import '../../../data/have_in_hand_list.dart';
 import '../../../templete/have_in_hand_templete.dart';
 

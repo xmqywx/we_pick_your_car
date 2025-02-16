@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import './passButton.dart';
-import 'package:get/get.dart';
 
 class NoLogin extends StatelessWidget {
   const NoLogin({super.key});
@@ -8,7 +6,7 @@ class NoLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         // height: 400,
         child: Column(children: [

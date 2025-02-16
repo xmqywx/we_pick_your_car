@@ -5,9 +5,6 @@ import 'app/controllers/is_loading_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'package:flutter/services.dart';
 import './app/color/colors.dart';
-import './app/services/storage.dart';
-import './app/api/user.dart';
-import 'dart:async';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

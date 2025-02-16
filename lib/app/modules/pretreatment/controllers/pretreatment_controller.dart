@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../../tabs/controllers/tabs_controller.dart';
 import '../../../templete/custom_card.dart';
 import 'package:flutter/material.dart';
-import '../../../widget/no_login.dart';
 import '../../../controllers/is_loading_controller.dart';
 
 class PretreatmentController extends GetxController {
@@ -18,7 +17,7 @@ class PretreatmentController extends GetxController {
 
   RxList<Widget> initListView() {
     RxList<Widget> list = RxList<Widget>();
-    myController.jobListPageData.forEach((value) {
+    for (var value in myController.jobListPageData) {
       list.addAll([
         InkWell(
           child: CustomCard(
@@ -44,7 +43,7 @@ class PretreatmentController extends GetxController {
           },
         )
       ]);
-    });
+    }
     return list;
   }
 
@@ -64,18 +63,18 @@ class PretreatmentController extends GetxController {
     'All time': {},
     '3 days': {
       'startDate':
-          DateTime.now().subtract(Duration(days: 3)).millisecondsSinceEpoch,
-      'endDate': DateTime.now().add(Duration(days: 3)).millisecondsSinceEpoch,
+          DateTime.now().subtract(const Duration(days: 3)).millisecondsSinceEpoch,
+      'endDate': DateTime.now().add(const Duration(days: 3)).millisecondsSinceEpoch,
     },
     '1 week': {
       'startDate':
-          DateTime.now().subtract(Duration(days: 7)).millisecondsSinceEpoch,
-      'endDate': DateTime.now().add(Duration(days: 7)).millisecondsSinceEpoch,
+          DateTime.now().subtract(const Duration(days: 7)).millisecondsSinceEpoch,
+      'endDate': DateTime.now().add(const Duration(days: 7)).millisecondsSinceEpoch,
     },
     '1 month': {
       'startDate':
-          DateTime.now().subtract(Duration(days: 30)).millisecondsSinceEpoch,
-      'endDate': DateTime.now().add(Duration(days: 30)).millisecondsSinceEpoch,
+          DateTime.now().subtract(const Duration(days: 30)).millisecondsSinceEpoch,
+      'endDate': DateTime.now().add(const Duration(days: 30)).millisecondsSinceEpoch,
     },
   };
   onSelectChanged(value) {
@@ -128,15 +127,7 @@ class PretreatmentController extends GetxController {
     myController.initializationJobViewList(filterData: searchData);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

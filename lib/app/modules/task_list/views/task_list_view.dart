@@ -1,12 +1,8 @@
-import 'package:car_wrecker/app/services/screen_adapter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import '../../../templete/calendar_templete.dart';
 import '../controllers/task_list_controller.dart';
-import 'package:calendar_view/calendar_view.dart';
 import '../../../widget/no_login.dart';
-import '../../../widget/passButton.dart';
 import '../../pretreatment/views/pretreatment_view.dart';
 
 class TaskListView extends GetView<TaskListController> {
@@ -14,10 +10,10 @@ class TaskListView extends GetView<TaskListController> {
   Widget _NoLogin() {
     return Column(
       children: [
-        NoLogin(),
-        Text("You haven't signed yet"),
+        const NoLogin(),
+        const Text("You haven't signed yet"),
         TextButton(
-          child: Text("To login"),
+          child: const Text("To login"),
           onPressed: () {
             Get.toNamed("/pass_login");
           },
@@ -29,7 +25,7 @@ class TaskListView extends GetView<TaskListController> {
   Widget _SignedIn() {
     // return TabBarView(
     //     controller: controller.tabController, children: controller.pages);
-    return PretreatmentView();
+    return const PretreatmentView();
   }
 
   @override

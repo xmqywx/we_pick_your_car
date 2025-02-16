@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 // ignore: slash_for_doc_comments

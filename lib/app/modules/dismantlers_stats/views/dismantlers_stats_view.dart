@@ -44,7 +44,7 @@ class DismantlersStatsView extends GetView<DismantlersStatsController> {
     required String title,
     required dynamic data,
   }) {
-    if (data == null) return SizedBox.shrink();
+    if (data == null) return const SizedBox.shrink();
 
     return Card(
       elevation: 3,
@@ -58,13 +58,13 @@ class DismantlersStatsView extends GetView<DismantlersStatsController> {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.teal,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             _buildStatRow("Total Cars", data.total, Icons.directions_car),
             _buildStatRow("Disassembled", data.disassembled, Icons.build),
             _buildStatRow("Total Parts", data.parts?.total, Icons.settings),
@@ -82,11 +82,11 @@ class DismantlersStatsView extends GetView<DismantlersStatsController> {
       child: Row(
         children: [
           Icon(icon, color: Colors.teal),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               label,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ),
           Text(

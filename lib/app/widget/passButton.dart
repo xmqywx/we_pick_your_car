@@ -97,7 +97,6 @@
 import 'package:flutter/material.dart';
 import '../services/screen_adapter.dart';
 import '../color/colors.dart';
-import 'package:get/get.dart';
 
 class PassButton extends StatelessWidget {
   String text;
@@ -138,9 +137,9 @@ class PassButton extends StatelessWidget {
         opacity: disabled ? 0.5 : 1,
         child: ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(btnColor),
-            foregroundColor: MaterialStateProperty.all(textColor),
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+            backgroundColor: WidgetStateProperty.all(btnColor),
+            foregroundColor: WidgetStateProperty.all(textColor),
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(
               side: BorderSide(
                 color: btnBorderCorlor,
                 width: isBorder ? 2 : 0,

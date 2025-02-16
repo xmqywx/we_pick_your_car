@@ -117,18 +117,18 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               "Upload site photos :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             OutlinedButton(
               onPressed: _modelBottomSheet,
-              child: Text("To upload"),
+              child: const Text("To upload"),
             )
           ],
         ),
-        _imageFileDir.length <= 0
-            ? Text("")
+        _imageFileDir.isEmpty
+            ? const Text("")
             : Card(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -156,15 +156,15 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
                                 Navigator.of(context)
                                     .pushNamed("/generate_signature");
                               },
-                              child: Text("Next")),
-                          SizedBox(
+                              child: const Text("Next")),
+                          const SizedBox(
                             width: 10,
                           ),
                           ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text("Back"))
+                              child: const Text("Back"))
                         ],
                       )
                     ],

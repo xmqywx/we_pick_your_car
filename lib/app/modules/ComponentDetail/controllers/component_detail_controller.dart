@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:get/get.dart';
 import '../../../api/wrecker.dart';
@@ -324,7 +323,7 @@ class ComponentDetailController extends GetxController {
       isLoading.value = false;
       wreckedData.value = Component.fromJson(response);
       containerStatus = wreckedData.value.containerStatus ?? -1;
-      print("containerStatus, ${containerStatus}");
+      print("containerStatus, $containerStatus");
       wreckedDataForm.value = {
         "id": wreckedData.value.id,
         "disassemblyDescription": wreckedData.value.disassemblyDescription,

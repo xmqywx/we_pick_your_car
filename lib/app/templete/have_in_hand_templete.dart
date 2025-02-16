@@ -1,12 +1,11 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
-import './details_templete.dart';
 import 'package:get/get.dart';
 
 class HaveInHandTemplete extends StatefulWidget {
   final Map arguments;
-  HaveInHandTemplete({super.key, required this.arguments});
+  const HaveInHandTemplete({super.key, required this.arguments});
 
   @override
   State<HaveInHandTemplete> createState() => _HaveInHandTempleteState();
@@ -27,10 +26,10 @@ class _HaveInHandTempleteState extends State<HaveInHandTemplete> {
             );
           },
           body: Padding(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
             child: ListBody(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Card(
@@ -52,7 +51,7 @@ class _HaveInHandTempleteState extends State<HaveInHandTemplete> {
                                     height: 2,
                                     fontWeight: FontWeight.w500),
                               ),
-                              Divider(
+                              const Divider(
                                 color: Colors.deepOrange,
                               ),
                               SizedBox(

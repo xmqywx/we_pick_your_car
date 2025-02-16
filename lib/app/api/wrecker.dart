@@ -1,5 +1,4 @@
 import '../services/https_client.dart';
-import '../models/component_model.dart';
 
 HttpsClient httpsClient = HttpsClient();
 
@@ -8,7 +7,7 @@ Future apiGetContainerPage(data) async {
 }
 
 Future apiGetContainerInfo({required int id}) async {
-  return await httpsClient.get("/admin/container/base/info?id=${id}");
+  return await httpsClient.get("/admin/container/base/info?id=$id");
 }
 
 Future apiGetComponentPageByContainerId(data) async {

@@ -19,15 +19,7 @@ class UserController extends GetxController {
     print(isLogin.value);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   getUserInfo() async {
     var tempLoginState = await UserServices.getUserLoginState();

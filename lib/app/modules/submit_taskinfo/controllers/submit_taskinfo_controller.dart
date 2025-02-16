@@ -4,7 +4,6 @@ import '../../pretreatment_detail/controllers/pretreatment_detail_controller.dar
 import 'package:flutter/material.dart';
 import '../../generate_signature/views/generate_signature_view.dart';
 import '../../../widget/toast.dart';
-import 'dart:convert';
 
 class SubmitTaskinfoController extends GetxController {
   //TODO: Implement SubmitTaskinfoController
@@ -72,14 +71,14 @@ class SubmitTaskinfoController extends GetxController {
 
     // 使用 forEach 循环判断每一项是否存在空值
     bool hasEmptyValue = false;
-    fields.forEach((item) {
+    for (var item in fields) {
       if (item['value'].isEmpty) {
         if (hasEmptyValue == false) {
           hasEmptyValue = true;
           showCustomSnackbar(message: item['message'], status: '3');
         }
       }
-    });
+    }
 
     // 如果存在空值，则直接返回，不执行下面的代码
     if (hasEmptyValue) {
@@ -130,10 +129,10 @@ class SubmitTaskinfoController extends GetxController {
   // 签名 bottom sheet
   openBottomSheet() {
     Get.bottomSheet(
-      Container(
+      SizedBox(
         height: ScreenAdapter.height(2000),
         // color: Colors.red,
-        child: DemoPage(),
+        child: const DemoPage(),
       ),
       enableDrag: false,
       isScrollControlled: true,
@@ -141,20 +140,8 @@ class SubmitTaskinfoController extends GetxController {
   }
 
   final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

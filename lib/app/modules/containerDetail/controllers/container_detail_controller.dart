@@ -77,8 +77,8 @@ class ContainerDetailController extends GetxController {
       "message": "The seal number has already been used."
     }
   }.obs;
-  final debouncer = Debouncer(delay: Duration(milliseconds: 500));
-  final debouncer2 = Debouncer(delay: Duration(milliseconds: 500));
+  final debouncer = Debouncer(delay: const Duration(milliseconds: 500));
+  final debouncer2 = Debouncer(delay: const Duration(milliseconds: 500));
   setFormList() {
     formList.value = [
       {
@@ -378,13 +378,5 @@ class ContainerDetailController extends GetxController {
     setFormList();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
